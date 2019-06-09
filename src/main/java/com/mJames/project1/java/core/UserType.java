@@ -1,5 +1,7 @@
 package com.mJames.project1.java.core;
 
-public enum UserType {
+import java.io.Serializable;
+
+public enum UserType implements Serializable{
 	BAD, EMPLOYEE, CUSTOMER
 }

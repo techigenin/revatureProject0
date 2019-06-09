@@ -1,12 +1,29 @@
 package com.mJames.project1.java.core;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
-public abstract class User {
+public class User implements Serializable{
+
+	private static final long serialVersionUID = -6755446065224781856L;
 	protected int userNum;
 	protected String name;
 	protected String password;
 	protected CarLot carLot;
+	
+	public User()
+	{
+		super();
+	}
+	
+	public User(CarLot cLot)
+	{
+		this.carLot = cLot;
+	}
 	
 	public User(int userNum, String name, String password, CarLot  cLot) {
 		super();
@@ -28,54 +45,67 @@ public abstract class User {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((password == null) ? 0 : password.hashCode());
-		result = prime * result + userNum;
-		return result;
-	}
-	
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		User other = (User) obj;
-		if (password == null) {
-			if (other.password != null)
-				return false;
-		} else if (!password.equals(other.password))
-			return false;
-		if (userNum != other.userNum)
-			return false;
-		return true;
-	}
-	
-	/*
-	 * Checks what kind of user the given user is.
-	 * 0 -> EMPLOYEENUMAX = employee (1)
-	 * EMPLOYEENUMMAX + 1 -> USERMAX = customer (2)
-	 * otherwise error (0)
-	 */
-	public int userType(int uNum)
-	{
-		if (uNum > -1 && uNum <= carLot.EMPLOYEENUMMAX)
-			return 1;	
-		else if (uNum > carLot.EMPLOYEENUMMAX && uNum <= carLot.USERMAX)
-			return 2;
-		else
-			return 0;
-	}
 
+	public void addCustomer()
+	{
+		System.out.println("Creating a new customer account.");
+		
+		int uNum = carLot.getEMPLOYEENUMMAX() + 1;
+		uNum = carLot.firstFree(uNum);
+		
+		String name = carLot.getResponse("Please enter the users name", "[A-Za-z ]{0,50}");
+		String password = carLot.getResponse("Please enter a password for the new user (alphanumeric, no spaces)", "[A-Za-z0-9]{0,50}");
+		
+		carLot.addUser(uNum + carLot.getEMPLOYEENUMMAX(), new Customer(uNum, name, password, carLot));
+		
+		System.out.println("User " + name + " added. User number is: " + uNum);
+	}
+	
 	public boolean checkPassword(String pWord) 
 	{
 		return password.equals(pWord);	
 	}
 	
-	public abstract HashMap<Integer, String> getListOfCommands();
+	public HashMap<Integer, String> getCommands() 
+	{
+		return new HashMap<Integer, String>();
+	}
+	
+	public String commandNumString()
+	{
+		String ret = "[";
+		Set<Integer> cNums = getCommands().keySet();
+		
+		for (Integer s : cNums)
+		{
+			ret = ret + s + "";
+		}
+		
+		return ret + "]";
+	}
+
+	public void printListOfCars(Map<Integer, Car> carMap)
+	{
+		List<Car> cars = new ArrayList<Car>(carMap.values()); 
+		
+		if (cars.size() > 0)
+		{	
+			System.out.println("The following cars are on the lot.");
+			System.out.printf("%-6s%-11s%-8s%-16s\n", 
+					"ID", 
+					"Color", 
+					"Price($)", 
+					" License Number");
+			for (Car c : cars)
+			{
+				System.out.printf("%6d%11s%9.2f%14s\n", 
+						c.getIdNumber(), 
+						c.getColor(), 
+						c.getPrice(), 
+						c.getLicenseString());
+			}
+		}
+		else
+			System.out.println("There are no cars on the lot");
+	}
 }
