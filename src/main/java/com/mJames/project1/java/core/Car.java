@@ -28,6 +28,14 @@ public class Car implements Serializable{
 		this.color = color;
 	}
 	
+	public Car(Car c)
+	{
+		this.idNumber = c.idNumber;
+		this.licenseNumber = c.licenseNumber;
+		this.color = c.color;
+		this.price = c.price;
+	}
+	
 	/*
 	 * Used to generate license numbers
 	 */

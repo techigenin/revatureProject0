@@ -2,12 +2,17 @@ package com.mJames.project1.java.core;
 
 import java.io.Serializable;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
 
 public class Customer extends User implements Serializable{
 	private static final long serialVersionUID = 5399686909346189303L;
 
+	Set<Car> myCars;
+	
 	public Customer() {
 		super();
+		myCars = new HashSet<Car>();
 		// TODO Auto-generated constructor stub
 	}
 
@@ -43,10 +48,27 @@ public class Customer extends User implements Serializable{
 		carLot.updateOffers(whichCar, userNum, offer);
 	}
 
-
 	public void viewOffers() {
 		carLot.viewCustomerOffers(userNum);
 		
 	}
 
+
+	public void viewCars() {
+		System.out.println("I have " + myCars.size() + " cars");
+	}
+
+
+	public void viewPayments() {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	public void addCar(Car c)
+	{
+		if (myCars == null)
+			myCars = new HashSet<Car>();
+		
+		myCars.add(c);
+	}
 }

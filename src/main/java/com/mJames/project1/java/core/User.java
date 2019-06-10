@@ -78,19 +78,26 @@ public class User implements Serializable{
 		
 		for (Integer s : cNums)
 		{
-			ret = ret + s + "";
+			//if (s > 0)
+				ret = ret + s + "";
 		}
 		
-		return ret + "]";
+		return ret + "\\-]{0,2}";
+	}
+	
+	public void printListOfCars(Map<Integer, Car> carMap)
+	{
+		System.out.println("The following cars are on the lot.");
+		
+		getListOfCars(carMap);
 	}
 
-	public void printListOfCars(Map<Integer, Car> carMap)
+	public void getListOfCars(Map<Integer, Car> carMap)
 	{
 		List<Car> cars = new ArrayList<Car>(carMap.values()); 
 		
 		if (cars.size() > 0)
 		{	
-			System.out.println("The following cars are on the lot.");
 			System.out.printf("%-6s%-11s%-8s%-16s\n", 
 					"ID", 
 					"Color", 

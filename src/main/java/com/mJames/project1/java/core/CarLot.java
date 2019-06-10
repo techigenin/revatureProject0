@@ -160,8 +160,13 @@ public class CarLot implements Serializable {
 		
 		if (callingUserNum == 0)
 		{
-			userMap.remove(uNum);
-			System.out.printf("User %d, %s, removed%n", uNum, user.getUserName());
+			if (userExists(uNum) && uNum != 0)
+			{	
+				userMap.remove(uNum);
+				System.out.printf("User %d, %s, removed%n", uNum, user.getUserName());
+			}
+			else
+				System.out.println("There is no user " + uNum);
 		}
 		else
 			System.out.println("Only manager can remove users.");
@@ -169,6 +174,7 @@ public class CarLot implements Serializable {
 
 	public void removeCar(Car car)
 	{
+		offers.remove(car.getIdNumber());
 		carMap.remove(car.getIdNumber());
 	}
 	
@@ -197,6 +203,10 @@ public class CarLot implements Serializable {
 			{
 				System.out.println("Response must be in the given range.");
 			}
+			else if (string == "")
+			{
+				continue;
+			}
 			else
 				good = true;
 		}
@@ -218,7 +228,7 @@ public class CarLot implements Serializable {
 				Employee emp = (Employee) currentUser;
 				
 				printChoices(currentUser.getCommands());
-				String response = getResponse("", currentUser.commandNumString());
+				String response = getResponse("", emp.commandNumString());
 				
 				switch(Integer.parseInt(response))
 				{
@@ -226,8 +236,10 @@ public class CarLot implements Serializable {
 					emp.viewOffers();
 					break;
 				case 2:
+					emp.acceptOffer();
 					break;
 				case 3:
+					emp.rejectOffer();
 					break;
 				case 4:
 					emp.addCar();
@@ -263,8 +275,8 @@ public class CarLot implements Serializable {
 			{
 				Customer cust = (Customer) currentUser;
 				
-				printChoices(currentUser.getCommands());
-				String response = getResponse("", currentUser.commandNumString());
+				printChoices(cust.getCommands());
+				String response = getResponse("", cust.commandNumString());
 				
 				switch(Integer.parseInt(response))
 				{
@@ -277,12 +289,12 @@ public class CarLot implements Serializable {
 				case 3:
 					cust.makeOffer();
 					break;
-//				case 4:
-//					emp.addCar();
-//					break;
-//				case 5:
-//					emp.removeCar();
-//					break;
+				case 4:
+					cust.viewCars();
+					break;
+				case 5:
+					cust.viewPayments();
+					break;
 				case 0:
 					loggedIn = false;
 					break;
@@ -301,16 +313,6 @@ public class CarLot implements Serializable {
 		return (c.contains(u));
 	}
 
-//	private int userType(int uNum)
-//	{
-//		if (uNum > -1 && uNum <= EMPLOYEENUMMAX)
-//			return 1;	
-//		else if (uNum > EMPLOYEENUMMAX && uNum <= CUSTOMERMAX)
-//			return 2;
-//		else
-//			return 0;
-//	}
-	
 	public int firstFree(int start) 
 	{
 		Set<Integer> numbers = new HashSet<Integer>(userMap.keySet());
@@ -340,8 +342,14 @@ public class CarLot implements Serializable {
 		else // The car doesn't exist
 			System.out.println("Car does not exist.");
 	}
-	private double getCurrentOffer(int whichCar, int userNum) {
-		return offers.get(whichCar).get(userNum);
+	private Double getCurrentOffer(int whichCar, int userNum) {
+		
+		Double offer =  offers.get(whichCar).get(userNum);
+		
+		if (offer == null)
+			return 0.0;
+		else
+			return offer;
 	}
 	public void viewCustomerOffers(int userNum) {
 		boolean good = false;
@@ -372,4 +380,80 @@ public class CarLot implements Serializable {
 			System.out.printf("%6d%10s%9.2f%9.2f\n", i, c.getColor(), c.getPrice(), userOffers.get(i));
 		}
 	}
+	public void viewCarOffers (int cID)
+	{
+		if (offers.get(cID) == null)
+			offers.put(cID, new HashMap<Integer, Double>());
+		
+		if (offers.get(cID).size() != 0)
+		{
+			System.out.println("The following offers exist");
+			System.out.printf("%12s%8s%8s%8s\n", "Customer", "Color", "Price", "Offer");
+			
+			Car car = carMap.get(cID);
+			
+			for (Integer uNum : offers.get(cID).keySet())
+			{
+				System.out.printf("%12d%8s%8.2f%8.2f\n", 
+						uNum, 
+						car.getColor(), 
+						car.getPrice(), 
+						offers.get(cID).get(uNum));
+			}
+		}
+		else
+			System.out.println("There are no offers on this car");
+	}
+	
+	public void removeOffer(int car, int cust)
+	{
+		offers.get(car).remove(cust);
+		System.out.println("Offer on car " + car + " by customer " + cust + " has been removed.");
+	}
+	
+	public void viewOffers()
+	{
+		if (offers.size() > 0)
+		{
+			System.out.println("The following offers exist");
+			System.out.printf("%8s%8s%8s%8s%12s\n", "carID", "Color", "Price", "Offer", "Customer");
+			
+			for (Integer c : offers.keySet())
+			{
+				Car car = carMap.get(c);
+				
+				for (Integer uNum : offers.get(c).keySet())
+				{
+					System.out.printf("%8d%8s%8.2f%8.2f%12d\n", 
+							c, 
+							car.getColor(), 
+							car.getPrice(), 
+							offers.get(c).get(uNum), 
+							uNum);
+				}
+			}
+		}
+		else
+			System.out.println("There are currently no offers");
+				
+	}
+	
+	public void listUsers()
+	{
+		boolean employees = true;
+		
+		System.out.println("Employees");
+		
+		for (User u : getUsers().values())
+		{
+			if (u.getUserNum() > EMPLOYEENUMMAX && employees)
+			{
+				employees = false;
+				System.out.println("Customers");
+			}
+			if(u.getUserNum() > 0) // Doesn't list manager
+				System.out.printf("%8d%15s\n", u.getUserNum(), u.getUserName());
+		}
+	}
+	
 }
