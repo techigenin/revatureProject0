@@ -2,6 +2,7 @@ package com.mJames.project1.java.core;
 
 import java.io.Serializable;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Set;
 
 public class Employee extends User implements Serializable{
@@ -137,7 +138,7 @@ public class Employee extends User implements Serializable{
 		int[] nums = offerBusiness();
 		
 		if (nums[1] != -1)
-			carLot.removeOffer(new Offer(carLot.getCars().get(nums[0]), (Customer)carLot.getUsers().get(nums[1])));
+			carLot.removeSingleOffer(new Offer(carLot.getCars().get(nums[0]), (Customer)carLot.getUsers().get(nums[1])));
 	}
 
 	// Returns the car number in int[0] and the customer number in int[1]
@@ -163,12 +164,15 @@ public class Employee extends User implements Serializable{
 		
 		// List offers on the car, and select one
 		carLot.printCarOffers(nums[0]);
-		if(carLot.getOffers().get(nums[0]).size() != 0)
+		
+		Set<Offer> offerSet = carLot.getCarOffers(nums[0]);
+		if(offerSet.size() != 0)
 		{
-			Set<Integer> cNums = carLot.getOffers()
-			
-					.get(nums[0])
-					.keySet();
+			Set<Integer> cNums = new HashSet<Integer>();
+			for (Offer o : offerSet)
+			{
+				cNums.add(o.getCustomer().getIdNumber());
+			}
 			nums[1] = -1;
 			
 			while (!cNums.contains(nums[1]) 
@@ -179,6 +183,8 @@ public class Employee extends User implements Serializable{
 						carLot.getResponse("Please select a customer", "[0-9]{0,6}"));
 			}
 		}	
+		else
+			System.out.println("There are no offers on this car.");
 		return nums;
 	}
 }

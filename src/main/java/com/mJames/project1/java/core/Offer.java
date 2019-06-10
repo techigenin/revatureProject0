@@ -1,6 +1,9 @@
 package com.mJames.project1.java.core;
 
-public class Offer {
+import java.io.Serializable;
+
+public class Offer implements Serializable{
+	private static final long serialVersionUID = 7260038008843297384L;
 	private Car car;
 	private Customer customer;
 	private double offer;

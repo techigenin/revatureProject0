@@ -308,15 +308,7 @@ public class CarLot implements Serializable {
 	}
 	public void removeCar(Car car)
 	{
-		int cID = car.getIdNumber();
-		Set<Offer> offerSet = new HashSet<Offer>();
-		
-		for (Offer o : offers)
-			if (o.getCar().getIdNumber() == cID)
-				offerSet.add(o);
-		for (Offer o : offerSet)
-			removeOffer(o);
-		
+		removeAllOffers(car);
 		carMap.remove(car.getIdNumber());
 	}
 	
@@ -329,17 +321,18 @@ public class CarLot implements Serializable {
 		if (offers.size() > 0)
 		{
 			System.out.println("The following offers exist");
-			System.out.printf("%8s%8s%8s%8s%12s\n", "carID", "Color", "Price", "Offer", "Customer");
+			System.out.printf("%8s%8s%8s%8s%8s%12s\n", "carID", "Color", "Price", "Offer", "Months",  "Customer");
 			
 			for (Offer o : offers)
 			{
 				Car car = o.getCar();
 				
-				System.out.printf("%8d%8s%8.2f%8.2f%12d\n", 
+				System.out.printf("%8d%8s%8.2f%8.2f%8d%12d\n", 
 					car.getIdNumber(), 
 					car.getColor(), 
 					car.getPrice(), 
 					o.getOffer(), 
+					o.getTerm(),
 					o.getCustomer().getIdNumber());
 			}
 		}
@@ -393,17 +386,19 @@ public class CarLot implements Serializable {
 		if (offerSet.size() != 0)
 		{
 			System.out.println("The following offers exist");
-			System.out.printf("%12s%8s%8s%8s\n", "Customer", "Color", "Price", "Offer");
+			System.out.printf("%8s%8s%8s%8s%8s%12s\n", "carID", "Color", "Price", "Offer", "Months",  "Customer");
 			
 			Car car = carMap.get(cID);
 			
 			for (Offer o : offerSet)
 			{
-				System.out.printf("%12d%8s%8.2f%8.2f\n", 
-						o.getCustomer().getIdNumber(), 
+				System.out.printf("%8d%8s%8.2f%8.2f%8d%12d\n", 
+						car.getIdNumber(), 
 						car.getColor(), 
 						car.getPrice(), 
-						o.getOffer());
+						o.getOffer(), 
+						o.getTerm(),
+						o.getCustomer().getIdNumber());
 			}
 		}
 		else
@@ -411,7 +406,7 @@ public class CarLot implements Serializable {
 	}
 	public void updateOffers(Offer newOffer) {
 		// First, the car exists
-		if (carMap.keySet().contains(newOffer.getCar()))
+		if (carMap.values().contains(newOffer.getCar()))
 		{
 			// Check to see if an existing offer exists
 			Offer oldOffer = null;
@@ -441,7 +436,7 @@ public class CarLot implements Serializable {
 		else // The car doesn't exist
 			System.out.println("Car does not exist.");
 	}
-	public void removeOffer(Offer oldOffer)
+	public void removeSingleOffer(Offer oldOffer)
 	{
 		for (Offer o : offers)
 		{
@@ -449,16 +444,43 @@ public class CarLot implements Serializable {
 			{
 				offers.remove(o);
 				System.out.println("Offer on car " 
-					+ o.getCar() 
+					+ o.getCar().getIdNumber()
 					+ " by customer " 
-					+ o.getCar() 
+					+ o.getCustomer().getUserName()
 					+ " has been removed.");
 				return;
 			}
 		}
 		
 		System.out.println("No such offer exists");
-	}	
+	}
+	public void removeAllOffers(Car car)
+	{
+		Set<Offer> matching = new HashSet<Offer>();
+		
+		for (Offer o : offers)
+		{
+			if (o.getCar().equals(car))
+				matching.add(o);
+		}
+		
+		offers.removeAll(matching);
+		
+		System.out.println("All remaining offers for " 
+				+ car.getIdNumber() 
+				+ " have been removed.");
+	}
+	public Set<Offer> getCarOffers(int cID) {
+		Set<Offer> carOffers = new HashSet<Offer>();
+		
+		for (Offer o : offers)
+		{
+			if (o.getCar().getIdNumber() == cID)
+				carOffers.add(o);
+		}
+		
+		return carOffers;
+	}
 	private Double getCurrentOffer(int whichCar, int userNum) {
 		for (Offer o : offers)
 		{
@@ -473,19 +495,41 @@ public class CarLot implements Serializable {
 	
 	public void listUsers()
 	{
-		boolean employees = true;
+		Set<Integer> employees = new HashSet<Integer>();
+		Set<Integer> customers = new HashSet<Integer>();
 		
-		System.out.println("Employees");
-		
-		for (User u : getUsers().values())
+		for (Integer i : userMap.keySet())
 		{
-			if (u.getIdNumber() > EMPLOYEENUMMAX && employees)
+			if (i > 0 && i <= EMPLOYEENUMMAX)
+				employees.add(i);
+			else if (i > EMPLOYEENUMMAX && i < CUSTOMERMAX)
+				customers.add(i);
+		}
+		
+		if (employees.size() == 0 && customers.size() == 0)
+		{
+			System.out.println("There are no users");
+			return;
+		}
+		
+		if (employees.size() > 0)
+		{
+			System.out.println("Employees");
+			for(Integer i : employees)
 			{
-				employees = false;
-				System.out.println("Customers");
-			}
-			if(u.getIdNumber() > 0) // Doesn't list manager
+				User u = userMap.get(i);
 				System.out.printf("%8d%15s\n", u.getIdNumber(), u.getUserName());
+			}
+		}
+		
+		if (customers.size() > 0)
+		{
+			System.out.println("Customers");
+			for(Integer i : customers)
+			{
+				User u = userMap.get(i);
+				System.out.printf("%8d%15s\n", u.getIdNumber(), u.getUserName());
+			}
 		}
 	}
 }

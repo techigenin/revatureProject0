@@ -38,12 +38,19 @@ public class Customer extends User implements Serializable{
 	public void makeOffer()
 	{
 		printListOfCars(carLot.getCars());
-		int whichCar = Integer.parseInt(carLot.getResponse("Please select a car to make an offer on", "[0-9]{4,6}"));
+		int whichCar = Integer.parseInt(carLot.getResponse(
+				"Please select a car to make an offer on", "[0-9]{4,6}"));
 		double offer = Double.parseDouble(carLot.getResponse(
 				"Please enter your offer, only highest will be stored.", 
 				"[0-9]{0,6}[.]{1,2}[0-9]{1,3}|[0-9]{0,6}"));
+		int months = Integer.parseInt(carLot.getResponse(
+				"Payments will be made over how many months?", 
+				"[0-9]{0,3}"));
 		
-		carLot.updateOffers(whichCar, userNum, offer);
+		carLot.updateOffers(new Offer(carLot.getCars().get(whichCar), 
+				(Customer)carLot.getUsers().get(userNum), 
+				offer, 
+				months));
 	}
 
 	public void viewCars() {
