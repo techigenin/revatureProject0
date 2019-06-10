@@ -77,4 +77,7 @@ public class Offer implements Serializable{
 	public int getTerm() {
 		return term;
 	}
+	public double getPayment(){
+		return offer/term;
+	}
 }

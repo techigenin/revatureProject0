@@ -14,12 +14,11 @@ public class CarLot implements Serializable {
 	private final int EMPLOYEENUMMAX = 99;
 	private final int CUSTOMERMAX = 999;
 	
-	private Map<Integer, Car> carMap;
+	private Map<Integer, Car> carsOnLot;
 	private Set<Integer> knownLicenses;
 	private Map<Integer, User> userMap;
-	// Offer should be a map of carID to maps of userIDs to offers
-	//private Map<Integer, Map<Integer, Double>> offers;
-	private Set<Offer> offers;
+	private Set<Offer> openOffers;
+	private Set<Offer> closedOffers;
 	private static Scanner sc;
 	private User currentUser;
 	private boolean keepRunning;
@@ -29,9 +28,9 @@ public class CarLot implements Serializable {
 		super();
 		sc = new Scanner(System.in);
 		userMap = new HashMap<Integer, User>();
-		carMap = new HashMap<Integer, Car>();
+		carsOnLot = new HashMap<Integer, Car>();
 		knownLicenses = new HashSet<Integer>();
-		offers = new HashSet<Offer>();
+		openOffers = new HashSet<Offer>();
 		
 		// Add the super user
 		if (!userMap.containsKey(0))
@@ -43,12 +42,12 @@ public class CarLot implements Serializable {
 		for (int i = 0; i < 5; i++)
 		{
 			int cNum = firstFree(CUSTOMERMAX + 1);
-			carMap.put(cNum, new Car(cNum, 2000, colors[i], knownLicenses));
+			carsOnLot.put(cNum, new Car(cNum, 2000, colors[i], knownLicenses));
 		}
 	}
 	public CarLot(Map<Integer, Car> cars, Map<Integer, User> users, Scanner sc) {
 		super();
-		this.carMap = cars;
+		this.carsOnLot = cars;
 		this.userMap = users;
 		CarLot.sc = sc;
 		
@@ -61,7 +60,7 @@ public class CarLot implements Serializable {
 	}	
 	
 	public Map<Integer, Car> getCars() {
-		return carMap;
+		return carsOnLot;
 	}
 	public int getEMPLOYEENUMMAX() {
 		return EMPLOYEENUMMAX;
@@ -77,8 +76,9 @@ public class CarLot implements Serializable {
 		return userMap;
 	}
 	public Set<Offer> getOffers() {
-		return offers;
+		return openOffers;
 	}
+	pubic
 	
 	public void run()
 	{
@@ -175,6 +175,7 @@ public class CarLot implements Serializable {
 					emp.removeCar();
 					break;
 				case 6: 
+					emp.viewPayments();
 					break;
 				case 7:
 					emp.addCustomer();
@@ -186,7 +187,7 @@ public class CarLot implements Serializable {
 					emp.listUsers();
 					break;
 				case 10:
-					emp.printListOfCars(carMap);
+					emp.printListOfCars(carsOnLot);
 					break;
 				case -1:
 					emp.removeUser();
@@ -208,7 +209,7 @@ public class CarLot implements Serializable {
 				switch(Integer.parseInt(response))
 				{
 				case 1:
-					cust.printListOfCars(carMap);
+					cust.printListOfCars(carsOnLot);
 					break;
 				case 2:
 					cust.viewOffers();
@@ -269,7 +270,7 @@ public class CarLot implements Serializable {
 	public int firstFree(int start) 
 	{
 		Set<Integer> numbers = new HashSet<Integer>(userMap.keySet());
-		numbers.addAll(carMap.keySet());
+		numbers.addAll(carsOnLot.keySet());
 		
 		while(elementExists(start, numbers)) {start += 1;}
 		return start;
@@ -304,26 +305,29 @@ public class CarLot implements Serializable {
 		
 	public void addCar(Car car)
 	{
-		carMap.put(car.getIdNumber(), car);
+		carsOnLot.put(car.getIdNumber(), car);
 	}
 	public void removeCar(Car car)
 	{
 		removeAllOffers(car);
-		carMap.remove(car.getIdNumber());
+		carsOnLot.remove(car.getIdNumber());
 	}
 	
+	public Set<Offer> getClosedOffers() {
+		return closedOffers;
+	}
 	public Set<Integer> getKnownLicenses() {
 		return knownLicenses;
 	}
 
 	public void printOffers()
 	{
-		if (offers.size() > 0)
+		if (openOffers.size() > 0)
 		{
 			System.out.println("The following offers exist");
 			System.out.printf("%8s%8s%8s%8s%8s%12s\n", "carID", "Color", "Price", "Offer", "Months",  "Customer");
 			
-			for (Offer o : offers)
+			for (Offer o : openOffers)
 			{
 				Car car = o.getCar();
 				
@@ -345,7 +349,7 @@ public class CarLot implements Serializable {
 		
 		Set<Offer> userOffers = new HashSet<Offer>();
 		
-		for(Offer o : offers)
+		for(Offer o : openOffers)
 		{
 			if (o.getCustomer().getIdNumber() == userNum)
 			{
@@ -377,7 +381,7 @@ public class CarLot implements Serializable {
 	{	
 		Set<Offer> offerSet = new HashSet<Offer>();
 		
-		for (Offer o : offers)
+		for (Offer o : openOffers)
 		{
 			if (o.getCar().getIdNumber() == cID)
 				offerSet.add(o);
@@ -388,7 +392,7 @@ public class CarLot implements Serializable {
 			System.out.println("The following offers exist");
 			System.out.printf("%8s%8s%8s%8s%8s%12s\n", "carID", "Color", "Price", "Offer", "Months",  "Customer");
 			
-			Car car = carMap.get(cID);
+			Car car = carsOnLot.get(cID);
 			
 			for (Offer o : offerSet)
 			{
@@ -406,12 +410,12 @@ public class CarLot implements Serializable {
 	}
 	public void updateOffers(Offer newOffer) {
 		// First, the car exists
-		if (carMap.values().contains(newOffer.getCar()))
+		if (carsOnLot.values().contains(newOffer.getCar()))
 		{
 			// Check to see if an existing offer exists
 			Offer oldOffer = null;
 			
-			for (Offer o : offers)
+			for (Offer o : openOffers)
 			{
 				if (o.equals(newOffer))
 						oldOffer = newOffer;
@@ -421,8 +425,8 @@ public class CarLot implements Serializable {
 			{
 				if (newOffer.getOffer() > oldOffer.getOffer())
 				{
-					offers.remove(oldOffer);
-					offers.add(newOffer);
+					openOffers.remove(oldOffer);
+					openOffers.add(newOffer);
 					System.out.println("Offer has been placed.");
 				}
 				else 
@@ -430,7 +434,7 @@ public class CarLot implements Serializable {
 			}
 			else
 			{
-				offers.add(newOffer);
+				openOffers.add(newOffer);
 			}
 		}
 		else // The car doesn't exist
@@ -438,11 +442,11 @@ public class CarLot implements Serializable {
 	}
 	public void removeSingleOffer(Offer oldOffer)
 	{
-		for (Offer o : offers)
+		for (Offer o : openOffers)
 		{
 			if (o.equals(oldOffer))
 			{
-				offers.remove(o);
+				openOffers.remove(o);
 				System.out.println("Offer on car " 
 					+ o.getCar().getIdNumber()
 					+ " by customer " 
@@ -458,13 +462,13 @@ public class CarLot implements Serializable {
 	{
 		Set<Offer> matching = new HashSet<Offer>();
 		
-		for (Offer o : offers)
+		for (Offer o : openOffers)
 		{
 			if (o.getCar().equals(car))
 				matching.add(o);
 		}
 		
-		offers.removeAll(matching);
+		openOffers.removeAll(matching);
 		
 		System.out.println("All remaining offers for " 
 				+ car.getIdNumber() 
@@ -473,24 +477,13 @@ public class CarLot implements Serializable {
 	public Set<Offer> getCarOffers(int cID) {
 		Set<Offer> carOffers = new HashSet<Offer>();
 		
-		for (Offer o : offers)
+		for (Offer o : openOffers)
 		{
 			if (o.getCar().getIdNumber() == cID)
 				carOffers.add(o);
 		}
 		
 		return carOffers;
-	}
-	private Double getCurrentOffer(int whichCar, int userNum) {
-		for (Offer o : offers)
-		{
-			if (o.getCar().getIdNumber() == whichCar 
-					&& o.getCustomer().getIdNumber() == userNum)
-				return o.getOffer();
-		}
-		System.out.println("No offer by this user exists");
-		
-		return -1.0;
 	}
 	
 	public void listUsers()
@@ -531,5 +524,10 @@ public class CarLot implements Serializable {
 				System.out.printf("%8d%15s\n", u.getIdNumber(), u.getUserName());
 			}
 		}
+	}
+	public void addClosedOffer(Offer o) {
+		if (closedOffers == null)
+			closedOffers = new HashSet<Offer>(0);
+		closedOffers.add(o);
 	}
 }

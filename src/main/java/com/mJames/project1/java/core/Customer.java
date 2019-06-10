@@ -8,11 +8,11 @@ import java.util.Set;
 public class Customer extends User implements Serializable{
 	private static final long serialVersionUID = 5399686909346189303L;
 
-	private Set<Car> myCars;
+	private Set<CustomerCar> myCars;
 	
 	public Customer() {
 		super();
-		myCars = new HashSet<Car>();
+		myCars = new HashSet<CustomerCar>();
 	}
 	public Customer(int userNum, String name, String password, CarLot cLot) {
 		super(userNum, name, password, cLot);
@@ -58,7 +58,7 @@ public class Customer extends User implements Serializable{
 		System.out.printf("%10s%8s\n", "License #", "Color");
 		
 		if (myCars == null)
-			myCars = new HashSet<Car>();
+			myCars = new HashSet<CustomerCar>();
 		
 		if (myCars.size() == 0)
 		{
@@ -72,14 +72,27 @@ public class Customer extends User implements Serializable{
 			}
 		}
 	}
-	public void addCar(Car c)
+	public void addCustomerCar(CustomerCar c)
 	{
 		if (myCars == null)
-			myCars = new HashSet<Car>();
+			myCars = new HashSet<CustomerCar>();
 		
 		myCars.add(c);
 	}
 
 	public void viewPayments() {
+		System.out.printf("%8s%8s%8s%8s\n", "License", "Offer", "Term", "Payment");
+		
+		if (myCars == null)
+			myCars = new HashSet<CustomerCar>();
+		
+		for (CustomerCar c : myCars)
+		{
+			System.out.printf("%8s%8.2f%8d%8.2f\n", 
+					c.getLicenseString(), 
+					c.getOffer(), 
+					c.getTerm(), 
+					c.getPayment());
+		}
 	}
 }

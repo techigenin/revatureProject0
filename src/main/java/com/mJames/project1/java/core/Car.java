@@ -15,11 +15,11 @@ public class Car implements Serializable{
 	private double price;
 	private String color;
 	
-	public Car(int idNumber, double price, String color, Set<Integer> licences) {
+	public Car(int idNumber, double price, String color, Set<Integer> licenses) {
 		super();
 		
 		int lNumber = generateLicenseNumber();
-		while(licences.contains(this.licenseNumber))
+		while(licenses.contains(lNumber))
 			lNumber = generateLicenseNumber();
 		
 		this.licenseNumber = lNumber;

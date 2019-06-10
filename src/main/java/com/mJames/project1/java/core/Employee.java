@@ -26,7 +26,7 @@ public class Employee extends User implements Serializable{
 		commands.put(3, "3. Reject offer");
 		commands.put(4, "4. Add car to lot");
 		commands.put(5, "5. Remove car from lot");
-		commands.put(6, "6. View all payments");
+		commands.put(6, "6. View payments on car");
 		commands.put(7, "7. Add new customer");
 		commands.put(8, "8. Add new employee");
 		commands.put(9, "9. List Users");
@@ -120,8 +120,7 @@ public class Employee extends User implements Serializable{
 		 * j, carLot.getOffers().get(i).get(j)); } }
 		 */
 	}
-	public void acceptOffer() 
-	{
+	public void acceptOffer() {
 		int[] nums = offerBusiness();
 		
 		if (nums[1] != -1)
@@ -129,7 +128,17 @@ public class Employee extends User implements Serializable{
 			// Add the car to the customers inventory
 			Customer customer = (Customer) carLot.getUsers().get(nums[1]);
 			Car car = carLot.getCars().get(nums[0]);
-			customer.addCar(new Car(car));
+			Set<Offer> offers = carLot.getCarOffers(nums[0]);
+			
+			for (Offer o : offers)
+			{
+				if (o.getCustomer().getIdNumber() == nums[1])
+				{
+					customer.addCustomerCar(new CustomerCar(car, o.getOffer(), o.getTerm()));
+					carLot.addClosedOffer(o);
+					break;
+				}
+			}
 			// remove the car from the lots inventory
 			carLot.removeCar(car);
 		}
@@ -140,7 +149,52 @@ public class Employee extends User implements Serializable{
 		if (nums[1] != -1)
 			carLot.removeSingleOffer(new Offer(carLot.getCars().get(nums[0]), (Customer)carLot.getUsers().get(nums[1])));
 	}
+	public void viewPayments() {
+		Set<Offer> offers = carLot.getClosedOffers();
+		Set<String> offerLic = new HashSet<String>();
+		int licNumber;
+		
+		for (Offer o : offers)
+		{
+			offerLic.add(o.getCar().getLicenseString());
+		}
+		
+		String resp = "";
 
+		System.out.println("Please select a license number");
+		for (Offer o : offers)
+		{
+			System.out.printf("%8s%8s%8s%8s\n", "License", "Offer", "Term", "Payment");
+			System.out.printf("%8s%8.2f%8d%8.2f", 
+						o.getCar().getLicenseString(), 
+						o.getOffer(), 
+						o.getTerm(), 
+						o.getPayment());
+		}
+		while(!offerLic.contains(resp))
+		{
+			resp = carLot.getResponse("", "[A-F0-9\\s]{6,8}");
+		}
+		
+		resp = resp.split(" ")[0] + resp.split(" ")[1];
+		
+		licNumber = Integer.parseInt(resp, 16);
+		
+		System.out.println("Payments on the vehicle are: ");
+		for (Offer o : carLot.getClosedOffers())
+		{
+			if (o.getCar().getLicenseNumber() == licNumber)
+			{
+				System.out.printf("%8s%8s%8s%8s\n", "License", "Offer", "Term", "Payment");
+				System.out.printf("%8s%8.2f%8d%8.2f\n", 
+							o.getCar().getLicenseString(), 
+							o.getOffer(), 
+							o.getTerm(), 
+							o.getPayment());
+			}
+		}
+	}
+	
 	// Returns the car number in int[0] and the customer number in int[1]
 	private int[] offerBusiness() {
 		int[] nums = new int[2]; // 0 = nums[0], 1 = nums[1] 
@@ -187,4 +241,5 @@ public class Employee extends User implements Serializable{
 			System.out.println("There are no offers on this car.");
 		return nums;
 	}
+
 }
