@@ -28,13 +28,36 @@ public class Car implements Serializable{
 		this.color = color;
 	}
 	public Car(Car c)
+
+	
 	{
 		this.idNumber = c.idNumber;
 		this.licenseNumber = c.licenseNumber;
 		this.color = c.color;
 		this.price = c.price;
 	}
-	
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + licenseNumber;
+		return result;
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Car other = (Car) obj;
+		if (licenseNumber != other.licenseNumber)
+			return false;
+		return true;
+	}
+
 	private int generateLicenseNumber(){
 		Random rand = new Random();
 		rand.setSeed(LocalDateTime.now().getNano());

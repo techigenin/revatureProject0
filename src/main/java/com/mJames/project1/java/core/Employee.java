@@ -6,9 +6,6 @@ import java.util.Set;
 
 public class Employee extends User implements Serializable{
 	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -5213133353068171726L;
 
 	public Employee() {
@@ -34,7 +31,7 @@ public class Employee extends User implements Serializable{
 		commands.put(9, "9. List Users");
 		commands.put(10, "10. View cars on lot");
 		commands.put(0, "0. Logout");
-		if (this.getUserNum() == 0)
+		if (this.getIdNumber() == 0)
 			commands.put(-1, "-1. Remove user");
 		
 		return commands;
@@ -140,7 +137,7 @@ public class Employee extends User implements Serializable{
 		int[] nums = offerBusiness();
 		
 		if (nums[1] != -1)
-			carLot.removeOffer(nums[0], nums[1]);
+			carLot.removeOffer(new Offer(carLot.getCars().get(nums[0]), (Customer)carLot.getUsers().get(nums[1])));
 	}
 
 	// Returns the car number in int[0] and the customer number in int[1]
