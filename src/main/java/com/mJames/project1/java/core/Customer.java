@@ -8,16 +8,14 @@ import java.util.Set;
 public class Customer extends User implements Serializable{
 	private static final long serialVersionUID = 5399686909346189303L;
 
-	Set<Car> myCars;
+	private Set<Car> myCars;
 	
 	public Customer() {
 		super();
 		myCars = new HashSet<Car>();
-		// TODO Auto-generated constructor stub
 	}
 	public Customer(int userNum, String name, String password, CarLot cLot) {
 		super(userNum, name, password, cLot);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
@@ -49,7 +47,23 @@ public class Customer extends User implements Serializable{
 	}
 
 	public void viewCars() {
-		System.out.println("I have " + myCars.size() + " cars");
+		System.out.println("I have the following cars");
+		System.out.printf("%10s%8s\n", "License #", "Color");
+		
+		if (myCars == null)
+			myCars = new HashSet<Car>();
+		
+		if (myCars.size() == 0)
+		{
+			System.out.println("I don't have any cars");
+		}
+		else
+		{
+			for (Car c : myCars)
+			{
+				System.out.printf("%10s%8s\n", c.getLicenseString(), c.getColor());
+			}
+		}
 	}
 	public void addCar(Car c)
 	{
@@ -60,7 +74,5 @@ public class Customer extends User implements Serializable{
 	}
 
 	public void viewPayments() {
-		// TODO Auto-generated method stub
-		
 	}
 }

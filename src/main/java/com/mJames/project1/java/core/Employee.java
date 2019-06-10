@@ -1,9 +1,7 @@
 package com.mJames.project1.java.core;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Set;
 
 public class Employee extends User implements Serializable{
