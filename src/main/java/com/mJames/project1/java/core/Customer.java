@@ -15,16 +15,13 @@ public class Customer extends User implements Serializable{
 		myCars = new HashSet<Car>();
 		// TODO Auto-generated constructor stub
 	}
-
-
 	public Customer(int userNum, String name, String password, CarLot cLot) {
 		super(userNum, name, password, cLot);
 		// TODO Auto-generated constructor stub
 	}
 
-
 	@Override
-	public HashMap<Integer, String> getCommands() {
+	public HashMap<Integer, String> getCommandString() {
 		HashMap<Integer, String> commands = new HashMap<Integer, String>();
 		
 		commands.put(1, "1. View cars on lot");
@@ -37,6 +34,9 @@ public class Customer extends User implements Serializable{
 		return commands;
 	}
 	
+	public void viewOffers() {
+		carLot.printCustomerOffers(userNum);	
+	}
 	public void makeOffer()
 	{
 		printListOfCars(carLot.getCars());
@@ -48,27 +48,19 @@ public class Customer extends User implements Serializable{
 		carLot.updateOffers(whichCar, userNum, offer);
 	}
 
-	public void viewOffers() {
-		carLot.viewCustomerOffers(userNum);
-		
-	}
-
-
 	public void viewCars() {
 		System.out.println("I have " + myCars.size() + " cars");
 	}
-
-
-	public void viewPayments() {
-		// TODO Auto-generated method stub
-		
-	}
-	
 	public void addCar(Car c)
 	{
 		if (myCars == null)
 			myCars = new HashSet<Car>();
 		
 		myCars.add(c);
+	}
+
+	public void viewPayments() {
+		// TODO Auto-generated method stub
+		
 	}
 }

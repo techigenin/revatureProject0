@@ -11,7 +11,7 @@ public class Car implements Serializable{
 	 */
 	private static final long serialVersionUID = -1720761779763343820L;
 	private int idNumber; // Identifier Unique to carlot
-	private int licenseNumber; // Universally Unique Identifier
+	private int licenseNumber; // Universally unique Identifier
 	private double price;
 	private String color;
 	
@@ -27,7 +27,6 @@ public class Car implements Serializable{
 		this.price = price;
 		this.color = color;
 	}
-	
 	public Car(Car c)
 	{
 		this.idNumber = c.idNumber;
@@ -36,36 +35,26 @@ public class Car implements Serializable{
 		this.price = c.price;
 	}
 	
-	/*
-	 * Used to generate license numbers
-	 */
 	private int generateLicenseNumber(){
 		Random rand = new Random();
 		rand.setSeed(LocalDateTime.now().getNano());
 		return rand.nextInt(0xffffff + 1);
-	}
-	
+	}	
 	public String getLicenseString()
 	{
 		String licString = String.format("%06X", licenseNumber);
 		return licString.substring(0,3) + " " + licString.substring(3);
 	}
-
 	public int getIdNumber() {
 		return idNumber;
 	}
-
 	public int getLicenseNumber() {
 		return licenseNumber;
 	}
-
 	public double getPrice() {
 		return price;
 	}
-
 	public String getColor() {
 		return color;
 	}
-	
-	
 }

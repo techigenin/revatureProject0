@@ -22,7 +22,7 @@ public class Employee extends User implements Serializable{
 	}
 
 	@Override
-	public HashMap<Integer, String> getCommands() {
+	public HashMap<Integer, String> getCommandString() {
 		HashMap<Integer, String> commands = new HashMap<Integer, String>();
 		
 		commands.put(1, "1. View Offers");
@@ -85,7 +85,6 @@ public class Employee extends User implements Serializable{
 		
 		carLot.getCars().put(cNum, new Car(cNum, price, color, carLot.getKnownLicenses()));
 	}	
-
 	public void removeCar()
 	{
 		printListOfCars(carLot.getCars());
@@ -113,7 +112,7 @@ public class Employee extends User implements Serializable{
 	}
 
 	public void viewOffers() {
-		carLot.viewOffers();
+		carLot.printOffers();
 		/*
 		 * System.out.println("The following offers currently exist.");
 		 * 
@@ -125,7 +124,6 @@ public class Employee extends User implements Serializable{
 		 * j, carLot.getOffers().get(i).get(j)); } }
 		 */
 	}
-
 	public void acceptOffer() 
 	{
 		int[] nums = offerBusiness();
@@ -140,7 +138,6 @@ public class Employee extends User implements Serializable{
 			carLot.removeCar(car);
 		}
 	}
-	
 	public void rejectOffer() {
 		int[] nums = offerBusiness();
 		
@@ -170,7 +167,7 @@ public class Employee extends User implements Serializable{
 		}
 		
 		// List offers on the car, and select one
-		carLot.viewCarOffers(nums[0]);
+		carLot.printCarOffers(nums[0]);
 		if(carLot.getOffers().get(nums[0]).size() != 0)
 		{
 			Set<Integer> cNums = carLot.getOffers()

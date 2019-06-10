@@ -19,12 +19,10 @@ public class User implements Serializable{
 	{
 		super();
 	}
-	
 	public User(CarLot cLot)
 	{
 		this.carLot = cLot;
 	}
-	
 	public User(int userNum, String name, String password, CarLot  cLot) {
 		super();
 		this.userNum = userNum;
@@ -66,7 +64,7 @@ public class User implements Serializable{
 		return password.equals(pWord);	
 	}
 	
-	public HashMap<Integer, String> getCommands() 
+	public HashMap<Integer, String> getCommandString() 
 	{
 		return new HashMap<Integer, String>();
 	}
@@ -74,7 +72,7 @@ public class User implements Serializable{
 	public String commandNumString()
 	{
 		String ret = "[";
-		Set<Integer> cNums = getCommands().keySet();
+		Set<Integer> cNums = getCommandString().keySet();
 		
 		for (Integer s : cNums)
 		{
@@ -91,7 +89,6 @@ public class User implements Serializable{
 		
 		getListOfCars(carMap);
 	}
-
 	public void getListOfCars(Map<Integer, Car> carMap)
 	{
 		List<Car> cars = new ArrayList<Car>(carMap.values()); 
