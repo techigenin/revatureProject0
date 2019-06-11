@@ -42,7 +42,9 @@ public class CarLot implements Serializable {
 		for (int i = 0; i < 5; i++)
 		{
 			int cNum = firstFree(CUSTOMERMAX + 1);
-			carsOnLot.put(cNum, new Car(cNum, 2000, colors[i], knownLicenses));
+			Car newCar = new Car(cNum, 2000, colors[i], knownLicenses);
+			carsOnLot.put(cNum, newCar);
+			knownLicenses.add(newCar.getLicenseNumber());
 		}
 	}
 	public CarLot(Map<Integer, Car> cars, Map<Integer, User> users, Scanner sc) {
@@ -78,7 +80,6 @@ public class CarLot implements Serializable {
 	public Set<Offer> getOffers() {
 		return openOffers;
 	}
-	pubic
 	
 	public void run()
 	{
