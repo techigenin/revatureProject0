@@ -1,2 +1,4 @@
 *.class
-instructions.txt
+instructions*
+*.log
+*.html
