@@ -1,0 +1,34 @@
+Pojo
+
+	- User
+	- Employee
+	- Customer
+	- Carlot
+	- Car
+	- CustomerCar
+		Combine these two?
+			Owner 0 could be carLot, otherwise use user number
+
+Services
+
+	Employee
+	- Add Car
+	- Remove Car
+	- View Offers
+	- Accept Offers
+	- Reject Offers
+	- View Payments
+	- Add Customer
+	- Add Employee
+	- List Users
+	- View Cars
+
+	Customer
+	- View Cars
+	- View Offers
+	- Make Offer
+	- View My Cars
+	- View Payments
+	
+Uses Static class to capture input, similar to my way, but with recursion
+	I think if I look at all the place I capture input, I could simplify

@@ -8,7 +8,7 @@ import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
 
-public class CarLot implements Serializable {
+public class CarLot extends Logging implements Serializable {
 	private static final long serialVersionUID = 3645297906547539714L;
 	
 	private final int EMPLOYEENUMMAX = 99;

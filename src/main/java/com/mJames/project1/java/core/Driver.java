@@ -7,11 +7,10 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
 public class Driver{
-	
-	
-	
 	public static void main(String[] args) {
 
+		Logging.infoLog("Application Started");
+		
 		System.out.println("Welcome to the Carlot.");
 		System.out.println();
 		
@@ -21,6 +20,7 @@ public class Driver{
 
 		try
 		{
+			Logging.infoLog("Opening file");
 			// Reading the object from a file 
             FileInputStream file = new FileInputStream(fileName); 
             ObjectInputStream in = new ObjectInputStream(file); 
@@ -30,9 +30,10 @@ public class Driver{
 			
 			in.close();
 			file.close();
+			Logging.infoLog("Opened Successfully");
 		}
 		catch (IOException e){
-			System.out.println("Creating new file");
+			Logging.warnLog("Open failed, creating new file");
 			//e.printStackTrace();
 		}
 		catch (ClassNotFoundException e)
@@ -45,6 +46,7 @@ public class Driver{
 		
 		try
 		{
+			Logging.infoLog("Saving file");
 			FileOutputStream file = new FileOutputStream(fileName);
 			ObjectOutputStream out = new ObjectOutputStream(file);
 			
@@ -52,11 +54,14 @@ public class Driver{
 			
 			out.close();
 			file.close();
+			Logging.infoLog("Saved Successfully");
 		}
 		catch (IOException e)
 		{
-			System.out.println("IOException occured");
+			Logging.errorLog("Saving failed");
 			e.printStackTrace();
 		}
+		
+		Logging.infoLog("Application Ended");
 	}
 }
