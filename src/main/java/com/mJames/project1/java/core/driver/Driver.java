@@ -1,4 +1,4 @@
-package com.mJames.project1.java.core;
+package com.mJames.project1.java.core.driver;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -6,13 +6,21 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
-public class Driver{
-	public static void main(String[] args) {
+import com.mJames.project1.java.core.Logging;
+import com.mJames.project1.java.core.pojo.Car;
+import com.mJames.project1.java.core.pojo.CarLot;
+import com.mJames.project1.java.core.pojo.Employee;
+import com.mJames.project1.java.core.services.CarLotService;
+import com.mJames.project1.java.core.ui.IOUtil;
 
+public class Driver{
+	private static CarLotService cs; //= new CarLotService();
+	
+	public static void main(String[] args) {
+		
 		Logging.infoLog("Application Started");
 		
-		System.out.println("Welcome to the Carlot.");
-		System.out.println();
+		IOUtil.messageToUser("Welcome to the Carlot.\n");
 		
 		String fileName = "carLot.ser";
 		
@@ -25,7 +33,7 @@ public class Driver{
             FileInputStream file = new FileInputStream(fileName); 
             ObjectInputStream in = new ObjectInputStream(file); 
               
-            // Method for deserialization of object 
+            // Method for de-serialization of object 
             carLot = (CarLot)in.readObject(); 
 			
 			in.close();
@@ -34,15 +42,20 @@ public class Driver{
 		}
 		catch (IOException e){
 			Logging.warnLog("Open failed, creating new file");
+			
+			carLot = newCarLot();
 			//e.printStackTrace();
 		}
 		catch (ClassNotFoundException e)
 		{
-			System.out.println(e.getStackTrace());
+			Logging.errorLog(e.getStackTrace().toString());
 			e.printStackTrace();
 		}
 		
-		carLot.run();
+		if (cs == null)
+			cs = new CarLotService(carLot);
+		
+		cs.run();
 		
 		try
 		{
@@ -63,5 +76,25 @@ public class Driver{
 		}
 		
 		Logging.infoLog("Application Ended");
+	}
+
+	private static CarLot newCarLot() {
+		CarLot carLot;
+		carLot = new CarLot();
+		cs = new CarLotService(carLot);
+		// Add the super user
+		carLot.addUser(new Employee(0, "Jean Luc", "Picard", carLot));
+
+		String[] colors = {"green", "blue", "red", "yellow", "orange"};
+		
+		// Add a couple starter cars
+		for (int i = 0; i < 5; i++)
+		{
+			int cNum = cs.firstFree(carLot.getCUSTOMERMAX() + 1);
+			Car newCar = new Car(cNum, 2000, colors[i], carLot.getKnownLicenses());
+			carLot.getCars().put(cNum, newCar);
+			carLot.getKnownLicenses().add(newCar.getLicenseNumber());
+		}
+		return carLot;
 	}
 }

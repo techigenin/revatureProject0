@@ -1,4 +1,4 @@
-package com.mJames.project1.java.core;
+package com.mJames.project1.java.core.pojo;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -14,6 +14,13 @@ public class Car implements Serializable{
 	private int licenseNumber; // Universally unique Identifier
 	private double price;
 	private String color;
+	private double offer;
+	private int term;
+	
+	public Car()
+	{
+		super();
+	}
 	
 	public Car(int idNumber, double price, String color, Set<Integer> licenses) {
 		super();
@@ -28,15 +35,19 @@ public class Car implements Serializable{
 		this.color = color;
 	}
 	public Car(Car c)
-
-	
 	{
+		super();
 		this.idNumber = c.idNumber;
 		this.licenseNumber = c.licenseNumber;
 		this.color = c.color;
 		this.price = c.price;
 	}
-
+	public Car(Car c, double offer, int term) {
+		this(c);
+		this.offer = offer;
+		this.term = term;
+	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -79,5 +90,20 @@ public class Car implements Serializable{
 	}
 	public String getColor() {
 		return color;
+	}
+	public double getSellPrice() {
+		return offer;
+	}
+	public void setSellPrice(double offer) {
+		this.offer = offer;
+	}
+	public int getTerm() {
+		return term;
+	}
+	public void setTerm(int term) {
+		this.term = term;
+	}
+	public double getPayment()	{
+		return offer/term;
 	}
 }

@@ -1,4 +1,4 @@
-package com.mJames.project1.java.core;
+package com.mJames.project1.java.core.pojo;
 
 import java.io.Serializable;
 
@@ -20,13 +20,13 @@ public class Offer implements Serializable{
 		this.offer = offer;
 		this.term = term;
 	}
-	public Offer(Car car, Customer customer, double offer) {
-		super();
-		this.car = car;
-		this.customer = customer;
-		this.offer = offer;
-		this.term = 24; // Default term is 24 months
-	}
+//	public Offer(Car car, Customer customer, double offer) {
+//		super();
+//		this.car = car;
+//		this.customer = customer;
+//		this.offer = offer;
+//		this.term = 24; // Default term is 24 months
+//	}
 	public Offer(Car car, Customer cust)
 	{
 		super();

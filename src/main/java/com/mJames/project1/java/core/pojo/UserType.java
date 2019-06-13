@@ -1,4 +1,4 @@
-package com.mJames.project1.java.core;
+package com.mJames.project1.java.core.pojo;
 
 import java.io.Serializable;
 
