@@ -175,10 +175,11 @@ public class CarLotServiceImplConsole implements CarLotService {
 					cs.makeOffer(cl, cust);
 					break;
 				case 4:
-					cs.viewCars(cust);
+					cs.viewCars(cl, cust);
 					break;
 				case 5:
-					viewPayments(cust);
+					// TODO fix this
+					cs.viewPayments(cl, cust);
 					break;
 				case 0:
 					loggedIn = false;
@@ -188,31 +189,6 @@ public class CarLotServiceImplConsole implements CarLotService {
 				}
 			}
 		}
-	}
-	
-	private void viewPayments(Customer cust) {
-		System.out.printf("%8s%8s%8s%8s\n", "License", "Offer", "Term", "Payment");
-		
-		Set<Car> myCars = getCustomerCars(cust);
-		
-		for (Car car : myCars)
-		{
-			System.out.printf("%8s%8.2f%8d%8.2f\n", 
-					car.getLicenseString(), 
-					car.getPrice());
-		}
-	}
-
-	private Set<Car> getCustomerCars(Customer cust) {
-		Set<Car> custCars = new HashSet<Car>();
-		
-		for (Car c : cl.getCars().values())
-		{
-			if (c.getOwnerID() == cust.getUserNum())
-				custCars.add(c);
-		}
-		
-		return custCars;
 	}
 
 	@Override
@@ -323,7 +299,7 @@ public class CarLotServiceImplConsole implements CarLotService {
 					car.getPrice(), 
 					o.getOffer(), 
 					o.getTerm(),
-					o.getCustomer().getUserNum());
+					o.getCustomerId());
 			}
 		}
 		else
@@ -337,7 +313,7 @@ public class CarLotServiceImplConsole implements CarLotService {
 		
 		for(Offer o : cl.getOffers())
 		{
-			if (o.get == userNum)
+			if (o.getCustomerId() == userNum)
 			{
 				userOffers.add(o);
 				good = true;
@@ -351,16 +327,17 @@ public class CarLotServiceImplConsole implements CarLotService {
 		}
 		
 		System.out.println("User has the following offers");
-		System.out.printf("%-6s%-10s%-9s%-9s\n", "ID", "Color", "Price", "Offer");
+		System.out.printf("%-6s%-10s%-9s%-9s%-9s\n", "ID", "Color", "Price", "Offer", "Term");
 		
 		for (Offer o: userOffers)
 		{
-			Car c = o.getCar();
-			System.out.printf("%6d%10s%9.2f%9.2f\n", 
+			Car c = getCarByLicense(o.getLicense());
+			System.out.printf("%6d%10s%9.2f%9.2f%9d\n", 
 					c.getLotID(), 
 					c.getColor(), 
 					c.getPrice(), 
-					o.getOffer());
+					o.getOffer(),
+					o.getTerm());
 		}
 	}
 	@Override
@@ -370,7 +347,7 @@ public class CarLotServiceImplConsole implements CarLotService {
 		
 		for (Offer o : cl.getOffers())
 		{
-			if (o.getCar().getLotID() == cID)
+			if (getCarByLicense(o.getLicense()).getLotID() == cID)
 				offerSet.add(o);
 		}
 		
@@ -389,7 +366,7 @@ public class CarLotServiceImplConsole implements CarLotService {
 						car.getPrice(), 
 						o.getOffer(), 
 						o.getTerm(),
-						o.getCustomer().getUserNum());
+						o.getCustomerId());
 			}
 		}
 		else
@@ -398,7 +375,7 @@ public class CarLotServiceImplConsole implements CarLotService {
 	@Override
 	public void updateOffers(Offer newOffer) {
 		// First, the car exists
-		if (cl.getCars().values().contains(newOffer.getCar()))
+		if (cl.getCars().values().contains(getCarByLicense(newOffer.getLicense())))
 		{
 			// Check to see if an existing offer exists
 			Offer oldOffer = null;
@@ -436,10 +413,13 @@ public class CarLotServiceImplConsole implements CarLotService {
 			if (o.equals(oldOffer))
 			{
 				cl.getOffers().remove(o);
+				Customer cust = (Customer) getCustomerByID(o.getCustomerId());
 				System.out.println("Offer on car " 
-					+ o.getCar().getLotID()
+					+ getCarByLicense(o.getLicense()).getLotID()
 					+ " by customer " 
-					+ o.getCustomer().getFirstName()
+					+ cust.getFirstName()
+					+ " "
+					+ cust.getLastName()
 					+ " has been removed.");
 				return;
 			}
@@ -447,6 +427,10 @@ public class CarLotServiceImplConsole implements CarLotService {
 		
 		System.out.println("No such offer exists");
 	}
+	private User getCustomerByID(Integer customerId) {
+		return cl.getUsers().get(customerId);
+	}
+
 	private void rejectAllOffers(Car car)
 	{
 		for (Offer o : cl.getOffers())

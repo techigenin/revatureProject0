@@ -15,13 +15,13 @@ public class Offer implements Serializable{
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public Offer(Integer license, Integer customer, double offer, int term, String status) {
+	public Offer(Integer license, Integer customerid, double offer, int term, String status) {
 		super();
 		this.setLicense(license);
-		this.customerid = customer;
+		this.customerid = customerid;
 		this.offer = offer;
 		this.term = term;
-		this.setStatus(status);
+		this.status = status;
 	}
 	public Offer(Integer license, Integer customerid, double offer, int term, int acceptedBy, String status) {
 		super();

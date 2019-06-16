@@ -39,10 +39,7 @@ import com.mJames.ui.IOUtil;
 		int months = Integer.parseInt(IOUtil.getResponse(
 				"Payments will be made over how many months?", 
 				"[0-9]{0,3}"));
-		cs.updateOffers(new Offer(c.getCars().get(whichCar), 
-				cust, 
-				offer, 
-				months));
+		cs.updateOffers(new Offer(whichCar, cust.getUserNum(), offer, months, "Active"));
 	}
 //	@Override
 //	public void viewCars(Customer c) {
@@ -78,4 +75,51 @@ import com.mJames.ui.IOUtil;
 //					car.getPrice());
 //		}
 //	}
+	@Override
+	public void viewCars(CarLot cl, Customer cust) {
+		
+		Set<Car> custCars = getCustomerCars(cl, cust);
+		
+		if (custCars.size() == 0)
+		{
+			IOUtil.messageToUser("I don't have any cars");
+		}
+		else
+		{
+			IOUtil.messageToUser("I have the following cars");
+			IOUtil.messageToUser("%10s%8s\n", "License #", "Color");
+			
+			for (Car car : custCars)
+			{
+				IOUtil.messageToUser("%10s%8s%8s%8s\n", 
+						car.getLicenseString(), 
+						car.getColor(),
+						car.getMake(),
+						car.getModel());
+			}
+		}
+	}
+	private Set<Car> getCustomerCars(CarLot cl, Customer cust) {
+		Set<Car> custCars = new HashSet<Car>();
+		
+		for (Car c : cl.getCars().values())
+		{
+			if (c.getOwnerID() == cust.getUserNum())
+				custCars.add(c);
+		}
+		return custCars;
+	}
+	
+	public void viewPayments(CarLot cl, Customer cust) {
+		System.out.printf("%8s%8s%8s%8s\n", "License", "Offer", "Term", "Payment");
+		
+		Set<Car> myCars = getCustomerCars(cl, cust);
+		
+		for (Car car : myCars)
+		{
+			System.out.printf("%8s%8.2f%8d%8.2f\n", 
+					car.getLicenseString(), 
+					car.getPrice());
+		}
+	}
 }

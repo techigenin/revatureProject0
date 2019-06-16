@@ -12,8 +12,7 @@ public interface CustomerService {
 
 	void makeOffer(CarLot c, Customer cust);
 
-	void viewCars(Customer c);
-
-	void viewPayments(Customer c);
-
+	void viewCars(CarLot cl, Customer cust);
+	
+	void viewPayments(CarLot cl, Customer cust);
 }
