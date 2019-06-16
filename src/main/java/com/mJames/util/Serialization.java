@@ -1,10 +1,10 @@
-package com.mJames.project1.java.core;
+package com.mJames.util;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 
-import com.mJames.project1.java.core.pojo.CarLot;
+import com.mJames.pojo.CarLot;
 
 public class Serialization {
 	

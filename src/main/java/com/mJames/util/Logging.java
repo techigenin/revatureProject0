@@ -1,4 +1,4 @@
-package com.mJames.project1.java.core;
+package com.mJames.util;
 
 import org.apache.log4j.Logger;
 

@@ -1,4 +1,4 @@
-package com.mJames.project1.java.core.pojo;
+package com.mJames.pojo;
 
 import java.io.Serializable;
 import java.util.HashMap;
@@ -7,8 +7,8 @@ import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
 
-import com.mJames.project1.java.core.Logging;
-import com.mJames.project1.java.core.pojo.User;
+import com.mJames.pojo.User;
+import com.mJames.util.Logging;
 
 public class CarLot extends Logging implements Serializable {
 	private static final long serialVersionUID = 3645297906547539714L;
@@ -20,8 +20,7 @@ public class CarLot extends Logging implements Serializable {
 	private Map<Integer, Car> cars;
 	private Set<Integer> knownLicenses;
 	private Map<Integer, User> users;
-	private Set<Offer> openOffers;
-	private Set<Offer> closedOffers;
+	private Set<Offer> offers;
 		
 	public CarLot() 
 	{
@@ -29,7 +28,7 @@ public class CarLot extends Logging implements Serializable {
 		users = new HashMap<Integer, User>();
 		cars = new HashMap<Integer, Car>();
 		knownLicenses = new HashSet<Integer>();
-		openOffers = new HashSet<Offer>();
+		offers = new HashSet<Offer>();
 	}
 	public CarLot(Map<Integer, Car> cars, Map<Integer, User> users, Scanner sc) {
 		super();
@@ -46,11 +45,11 @@ public class CarLot extends Logging implements Serializable {
 	
 	public Car addCar(Car car)
 	{
-		String idNum = ""  + car.getIdNumber();
+		String idNum = ""  + car.getLotID();
 		String license = "" + car.getLicenseNumber();
 		Logging.infoLog("Car " + idNum + ", license " + license + ", created.");
 		
-		cars.put(car.getIdNumber(), car);
+		cars.put(car.getLotID(), car);
 		
 		return car;
 	}
@@ -66,8 +65,8 @@ public class CarLot extends Logging implements Serializable {
 			}
 		}
 		
-		cars.remove(car.getIdNumber());
-		int idNum = car.getIdNumber();
+		cars.remove(car.getLotID());
+		int idNum = car.getLotID();
 		
 		Logging.infoLog("Car " + idNum + ", license " + license + ", removed.");
 		
@@ -86,31 +85,13 @@ public class CarLot extends Logging implements Serializable {
 	public Map<Integer, User> getUsers() {
 		return users;
 	}
-	public Set<Offer> getOpenOffers() {
-		return openOffers;
-	}
-	public Set<Offer> getClosedOffers() {
-		return closedOffers;
+	public Set<Offer> getOffers() {
+		return offers;
 	}
 	public Set<Integer> getKnownLicenses() {
 		return knownLicenses;
 	}
-	public Set<Offer> getOpenOffers(int cID) {
-		Set<Offer> carOffers = new HashSet<Offer>();
-		
-		for (Offer o : openOffers)
-		{
-			if (o.getCar().getIdNumber() == cID)
-				carOffers.add(o);
-		}
-		
-		return carOffers;
-	}
-	public void addClosedOffer(Offer o) {
-		if (closedOffers == null)
-			closedOffers = new HashSet<Offer>(0);
-		closedOffers.add(o);
-	}
+
 	
 	public User setCurrentUser(User u)
 	{
@@ -123,7 +104,7 @@ public class CarLot extends Logging implements Serializable {
 	public User addUser(User user)
 	{
 		String userNum = ""  + user.getUserNum();
-		String userName = user.getName();
+		String userName = user.getFirstName();
 		Logging.infoLog("New User " + userNum + ", " + userName + " created.");
 		
 		users.put(user.getUserNum(), user);
@@ -133,4 +114,5 @@ public class CarLot extends Logging implements Serializable {
 		Logging.infoLog("Removing user number " + user.getUserNum() + ".");
 		users.remove(user.getUserNum());
 	}
+
 }

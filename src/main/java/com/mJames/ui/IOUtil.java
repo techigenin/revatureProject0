@@ -1,4 +1,4 @@
-package com.mJames.project1.java.core.ui;
+package com.mJames.ui;
 
 import java.util.Scanner;
 

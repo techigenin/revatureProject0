@@ -1,4 +1,4 @@
-package com.mJames.project1.java.core.pojo;
+package com.mJames.pojo;
 
 import java.io.Serializable;
 
@@ -10,8 +10,10 @@ public class Employee extends User implements Serializable{
 		super();
 	}
 	
-	public Employee(int userNum, String name, String password, CarLot cLot) {
-		super(userNum, name, password, cLot);
+	public Employee(int userNum, String firstName, String lastName, String password) {
+		super(userNum, firstName, lastName, password);
 	}
+	
+	// TODO - Consider removing Employee and Customer, since they really are just users
 
 }
