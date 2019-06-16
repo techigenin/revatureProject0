@@ -40,9 +40,7 @@ public interface CarLotService {
 
 	void updateOffers(Offer newOffer);
 
-	void removeSingleOffer(Offer oldOffer);
-
-	void removeAllOffers(Car car);
+	void rejectSingleOffer(Offer oldOffer);
 
 	void listUsers();
 

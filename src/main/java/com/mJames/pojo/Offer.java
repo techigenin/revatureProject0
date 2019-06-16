@@ -5,7 +5,7 @@ import java.io.Serializable;
 public class Offer implements Serializable{
 	private static final long serialVersionUID = 7260038008843297384L;
 	private Integer license;
-	private Customer customer;
+	private Integer customerid;
 	private double offer;
 	private int term;
 	private int acceptedBy;
@@ -15,26 +15,40 @@ public class Offer implements Serializable{
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public Offer(Integer license, Customer customer, double offer, int term, String status) {
+	public Offer(Integer license, Integer customer, double offer, int term, String status) {
 		super();
 		this.setLicense(license);
-		this.customer = customer;
+		this.customerid = customer;
 		this.offer = offer;
 		this.term = term;
 		this.setStatus(status);
 	}
-	public Offer(Integer license, Customer cust)
+	public Offer(Integer license, Integer customerid, double offer, int term, int acceptedBy, String status) {
+		super();
+		this.license = license;
+		this.customerid = customerid;
+		this.offer = offer;
+		this.term = term;
+		this.acceptedBy = acceptedBy;
+		this.status = status;
+	}
+	public Offer(Integer license, Integer cust)
 	{
 		super();
 		this.setLicense(license);
-		this.customer = cust;
+		this.customerid = cust;
 		this.offer = 0.00;
 		this.term = 0;
 	}
 	
-
-	public Customer getCustomer() {
-		return customer;
+	public Integer getLicense() {
+		return license;
+	}
+	public void setLicense(Integer license) {
+		this.license = license;
+	}
+	public Integer getCustomerId() {
+		return customerid;
 	}
 	public double getOffer() {
 		return offer;
@@ -56,11 +70,5 @@ public class Offer implements Serializable{
 	}
 	public void setStatus(String status) {
 		this.status = status;
-	}
-	public Integer getLicense() {
-		return license;
-	}
-	public void setLicense(Integer license) {
-		this.license = license;
 	}
 }

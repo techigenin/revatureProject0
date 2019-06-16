@@ -37,16 +37,20 @@ public class UserServiceImplConsole implements UserService {
 		ArrayList<Car> cars = getListOfCars(c);
 		if (cars.size() > 0)
 		{	
-			IOUtil.messageToUser("%-6s%-11s%-8s%-16s\n", 
+			IOUtil.messageToUser("%-6s%-11s%-11s%-11s%-8s%-16s\n", 
 					"ID", 
 					"Color", 
+					"Make", 
+					"Model",
 					"Price($)", 
 					" License Number");
 			for (Car car : cars)
 			{
-				IOUtil.messageToUser("%6d%11s%9.2f%14s\n", 
+				IOUtil.messageToUser("%6d%11s%11s%11s%8.2f%16s\n", 
 						car.getLotID(), 
 						car.getColor(), 
+						car.getMake(),
+						car.getModel(),
 						car.getPrice(), 
 						car.getLicenseString());
 			}

@@ -146,9 +146,9 @@ public class CarLotServiceImplConsole implements CarLotService {
 				case 10:
 					us.printListOfCarsWithHeading(cl);
 					break;
-				case -1:
-					es.removeUser(cl, emp);
-					break;
+//				case -1:
+//					es.removeUser(cl, emp);
+//					break;
 				case 0:
 					loggedIn = false;
 					break;
@@ -250,16 +250,28 @@ public class CarLotServiceImplConsole implements CarLotService {
 	@Override
 	public void removeCar(Car car)
 	{
-		removeAllOffers(car);
-		cl.removeCar(car.getLicenseNumber());
+		rejectAllOffers(car);
+		
+		setCarStatus(car, "Removed");
 		Serialization.Serialize(cl);
+	}
+
+	private void setCarStatus(Car car, String status) {
+		for (Car c : cl.getCars().values())
+		{
+			if (c.equals(car))
+			{
+				c.setStatus(status);
+			}
+		}
 	}
 	@Override
 	public User addUser(User user)
 	{
-		IOUtil.messageToUser("User %d, %s, added%n", 
+		IOUtil.messageToUser("User %d, %s %s, added%n", 
 				user.getUserNum(), 
-				user.getFirstName());
+				user.getFirstName(),
+				user.getLastName());
 		
 		cl.addUser(user);
 		Serialization.Serialize(cl);
@@ -325,7 +337,7 @@ public class CarLotServiceImplConsole implements CarLotService {
 		
 		for(Offer o : cl.getOffers())
 		{
-			if (o.getCustomer().getUserNum() == userNum)
+			if (o.get == userNum)
 			{
 				userOffers.add(o);
 				good = true;
@@ -417,7 +429,7 @@ public class CarLotServiceImplConsole implements CarLotService {
 			System.out.println("Car does not exist.");
 	}
 	@Override
-	public void removeSingleOffer(Offer oldOffer)
+	public void rejectSingleOffer(Offer oldOffer)
 	{
 		for (Offer o : cl.getOffers())
 		{
@@ -435,22 +447,17 @@ public class CarLotServiceImplConsole implements CarLotService {
 		
 		System.out.println("No such offer exists");
 	}
-	@Override
-	public void removeAllOffers(Car car)
+	private void rejectAllOffers(Car car)
 	{
-		Set<Offer> matching = new HashSet<Offer>();
-		
 		for (Offer o : cl.getOffers())
 		{
-			if (o.getCar().equals(car))
-				matching.add(o);
+			if (o.getLicense() == car.getLicenseNumber())
+				o.setStatus("Rejected");
 		}
-		
-		cl.getOffers().removeAll(matching);
 		
 		System.out.println("All remaining offers for " 
 				+ car.getLotID() 
-				+ " have been removed.");
+				+ " have been rejected.");
 	}
 	
 	@Override
@@ -478,7 +485,7 @@ public class CarLotServiceImplConsole implements CarLotService {
 			for(Integer i : employees)
 			{
 				User u = cl.getUsers().get(i);
-				System.out.printf("%8d%15s\n", u.getUserNum(), u.getFirstName());
+				System.out.printf("%8d%25s\n", u.getUserNum(), u.getFirstName() + " " + u.getLastName());
 			}
 		}
 		
@@ -488,7 +495,7 @@ public class CarLotServiceImplConsole implements CarLotService {
 			for(Integer i : customers)
 			{
 				User u = cl.getUsers().get(i);
-				System.out.printf("%8d%15s\n", u.getUserNum(), u.getFirstName());
+				System.out.printf("%8d%25s\n", u.getUserNum(), u.getFirstName() + " " + u.getLastName());
 			}
 		}
 	}

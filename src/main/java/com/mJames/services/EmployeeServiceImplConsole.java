@@ -76,7 +76,7 @@ public class EmployeeServiceImplConsole extends UserServiceImplConsole implement
 		
 		Employee newEmployee = new Employee(uNum, firstName, lastName, password);
 		
-		c.addUser(newEmployee);
+		cs.addUser(newEmployee);
 		
 		return newEmployee;
 	}
@@ -118,7 +118,7 @@ public class EmployeeServiceImplConsole extends UserServiceImplConsole implement
 		String model = IOUtil.getResponse("Please enter the model", "[A-Za-z]{0,20}");
 		Integer year = Integer.parseInt(IOUtil.getResponse("Please enter a year of release:", "[0-9]{0,5}"));
 		
-		cs.addCar(new Car(cNum, price, color, make, model, year, c.getKnownLicenses()));
+		cs.addCar(new Car(cNum, price, color, make, model, year, "Active", c.getKnownLicenses()));
 	}	
 	@Override
 	public void removeCar(CarLot c)
@@ -140,7 +140,7 @@ public class EmployeeServiceImplConsole extends UserServiceImplConsole implement
 				
 				if (c.getCars().keySet().contains(intResp))
 				{
-					cs.removeCar(c.getCars().remove(intResp));
+					cs.removeCar(c.getCars().get(intResp));
 					System.out.println("Car " + intResp + " removed.");
 					good = true;
 				}
@@ -198,7 +198,7 @@ public class EmployeeServiceImplConsole extends UserServiceImplConsole implement
 		int[] nums = offerBusiness(c);
 		
 		if (nums[1] != -1)
-			cs.removeSingleOffer(new Offer(c.getCars().get(nums[0]), (Customer)c.getUsers().get(nums[1])));
+			cs.rejectSingleOffer(new Offer(c.getCars().get(nums[0]), (Customer)c.getUsers().get(nums[1])));
 	}
 	@Override
 	public void viewPayments(CarLot c) {
@@ -248,6 +248,7 @@ public class EmployeeServiceImplConsole extends UserServiceImplConsole implement
 	}
 	
 	// Returns the car number in int[0] and the customer number in int[1]
+	// TODO fix this mess. I hate how this works currently.
 	private int[] offerBusiness(CarLot c) {
 		CarLotService cs = new CarLotServiceImplConsole(c);
 		int[] nums = new int[2]; // 0 = nums[0], 1 = nums[1] 
