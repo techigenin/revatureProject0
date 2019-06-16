@@ -45,4 +45,6 @@ public interface CarLotService {
 	void listUsers();
 
 	void addCustomer(CarLot c);
+
+	void acceptOffer(Offer o);
 }

@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
-import java.util.Scanner;
 import java.util.Set;
 
 import com.mJames.pojo.User;
@@ -21,6 +20,7 @@ public class CarLot extends Logging implements Serializable {
 	private Set<Integer> knownLicenses;
 	private Map<Integer, User> users;
 	private Set<Offer> offers;
+	private Set<Payment> payments;
 		
 	public CarLot() 
 	{
@@ -30,7 +30,7 @@ public class CarLot extends Logging implements Serializable {
 		knownLicenses = new HashSet<Integer>();
 		offers = new HashSet<Offer>();
 	}
-	public CarLot(Map<Integer, Car> cars, Map<Integer, User> users, Scanner sc) {
+	public CarLot(Map<Integer, Car> cars, Map<Integer, User> users) {
 		super();
 		this.cars = cars;
 		this.users = users;
@@ -114,5 +114,10 @@ public class CarLot extends Logging implements Serializable {
 		Logging.infoLog("Removing user number " + user.getUserNum() + ".");
 		users.remove(user.getUserNum());
 	}
-
+	public Set<Payment> getPayments() {
+		return payments;
+	}
+	public void setPayments(Set<Payment> payments) {
+		this.payments = payments;
+	}
 }

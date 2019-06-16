@@ -1,8 +1,6 @@
 package com.mJames.services;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Set;
 
 import com.mJames.pojo.Car;
 import com.mJames.pojo.CarLot;
@@ -15,21 +13,7 @@ public class UserServiceImplConsole implements UserService {
 	{
 			return u.checkPassword(pWord);	
 	}
-	@Override
-	public HashMap<Integer, String> getCommands(User u) { return new HashMap<Integer, String>();} 
-	@Override
-	public String commandNumString(User u)
-	{
-		String ret = "[";
-		Set<Integer> cNums = getCommands(u).keySet();
-		
-		for (Integer s : cNums)
-		{
-			ret += s + "";
-		}
-		
-		return ret + "\\-]{0,2}";
-	}	
+
 	@Override
 	public void printListOfCarsWithHeading(CarLot c)
 	{

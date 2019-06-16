@@ -12,6 +12,7 @@ import com.mJames.pojo.Employee;
 import com.mJames.pojo.Offer;
 import com.mJames.pojo.User;
 import com.mJames.ui.IOUtil;
+import com.mJames.util.Logging;
 import com.mJames.util.Serialization;
 
 public class EmployeeServiceImplConsole extends UserServiceImplConsole implements EmployeeService {
@@ -164,28 +165,34 @@ public class EmployeeServiceImplConsole extends UserServiceImplConsole implement
 		 */
 	}
 	@Override
-	public void acceptOffer(CarLot c) {
+	public void acceptOffer(CarLot c, Employee e) {
 		CarLotService cs = new CarLotServiceImplConsole(c);
 		int[] nums = offerBusiness(c);
 		
-		if (nums[1] != -1)
+		int carNum = nums[0];
+		int custNum = nums[1];
+		
+		if (custNum != -1)
 		{
 			// Add the car to the customers inventory
-			Customer cust = (Customer) c.getUsers().get(nums[1]);
-			Car car = c.getCars().get(nums[0]);
-			Set<Offer> offers = c.getOpenOffers(nums[0]);
+			Customer cust = (Customer) c.getUsers().get(custNum);
+			Car car = c.getCars().get(carNum);
+			Set<Offer> offers = c.getOffers();
 			
 			for (Offer o : offers)
 			{
-				if (o.getCustomer().getUserNum() == nums[1])
+				if (o.getCustomerId() == custNum)
 				{
-					cust.addCar(new Car(car, o.getOffer(), o.getTerm()));
-					c.addClosedOffer(o);
+					car.setOwnerID(cust.getUserNum());
+					car.setStatus("Sold");
+					
+					cs.acceptOffer(o);
+					o.setAcceptedBy(e.getUserNum());
 					break;
 				}
 			}
 			
-			//TODO Logging
+			Logging.infoLog("Car " + car.getLicenseString() + " has been sold to user number " + cust.getUserNum());
 			
 			// remove the car from the lots inventory
 			cs.removeCar(car);
@@ -194,103 +201,66 @@ public class EmployeeServiceImplConsole extends UserServiceImplConsole implement
 	}
 	@Override
 	public void rejectOffer(CarLot c) {
-		CarLotService cs = new CarLotServiceImplConsole(c);
 		int[] nums = offerBusiness(c);
+		int carNum = nums[0];
+		int custNum = nums[1];
+		Car car = c.getCars().get(carNum);
 		
-		if (nums[1] != -1)
-			cs.rejectSingleOffer(new Offer(c.getCars().get(nums[0]), (Customer)c.getUsers().get(nums[1])));
+		for (Offer o : c.getOffers())
+		{
+			if (o.getCustomerId() == custNum && o.getLicense() == car.getLicenseNumber())
+				o.setStatus("Rejected");
+		}
 	}
 	@Override
 	public void viewPayments(CarLot c) {
-		Set<Offer> offers = c.getClosedOffers();
-		Set<String> offerLic = new HashSet<String>();
-		int licNumber;
-		
-		for (Offer o : offers)
-		{
-			offerLic.add(o.getCar().getLicenseString());
-		}
-		
-		String resp = "";
-
-		System.out.println("Please select a license number");
-		for (Offer o : offers)
-		{
-			System.out.printf("%8s%8s%8s%8s\n", "License", "Offer", "Term", "Payment");
-			System.out.printf("%8s%8.2f%8d%8.2f", 
-						o.getCar().getLicenseString(), 
-						o.getOffer(), 
-						o.getTerm(), 
-						o.getPayment());
-		}
-		while(!offerLic.contains(resp))
-		{
-			resp = IOUtil.getResponse("", "[A-F0-9\\s]{6,8}");
-		}
-		
-		resp = resp.split(" ")[0] + resp.split(" ")[1];
-		
-		licNumber = Integer.parseInt(resp, 16);
-		
-		System.out.println("Payments on the vehicle are: ");
-		for (Offer o : c.getClosedOffers())
-		{
-			if (o.getCar().getLicenseNumber() == licNumber)
-			{
-				System.out.printf("%8s%8s%8s%8s\n", "License", "Offer", "Term", "Payment");
-				System.out.printf("%8s%8.2f%8d%8.2f\n", 
-							o.getCar().getLicenseString(), 
-							o.getOffer(), 
-							o.getTerm(), 
-							o.getPayment());
-			}
-		}
+		// TODO This method.  After adding the ability for users to make payments
 	}
-	
-	// Returns the car number in int[0] and the customer number in int[1]
-	// TODO fix this mess. I hate how this works currently.
+
 	private int[] offerBusiness(CarLot c) {
 		CarLotService cs = new CarLotServiceImplConsole(c);
-		int[] nums = new int[2]; // 0 = nums[0], 1 = nums[1] 
-		nums[0] = -1;
-		nums[1] = -1;
+		 // Customer
+		int carNum = -1;
+		int custNum = -1;
 		
 		// List offers
 		System.out.println("Please select a car");
-		getListOfCars(c);
 		
 		// Accept one of the selections as input
-		nums[0] = -1;
-		
-		while (!c.getCars().containsKey(nums[0]) 
-				&& !(nums[0] > c.getCUSTOMERMAX()))
+		while (!c.getCars().containsKey(carNum))
 		{
-			nums[0] = Integer.parseInt(IOUtil.getResponse("","[0-9]{0,6}"));
+			carNum = Integer.parseInt(IOUtil.getResponse("","[0-9]{0,6}"));
 		}
 		
 		// List offers on the car, and select one
-		cs.printCarOffers(nums[0]);
+		cs.printCarOffers(carNum);
 		
-		Set<Offer> offerSet = c.getOpenOffers(nums[0]);
-		if(offerSet.size() != 0)
+		OfferService os = new OfferServiceImplConsole();
+		
+		Set<Offer> activeOffers = os.getActiveOffers(c.getOffers());
+		if(activeOffers.size() != 0)
 		{
 			Set<Integer> cNums = new HashSet<Integer>();
-			for (Offer o : offerSet)
+			for (Offer o : activeOffers)
 			{
-				cNums.add(o.getCustomer().getUserNum());
+				cNums.add(o.getCustomerId());
 			}
-			nums[1] = -1;
 			
-			while (!cNums.contains(nums[1]) 
-					&& (nums[1] < c.getEMPLOYEENUMMAX() 
-					|| nums[1] > c.getCUSTOMERMAX()))
+			while (!cNums.contains(custNum) 
+					&& (custNum < c.getEMPLOYEENUMMAX() 
+					|| custNum > c.getCUSTOMERMAX()))
 			{
-				nums[1] = Integer.parseInt(
+				custNum = Integer.parseInt(
 						IOUtil.getResponse("Please select a customer", "[0-9]{0,6}"));
 			}
 		}	
 		else
 			System.out.println("There are no offers on this car.");
+		
+		int[] nums = new int[2]; // 0 = carNum, 1 = custNum 
+		nums[0] = carNum; // Car
+		nums[1] = custNum; // Cust
+		
 		return nums;
 	}
 }

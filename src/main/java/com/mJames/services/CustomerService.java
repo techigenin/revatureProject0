@@ -9,6 +9,8 @@ import com.mJames.pojo.User;
 public interface CustomerService {
 
 	HashMap<Integer, String> getCommands(User c);
+	
+	public String commandNumString(Customer c);
 
 	void makeOffer(CarLot c, Customer cust);
 

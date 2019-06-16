@@ -13,19 +13,31 @@ import com.mJames.ui.IOUtil;
 
 	public class CustomerServiceImplConsole extends UserServiceImplConsole implements CustomerService{
 		
-		@Override
 	public HashMap<Integer, String> getCommands(User c) {
-			HashMap<Integer, String> commands = new HashMap<Integer, String>();
-			
-			commands.put(1, "1. View cars on lot");
-			commands.put(2, "2. View current offers");
-			commands.put(3, "3. Make offer");
-			commands.put(4, "4. View my cars");
-			commands.put(5, "5. View remaining payments");
-			commands.put(0, "0. Logout");
-			
-			return commands;
+		HashMap<Integer, String> commands = new HashMap<Integer, String>();
+		
+		commands.put(1, "1. View cars on lot");
+		commands.put(2, "2. View current offers");
+		commands.put(3, "3. Make offer");
+		commands.put(4, "4. View my cars");
+		commands.put(5, "5. View remaining payments");
+		commands.put(0, "0. Logout");
+		
+		return commands;
+	}
+	@Override
+	public String commandNumString(Customer c)
+	{
+		String ret = "[";
+		Set<Integer> cNums = getCommands(c).keySet();
+		
+		for (Integer s : cNums)
+		{
+			ret += s + "";
 		}
+		
+		return ret + "\\-]{0,2}";
+	}	
 	@Override
 	public void makeOffer(CarLot c, Customer cust)
 	{
@@ -39,42 +51,12 @@ import com.mJames.ui.IOUtil;
 		int months = Integer.parseInt(IOUtil.getResponse(
 				"Payments will be made over how many months?", 
 				"[0-9]{0,3}"));
-		cs.updateOffers(new Offer(whichCar, cust.getUserNum(), offer, months, "Active"));
+		
+		
+		
+		cs.updateOffers(new Offer(c.getCars().get(whichCar).getLicenseNumber(), cust.getUserNum(), offer, months, "Active"));
 	}
-//	@Override
-//	public void viewCars(Customer c) {
-//		System.out.println("I have the following cars");
-//		System.out.printf("%10s%8s\n", "License #", "Color");
-//		
-//		Set<Car> myCars = getCustomerCars(c);
-//		
-//		if (myCars.size() == 0)
-//		{
-//			System.out.println("I don't have any cars");
-//		}
-//		else
-//		{
-//			for (Car car : myCars)
-//			{
-//				System.out.printf("%10s%8s\n", 
-//						car.getLicenseString(), 
-//						car.getColor());
-//			}
-//		}
-//	}
-//	@Override
-//	public void viewPayments(Customer cust, CarLot cl) {
-//		System.out.printf("%8s%8s%8s%8s\n", "License", "Offer", "Term", "Payment");
-//		
-//		Set<Car> myCars = cust.getCustomerCars(cust, cl);
-//		
-//		for (Car car : myCars)
-//		{
-//			System.out.printf("%8s%8.2f%8d%8.2f\n", 
-//					car.getLicenseString(), 
-//					car.getPrice());
-//		}
-//	}
+
 	@Override
 	public void viewCars(CarLot cl, Customer cust) {
 		
@@ -104,7 +86,8 @@ import com.mJames.ui.IOUtil;
 		
 		for (Car c : cl.getCars().values())
 		{
-			if (c.getOwnerID() == cust.getUserNum())
+			if (c.getOwnerID() != null &&
+					c.getOwnerID() == cust.getUserNum())
 				custCars.add(c);
 		}
 		return custCars;

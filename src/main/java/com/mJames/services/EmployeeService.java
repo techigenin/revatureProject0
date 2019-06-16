@@ -25,7 +25,7 @@ public interface EmployeeService {
 
 	void viewActiveOffers(CarLot c);
 
-	void acceptOffer(CarLot c);
+	void acceptOffer(CarLot c, Employee e);
 
 	void rejectOffer(CarLot c);
 

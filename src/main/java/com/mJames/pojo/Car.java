@@ -12,7 +12,7 @@ public class Car implements Serializable{
 	private int licenseNumber; // Universally unique Identifier
 	private double price;
 	private String color;
-	private int ownerID;
+	private Integer ownerID;
 	private String make;
 	private String model;
 	private String status;
@@ -22,7 +22,7 @@ public class Car implements Serializable{
 		super();
 	}
 	
-	public Car(int lotID, double price, String color, String make, String model, int ownerID, String status, Set<Integer> licenses) {
+	public Car(int lotID, double price, String color, String make, String model, Integer ownerID, String status, Set<Integer> licenses) {
 		super();
 		
 		int lNumber = generateLicenseNumber();
@@ -39,7 +39,7 @@ public class Car implements Serializable{
 		this.status = status;
 	}
 	
-	public Car(int lotID, int licenseNumber, double price, String color, int ownerID, String make, String model) {
+	public Car(int lotID, int licenseNumber, double price, String color, Integer ownerID, String make, String model) {
 		super();
 		this.lotID = lotID;
 		this.licenseNumber = licenseNumber;
@@ -98,11 +98,11 @@ public class Car implements Serializable{
 		this.price = price;
 	}
 
-	public int getOwnerID() {
+	public Integer getOwnerID() {
 		return ownerID;
 	}
 
-	public void setOwnerID(int ownerID) {
+	public void setOwnerID(Integer ownerID) {
 		this.ownerID = ownerID;
 	}
 

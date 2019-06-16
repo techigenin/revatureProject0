@@ -79,18 +79,14 @@ public class DriverSerializable{
 		carLot = new CarLot();
 		cs = new CarLotServiceImplConsole(carLot);
 		// Add the super user
-		carLot.addUser(new Employee(0, "Jean Luc", "Picard", carLot));
+		carLot.addUser(new Employee(0, "Jean Luc", "Picard", "makeItSo"));
 
-		String[] colors = {"green", "blue", "red", "yellow", "orange"};
-		
 		// Add a couple starter cars
-		for (int i = 0; i < 5; i++)
-		{
-			int cNum = cs.firstFree(carLot.getCUSTOMERMAX() + 1);
-			Car newCar = new Car(cNum, 2000, colors[i], carLot.getKnownLicenses());
-			carLot.getCars().put(cNum, newCar);
-			carLot.getKnownLicenses().add(newCar.getLicenseNumber());
-		}
+		carLot.addCar(new Car(cs.firstFree(carLot.getCUSTOMERMAX() + 1), 1500.00, "Silver", "Honda", "Civic", null, "Active", carLot.getKnownLicenses()));
+		carLot.addCar(new Car(cs.firstFree(carLot.getCUSTOMERMAX() + 1), 9000.00, "Silver", "Mini", "Cooper", null, "Active", carLot.getKnownLicenses()));
+		carLot.addCar(new Car(cs.firstFree(carLot.getCUSTOMERMAX() + 1), 750.00, "White", "Ford", "F-250", null, "Active", carLot.getKnownLicenses()));
+		carLot.addCar(new Car(cs.firstFree(carLot.getCUSTOMERMAX() + 1), 12000.00, "Red", "Dodge", "Ram", null, "Active", carLot.getKnownLicenses()));
+		carLot.addCar(new Car(cs.firstFree(carLot.getCUSTOMERMAX() + 1), 8000.00, "Black", "Jeep", "Wrangler", null, "Active", carLot.getKnownLicenses()));
 		return carLot;
 	}
 }

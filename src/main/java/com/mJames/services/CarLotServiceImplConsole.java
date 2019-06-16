@@ -120,7 +120,7 @@ public class CarLotServiceImplConsole implements CarLotService {
 					es.viewActiveOffers(cl);
 					break;
 				case 2:
-					es.acceptOffer(cl);
+					es.acceptOffer(cl, emp);
 					break;
 				case 3:
 					es.rejectOffer(cl);
@@ -161,7 +161,7 @@ public class CarLotServiceImplConsole implements CarLotService {
 				Customer cust = (Customer) cl.getCurrentUser();
 				
 				printChoices(cs.getCommands(cust));
-				String response = IOUtil.getResponse("", us.commandNumString(cust));
+				String response = IOUtil.getResponse("", cs.commandNumString(cust));
 				
 				switch(Integer.parseInt(response))
 				{
@@ -327,14 +327,16 @@ public class CarLotServiceImplConsole implements CarLotService {
 		}
 		
 		System.out.println("User has the following offers");
-		System.out.printf("%-6s%-10s%-9s%-9s%-9s\n", "ID", "Color", "Price", "Offer", "Term");
+		System.out.printf("%-6s%-10s%-9s%-9s%-9s\n", "ID", "Color", "Make", "Model", "Price", "Offer", "Term");
 		
 		for (Offer o: userOffers)
 		{
 			Car c = getCarByLicense(o.getLicense());
-			System.out.printf("%6d%10s%9.2f%9.2f%9d\n", 
+			System.out.printf("%6d%10s%10s%10s%9.2f%9.2f%9d\n", 
 					c.getLotID(), 
 					c.getColor(), 
+					c.getMake(),
+					c.getModel(),
 					c.getPrice(), 
 					o.getOffer(),
 					o.getTerm());
@@ -514,5 +516,19 @@ public class CarLotServiceImplConsole implements CarLotService {
 				return c;
 		}
 		return null;
+	}
+
+	@Override
+	public void acceptOffer(Offer offer) {
+		for (Offer o : cl.getOffers())
+		{
+			if (o.getLicense() == offer.getLicense()) // Same Car
+			{
+				if (o.getCustomerId() == offer.getCustomerId()) // Same Customer
+					o.setStatus("Accepted");
+				else
+					o.setStatus("Rejected");
+			}
+		}
 	}
 }

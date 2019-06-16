@@ -8,7 +8,7 @@ public class Offer implements Serializable{
 	private Integer customerid;
 	private double offer;
 	private int term;
-	private int acceptedBy;
+	private Integer acceptedBy;
 	private String status;
 	
 	public Offer() {
@@ -59,10 +59,10 @@ public class Offer implements Serializable{
 	public double getPayment(){
 		return offer/term;
 	}
-	public int getAcceptedBy() {
+	public Integer getAcceptedBy() {
 		return acceptedBy;
 	}
-	public void setAcceptedBy(int acceptedBy) {
+	public void setAcceptedBy(Integer acceptedBy) {
 		this.acceptedBy = acceptedBy;
 	}
 	public String getStatus() {

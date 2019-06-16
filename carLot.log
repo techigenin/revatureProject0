@@ -1,199 +1,42 @@
-2019-06-12 23:51:53 INFO  root:9 - Application Started
-2019-06-12 23:51:53 INFO  root:9 - Opening file
-2019-06-12 23:51:53 ERROR root:19 - [Ljava.lang.StackTraceElement;@5c29bfd
-2019-06-12 23:52:31 INFO  root:9 - Saving file
-2019-06-12 23:52:31 INFO  root:9 - Saved Successfully
-2019-06-12 23:52:31 INFO  root:9 - Application Ended
-2019-06-12 23:53:26 INFO  root:9 - Application Started
-2019-06-12 23:53:26 INFO  root:9 - Opening file
-2019-06-12 23:53:26 WARN  root:14 - Open failed, creating new file
-2019-06-12 23:53:26 INFO  root:9 - New User0, Jean Luc created.
-2019-06-12 23:56:25 INFO  root:9 - Application Started
-2019-06-12 23:56:25 INFO  root:9 - Opening file
-2019-06-12 23:56:25 WARN  root:14 - Open failed, creating new file
-2019-06-12 23:56:25 INFO  root:9 - New User 0, Jean Luc created.
-2019-06-12 23:56:59 INFO  root:9 - Application Started
-2019-06-12 23:56:59 INFO  root:9 - Opening file
-2019-06-12 23:56:59 WARN  root:14 - Open failed, creating new file
-2019-06-12 23:56:59 INFO  root:9 - New User 0, Jean Luc created.
-2019-06-12 23:58:04 INFO  root:9 - Application Started
-2019-06-12 23:58:04 INFO  root:9 - Opening file
-2019-06-12 23:58:04 WARN  root:14 - Open failed, creating new file
-2019-06-12 23:58:04 INFO  root:9 - New User 0, Jean Luc created.
-2019-06-12 23:59:34 INFO  root:9 - Application Started
-2019-06-12 23:59:34 INFO  root:9 - Opening file
-2019-06-12 23:59:34 WARN  root:14 - Open failed, creating new file
-2019-06-12 23:59:34 INFO  root:9 - New User 0, Jean Luc created.
-2019-06-13 00:00:22 INFO  root:9 - Application Started
-2019-06-13 00:00:22 INFO  root:9 - Opening file
-2019-06-13 00:00:22 WARN  root:14 - Open failed, creating new file
-2019-06-13 00:00:22 INFO  root:9 - New User 0, Jean Luc created.
-2019-06-13 00:01:13 INFO  root:9 - Application Started
-2019-06-13 00:01:13 INFO  root:9 - Opening file
-2019-06-13 00:01:13 WARN  root:14 - Open failed, creating new file
-2019-06-13 00:01:13 INFO  root:9 - New User 0, Jean Luc created.
-2019-06-13 00:01:51 INFO  root:9 - Application Started
-2019-06-13 00:01:51 INFO  root:9 - Opening file
-2019-06-13 00:01:51 WARN  root:14 - Open failed, creating new file
-2019-06-13 00:01:51 INFO  root:9 - New User 0, Jean Luc created.
-2019-06-13 00:02:32 INFO  root:9 - Application Started
-2019-06-13 00:02:32 INFO  root:9 - Opening file
-2019-06-13 00:02:32 WARN  root:14 - Open failed, creating new file
-2019-06-13 00:02:32 INFO  root:9 - New User 0, Jean Luc created.
-2019-06-13 00:04:11 INFO  root:9 - Application Started
-2019-06-13 00:04:11 INFO  root:9 - Opening file
-2019-06-13 00:04:11 WARN  root:14 - Open failed, creating new file
-2019-06-13 00:04:11 INFO  root:9 - New User 0, Jean Luc created.
-2019-06-13 00:05:29 INFO  root:9 - Application Started
-2019-06-13 00:05:29 INFO  root:9 - Opening file
-2019-06-13 00:05:29 WARN  root:14 - Open failed, creating new file
-2019-06-13 00:05:29 INFO  root:9 - New User 0, Jean Luc created.
-2019-06-13 00:06:31 INFO  root:9 - Application Started
-2019-06-13 00:06:31 INFO  root:9 - Opening file
-2019-06-13 00:06:31 WARN  root:14 - Open failed, creating new file
-2019-06-13 00:06:31 INFO  root:9 - New User 0, Jean Luc created.
-2019-06-13 00:08:25 INFO  root:9 - Application Started
-2019-06-13 00:08:25 INFO  root:9 - Opening file
-2019-06-13 00:08:25 WARN  root:14 - Open failed, creating new file
-2019-06-13 00:08:25 INFO  root:9 - New User 0, Jean Luc created.
-2019-06-13 00:10:03 INFO  root:9 - Application Started
-2019-06-13 00:10:03 INFO  root:9 - Opening file
-2019-06-13 00:10:03 WARN  root:14 - Open failed, creating new file
-2019-06-13 00:10:03 INFO  root:9 - New User 0, Jean Luc created.
-2019-06-13 00:16:02 INFO  root:9 - Application Started
-2019-06-13 00:16:02 INFO  root:9 - Opening file
-2019-06-13 00:16:02 WARN  root:14 - Open failed, creating new file
-2019-06-13 00:16:02 INFO  root:9 - New User 0, Jean Luc created.
-2019-06-13 00:16:43 INFO  root:9 - New User 1, Will created.
-2019-06-13 00:16:56 INFO  root:9 - New User 199, Billy created.
-2019-06-13 00:17:25 INFO  root:9 - New User 199, Wally created.
-2019-06-13 00:17:37 INFO  root:9 - New User 2, Dianna created.
-2019-06-13 00:19:54 INFO  root:9 - Application Started
-2019-06-13 00:19:54 INFO  root:9 - Opening file
-2019-06-13 00:19:54 WARN  root:14 - Open failed, creating new file
-2019-06-13 00:19:54 INFO  root:9 - New User 0, Jean Luc created.
-2019-06-13 00:20:09 INFO  root:9 - New User 100, Billy created.
-2019-06-13 00:20:24 INFO  root:9 - New User 101, Wally created.
-2019-06-13 00:20:34 INFO  root:9 - Saving file
-2019-06-13 00:20:34 INFO  root:9 - Saved Successfully
-2019-06-13 00:20:34 INFO  root:9 - Application Ended
-2019-06-13 00:20:52 INFO  root:9 - Application Started
-2019-06-13 00:20:52 INFO  root:9 - Opening file
-2019-06-13 00:20:52 INFO  root:9 - Opened Successfully
-2019-06-13 00:21:06 INFO  root:9 - New User 1, Will created.
-2019-06-13 00:23:10 INFO  root:9 - Saving file
-2019-06-13 00:23:10 INFO  root:9 - Saved Successfully
-2019-06-13 00:23:10 INFO  root:9 - Application Ended
-2019-06-13 00:37:59 INFO  root:9 - Application Started
-2019-06-13 00:37:59 INFO  root:9 - Opening file
-2019-06-13 00:37:59 INFO  root:9 - Opened Successfully
-2019-06-13 00:38:22 INFO  root:9 - Saving file
-2019-06-13 00:38:22 INFO  root:9 - Saved Successfully
-2019-06-13 00:38:55 INFO  root:9 - New User 102, Willy created.
-2019-06-13 00:39:28 INFO  root:9 - Removing user number 102.
-2019-06-13 00:39:28 INFO  root:9 - Saving file
-2019-06-13 00:39:28 INFO  root:9 - Saved Successfully
-2019-06-13 00:40:34 INFO  root:9 - Saving file
-2019-06-13 00:40:34 INFO  root:9 - Saved Successfully
-2019-06-13 00:40:34 INFO  root:9 - Saving file
-2019-06-13 00:40:34 INFO  root:9 - Saved Successfully
-2019-06-13 00:40:39 INFO  root:9 - Saving file
-2019-06-13 00:40:39 INFO  root:9 - Saved Successfully
-2019-06-13 00:40:39 INFO  root:9 - Application Ended
-2019-06-13 08:58:51 INFO  root:9 - Application Started
-2019-06-13 08:58:51 INFO  root:9 - Opening file
-2019-06-13 08:58:51 INFO  root:9 - Opened Successfully
-2019-06-13 09:00:38 INFO  root:9 - Application Started
-2019-06-13 09:00:38 INFO  root:9 - Opening file
-2019-06-13 09:00:38 INFO  root:9 - Opened Successfully
-2019-06-13 09:01:38 INFO  root:9 - Application Started
-2019-06-13 09:01:38 INFO  root:9 - Opening file
-2019-06-13 09:01:38 INFO  root:9 - Opened Successfully
-2019-06-13 09:10:43 INFO  root:9 - Application Started
-2019-06-13 09:10:43 INFO  root:9 - Opening file
-2019-06-13 09:10:43 INFO  root:9 - Opened Successfully
-2019-06-13 09:12:12 INFO  root:9 - Saving file
-2019-06-13 09:12:12 INFO  root:9 - Saved Successfully
-2019-06-13 09:12:12 INFO  root:9 - Application Ended
-2019-06-13 09:12:26 INFO  root:9 - Application Started
-2019-06-13 09:12:26 INFO  root:9 - Opening file
-2019-06-13 09:12:26 WARN  root:14 - Open failed, creating new file
-2019-06-13 09:12:26 INFO  root:9 - New User 0, Jean Luc created.
-2019-06-13 09:12:52 INFO  root:9 - New User 100, Billy created.
-2019-06-13 09:13:29 INFO  root:9 - Saving file
-2019-06-13 09:13:29 INFO  root:9 - Saved Successfully
-2019-06-13 09:13:29 INFO  root:9 - Saving file
-2019-06-13 09:13:29 INFO  root:9 - Saved Successfully
-2019-06-13 09:14:04 INFO  root:9 - Saving file
-2019-06-13 09:14:04 INFO  root:9 - Saved Successfully
-2019-06-13 09:14:04 INFO  root:9 - Application Ended
-2019-06-13 09:24:57 INFO  root:9 - Application Started
-2019-06-13 09:24:57 INFO  root:9 - Opening file
-2019-06-13 09:24:57 INFO  root:9 - Opened Successfully
-2019-06-13 09:27:15 INFO  root:9 - Application Started
-2019-06-13 09:27:15 INFO  root:9 - Opening file
-2019-06-13 09:27:15 INFO  root:9 - Opened Successfully
-2019-06-13 09:33:04 INFO  root:9 - Application Started
-2019-06-13 09:33:04 INFO  root:9 - Opening file
-2019-06-13 09:33:04 INFO  root:9 - Opened Successfully
-2019-06-13 09:34:57 INFO  root:9 - Application Started
-2019-06-13 09:34:57 INFO  root:9 - Opening file
-2019-06-13 09:34:57 INFO  root:9 - Opened Successfully
-2019-06-13 09:35:39 INFO  root:9 - Car 1001, license 10797463, removed.
-2019-06-13 09:35:39 INFO  root:9 - Saving file
-2019-06-13 09:35:39 INFO  root:9 - Saved Successfully
-2019-06-13 09:35:39 INFO  root:9 - Saving file
-2019-06-13 09:35:39 INFO  root:9 - Saved Successfully
-2019-06-13 09:36:02 INFO  root:9 - Saving file
-2019-06-13 09:36:02 INFO  root:9 - Saved Successfully
-2019-06-13 09:36:02 INFO  root:9 - Application Ended
-2019-06-13 09:36:11 INFO  root:9 - Application Started
-2019-06-13 09:36:11 INFO  root:9 - Opening file
-2019-06-13 09:36:12 INFO  root:9 - Opened Successfully
-2019-06-13 09:36:19 INFO  root:9 - New User 101, Dick created.
-2019-06-13 09:36:26 INFO  root:9 - Application Started
-2019-06-13 09:36:26 INFO  root:9 - Opening file
-2019-06-13 09:36:26 INFO  root:9 - Opened Successfully
-2019-06-13 09:36:51 INFO  root:9 - Saving file
-2019-06-13 09:36:51 INFO  root:9 - Saved Successfully
-2019-06-13 09:36:51 INFO  root:9 - Application Ended
-2019-06-13 09:37:11 INFO  root:9 - Application Started
-2019-06-13 09:37:11 INFO  root:9 - Opening file
-2019-06-13 09:37:11 INFO  root:9 - Opened Successfully
-2019-06-13 09:37:18 INFO  root:9 - New User 101, Dick created.
-2019-06-13 09:38:20 INFO  root:9 - Application Started
-2019-06-13 09:38:20 INFO  root:9 - Opening file
-2019-06-13 09:38:20 INFO  root:9 - Opened Successfully
-2019-06-13 09:38:26 INFO  root:9 - New User 101, Dick created.
-2019-06-13 09:38:26 INFO  root:9 - Saving file
-2019-06-13 09:38:26 INFO  root:9 - Saved Successfully
-2019-06-13 09:38:34 INFO  root:9 - Application Started
-2019-06-13 09:38:34 INFO  root:9 - Opening file
-2019-06-13 09:38:34 INFO  root:9 - Opened Successfully
-2019-06-13 09:38:56 INFO  root:9 - Removing user number 101.
-2019-06-13 09:38:56 INFO  root:9 - Saving file
-2019-06-13 09:38:56 INFO  root:9 - Saved Successfully
-2019-06-13 09:39:01 INFO  root:9 - Application Started
-2019-06-13 09:39:01 INFO  root:9 - Opening file
-2019-06-13 09:39:01 INFO  root:9 - Opened Successfully
-2019-06-13 09:39:26 INFO  root:9 - Application Started
-2019-06-13 09:39:26 INFO  root:9 - Opening file
-2019-06-13 09:39:26 INFO  root:9 - Opened Successfully
-2019-06-13 09:39:41 INFO  root:9 - Application Started
-2019-06-13 09:39:41 INFO  root:9 - Opening file
-2019-06-13 09:39:41 INFO  root:9 - Opened Successfully
-2019-06-13 09:41:08 INFO  root:9 - Application Started
-2019-06-13 09:41:08 INFO  root:9 - Opening file
-2019-06-13 09:41:08 INFO  root:9 - Opened Successfully
-2019-06-13 09:41:20 INFO  root:9 - Car 1000, license 12124120, created.
-2019-06-13 09:41:20 INFO  root:9 - Saving file
-2019-06-13 09:41:20 INFO  root:9 - Saved Successfully
-2019-06-13 09:41:26 INFO  root:9 - Application Started
-2019-06-13 09:41:26 INFO  root:9 - Opening file
-2019-06-13 09:41:26 INFO  root:9 - Opened Successfully
-2019-06-13 09:41:41 INFO  root:9 - Car 0, license 12124120, removed.
-2019-06-13 09:41:41 INFO  root:9 - Saving file
-2019-06-13 09:41:41 INFO  root:9 - Saved Successfully
-2019-06-13 09:41:47 INFO  root:9 - Application Started
-2019-06-13 09:41:47 INFO  root:9 - Opening file
-2019-06-13 09:41:47 INFO  root:9 - Opened Successfully
+2019-06-16 16:16:58 INFO  root:9 - Application Started
+2019-06-16 16:16:58 WARN  root:14 - Open failed, creating new file
+2019-06-16 16:16:58 INFO  root:9 - New User 0, Jean Luc created.
+2019-06-16 16:16:58 INFO  root:9 - Car 1000, license 12138387, created.
+2019-06-16 16:16:58 INFO  root:9 - Car 1001, license 224745, created.
+2019-06-16 16:16:58 INFO  root:9 - Car 1002, license 15658395, created.
+2019-06-16 16:16:58 INFO  root:9 - Car 1003, license 15658395, created.
+2019-06-16 16:16:58 INFO  root:9 - Car 1004, license 15658395, created.
+2019-06-16 16:17:17 INFO  root:9 - Application Started
+2019-06-16 16:17:17 WARN  root:14 - Open failed, creating new file
+2019-06-16 16:17:17 INFO  root:9 - New User 0, Jean Luc created.
+2019-06-16 16:17:17 INFO  root:9 - Car 1000, license 8960120, created.
+2019-06-16 16:17:17 INFO  root:9 - Car 1001, license 4077101, created.
+2019-06-16 16:17:17 INFO  root:9 - Car 1002, license 4077101, created.
+2019-06-16 16:17:17 INFO  root:9 - Car 1003, license 4077101, created.
+2019-06-16 16:17:17 INFO  root:9 - Car 1004, license 4077101, created.
+2019-06-16 16:19:08 INFO  root:9 - New User 1, Will created.
+2019-06-16 16:19:08 INFO  root:9 - Saving file
+2019-06-16 16:19:08 INFO  root:9 - Saved Successfully
+2019-06-16 16:19:25 INFO  root:9 - New User 100, Billy created.
+2019-06-16 16:19:25 INFO  root:9 - Saving file
+2019-06-16 16:19:25 INFO  root:9 - Saved Successfully
+2019-06-16 16:29:45 INFO  root:9 - Application Started
+2019-06-16 16:29:45 INFO  root:9 - Opening file
+2019-06-16 16:40:24 INFO  root:9 - Application Started
+2019-06-16 16:40:24 INFO  root:9 - Opening file
+2019-06-16 16:40:24 INFO  root:9 - Opened Successfully
+2019-06-16 16:42:14 INFO  root:9 - Application Started
+2019-06-16 16:42:14 INFO  root:9 - Opening file
+2019-06-16 16:42:19 INFO  root:9 - Opened Successfully
+2019-06-16 16:43:34 INFO  root:9 - Application Started
+2019-06-16 16:43:34 INFO  root:9 - Opening file
+2019-06-16 16:43:34 INFO  root:9 - Opened Successfully
+2019-06-16 16:48:01 INFO  root:9 - Application Started
+2019-06-16 16:48:01 INFO  root:9 - Opening file
+2019-06-16 16:48:01 INFO  root:9 - Opened Successfully
+2019-06-16 16:49:59 INFO  root:9 - Application Started
+2019-06-16 16:49:59 INFO  root:9 - Opening file
+2019-06-16 16:49:59 INFO  root:9 - Opened Successfully
+2019-06-16 16:50:29 INFO  root:9 - Saving file
+2019-06-16 16:50:29 INFO  root:9 - Saved Successfully
+2019-06-16 16:50:29 INFO  root:9 - Application Ended
