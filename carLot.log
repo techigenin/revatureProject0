@@ -196,3 +196,186 @@
 2019-06-16 20:35:44 INFO  root:9 - Saving file
 2019-06-16 20:35:44 INFO  root:9 - Saved Successfully
 2019-06-16 20:35:44 INFO  root:9 - Application Ended
+2019-06-16 20:58:40 INFO  root:9 - Application Started
+2019-06-16 20:58:40 INFO  root:9 - Opening file
+2019-06-16 20:58:40 INFO  root:9 - Opened Successfully
+2019-06-16 20:58:46 INFO  root:9 - Employee 0 has logged in.
+2019-06-16 20:59:15 INFO  root:9 - Car 1005, license 9911520, created.
+2019-06-16 20:59:15 INFO  root:9 - Saving file
+2019-06-16 20:59:15 INFO  root:9 - Saved Successfully
+2019-06-16 21:01:07 INFO  root:9 - Application Started
+2019-06-16 21:01:07 INFO  root:9 - Opening file
+2019-06-16 21:01:07 INFO  root:9 - Opened Successfully
+2019-06-16 21:01:12 INFO  root:9 - Employee 0 has logged in.
+2019-06-16 21:02:31 INFO  root:9 - Application Started
+2019-06-16 21:02:31 INFO  root:9 - Opening file
+2019-06-16 21:02:31 INFO  root:9 - Opened Successfully
+2019-06-16 21:02:36 INFO  root:9 - Employee 0 has logged in.
+2019-06-16 21:02:50 INFO  root:9 - Car 1006, license 5407367, created.
+2019-06-16 21:02:50 INFO  root:9 - Saving file
+2019-06-16 21:02:50 INFO  root:9 - Saved Successfully
+2019-06-16 21:03:18 INFO  root:9 - New User 101, Wally  created.
+2019-06-16 21:03:18 INFO  root:9 - Saving file
+2019-06-16 21:03:18 INFO  root:9 - Saved Successfully
+2019-06-16 21:03:25 INFO  root:9 - Customer 
+2019-06-16 21:03:52 INFO  root:9 - Customer 
+2019-06-16 21:04:06 INFO  root:9 - Saving file
+2019-06-16 21:04:06 INFO  root:9 - Saved Successfully
+2019-06-16 21:04:14 INFO  root:9 - Employee 0 has logged in.
+2019-06-16 21:04:31 INFO  root:9 - Status of offer by 101 for car 12687694 is  set to Rejected
+2019-06-16 21:04:51 INFO  root:9 - Customer 
+2019-06-16 21:05:06 INFO  root:9 - Customer 
+2019-06-16 21:05:23 INFO  root:9 - Employee 0 has logged in.
+2019-06-16 21:05:38 INFO  root:9 - Saving file
+2019-06-16 21:05:38 INFO  root:9 - Saved Successfully
+2019-06-16 21:05:38 INFO  root:9 - Application Ended
+2019-06-16 21:06:47 INFO  root:9 - Application Started
+2019-06-16 21:06:47 INFO  root:9 - Opening file
+2019-06-16 21:06:47 INFO  root:9 - Opened Successfully
+2019-06-16 21:06:56 INFO  root:9 - Employee 0 has logged in.
+2019-06-16 21:08:01 INFO  root:9 - Application Started
+2019-06-16 21:08:01 INFO  root:9 - Opening file
+2019-06-16 21:08:01 INFO  root:9 - Opened Successfully
+2019-06-16 21:08:07 INFO  root:9 - Customer 
+2019-06-16 21:08:36 INFO  root:9 - Employee 0 has logged in.
+2019-06-16 21:10:26 INFO  root:9 - Application Started
+2019-06-16 21:10:26 INFO  root:9 - Opening file
+2019-06-16 21:10:27 INFO  root:9 - Opened Successfully
+2019-06-16 21:10:33 INFO  root:9 - Employee 0 has logged in.
+2019-06-16 21:11:16 INFO  root:9 - Application Started
+2019-06-16 21:11:16 INFO  root:9 - Opening file
+2019-06-16 21:11:16 INFO  root:9 - Opened Successfully
+2019-06-16 21:11:34 INFO  root:9 - Customer 
+2019-06-16 21:11:50 INFO  root:9 - Employee 0 has logged in.
+2019-06-16 21:13:06 INFO  root:9 - Customer 
+2019-06-16 21:14:10 INFO  root:9 - Saving file
+2019-06-16 21:14:10 INFO  root:9 - Saved Successfully
+2019-06-16 21:14:40 INFO  root:9 - Employee 0 has logged in.
+2019-06-16 21:16:32 INFO  root:9 - Status of car 4326720 is  set to Sold
+2019-06-16 21:17:00 INFO  root:9 - Status of offer by 100 for car 12687694 is  set to Accepted
+2019-06-16 21:17:14 INFO  root:9 - Saving file
+2019-06-16 21:17:14 INFO  root:9 - Saved Successfully
+2019-06-16 21:17:23 INFO  root:9 - Car 420 540 has been sold to user number 100
+2019-06-16 21:18:09 INFO  root:9 - Application Started
+2019-06-16 21:18:09 WARN  root:14 - Open failed, creating new file
+2019-06-16 21:18:09 INFO  root:9 - New User 0, Jean Luc created.
+2019-06-16 21:18:09 INFO  root:9 - Car 1000, license 9028532, created.
+2019-06-16 21:18:09 INFO  root:9 - Car 1001, license 10696908, created.
+2019-06-16 21:18:09 INFO  root:9 - Car 1002, license 3197359, created.
+2019-06-16 21:18:09 INFO  root:9 - Car 1003, license 12687694, created.
+2019-06-16 21:18:09 INFO  root:9 - Car 1004, license 9523301, created.
+2019-06-16 21:18:15 INFO  root:9 - New User 100, Billy created.
+2019-06-16 21:18:15 INFO  root:9 - Saving file
+2019-06-16 21:18:15 INFO  root:9 - Saved Successfully
+2019-06-16 21:18:20 INFO  root:9 - New User 101, Wally created.
+2019-06-16 21:18:20 INFO  root:9 - Saving file
+2019-06-16 21:18:20 INFO  root:9 - Saved Successfully
+2019-06-16 21:18:32 INFO  root:9 - Customer 
+2019-06-16 21:18:40 INFO  root:9 - Saving file
+2019-06-16 21:18:40 INFO  root:9 - Saved Successfully
+2019-06-16 21:18:46 INFO  root:9 - Customer 
+2019-06-16 21:18:56 INFO  root:9 - Saving file
+2019-06-16 21:18:56 INFO  root:9 - Saved Successfully
+2019-06-16 21:19:02 INFO  root:9 - Employee 0 has logged in.
+2019-06-16 21:19:13 INFO  root:9 - Status of car 9028532 is  set to Sold
+2019-06-16 21:19:13 INFO  root:9 - Status of offer by 100 for car 9028532 is  set to Accepted
+2019-06-16 21:19:13 INFO  root:9 - Saving file
+2019-06-16 21:19:13 INFO  root:9 - Saved Successfully
+2019-06-16 21:19:13 INFO  root:9 - Car 89C 3B4 has been sold to user number 100
+2019-06-16 21:19:23 INFO  root:9 - Customer 
+2019-06-16 21:22:55 INFO  root:9 - Application Started
+2019-06-16 21:22:55 WARN  root:14 - Open failed, creating new file
+2019-06-16 21:22:55 INFO  root:9 - New User 0, Jean Luc created.
+2019-06-16 21:22:55 INFO  root:9 - Car 1000, license 7021416, created.
+2019-06-16 21:22:55 INFO  root:9 - Car 1001, license 309187, created.
+2019-06-16 21:22:55 INFO  root:9 - Car 1002, license 13922010, created.
+2019-06-16 21:22:55 INFO  root:9 - Car 1003, license 6071724, created.
+2019-06-16 21:22:55 INFO  root:9 - Car 1004, license 12845929, created.
+2019-06-16 21:23:02 INFO  root:9 - Employee 0 has logged in.
+2019-06-16 21:23:12 INFO  root:9 - New User 100, Billy created.
+2019-06-16 21:23:12 INFO  root:9 - Saving file
+2019-06-16 21:23:12 INFO  root:9 - Saved Successfully
+2019-06-16 21:23:21 INFO  root:9 - New User 101, Wally created.
+2019-06-16 21:23:21 INFO  root:9 - Saving file
+2019-06-16 21:23:21 INFO  root:9 - Saved Successfully
+2019-06-16 21:23:27 INFO  root:9 - Customer 
+2019-06-16 21:23:34 INFO  root:9 - Saving file
+2019-06-16 21:23:34 INFO  root:9 - Saved Successfully
+2019-06-16 21:23:42 INFO  root:9 - Customer 
+2019-06-16 21:23:51 INFO  root:9 - Saving file
+2019-06-16 21:23:51 INFO  root:9 - Saved Successfully
+2019-06-16 21:24:13 INFO  root:9 - Employee 0 has logged in.
+2019-06-16 21:24:19 INFO  root:9 - Status of offer by 100 for car 7021416 is  set to Rejected
+2019-06-16 21:24:19 INFO  root:9 - Status of offer by 101 for car 7021416 is  set to Rejected
+2019-06-16 21:24:19 INFO  root:9 - Saving file
+2019-06-16 21:24:19 INFO  root:9 - Saved Successfully
+2019-06-16 21:24:19 INFO  root:9 - Status of car 7021416 is  set to Removed
+2019-06-16 21:24:19 INFO  root:9 - Saving file
+2019-06-16 21:24:19 INFO  root:9 - Saved Successfully
+2019-06-16 21:24:19 INFO  root:9 - Status of car 7021416 is  set to Sold
+2019-06-16 21:24:19 INFO  root:9 - Status of offer by 100 for car 7021416 is  set to Accepted
+2019-06-16 21:24:19 INFO  root:9 - Saving file
+2019-06-16 21:24:19 INFO  root:9 - Saved Successfully
+2019-06-16 21:24:19 INFO  root:9 - Car 6B2 368 has been sold to user number 100
+2019-06-16 21:24:29 INFO  root:9 - Customer 
+2019-06-16 21:25:36 INFO  root:9 - Application Started
+2019-06-16 21:25:36 WARN  root:14 - Open failed, creating new file
+2019-06-16 21:25:36 INFO  root:9 - New User 0, Jean Luc created.
+2019-06-16 21:25:36 INFO  root:9 - Car 1000, license 5021409, created.
+2019-06-16 21:25:36 INFO  root:9 - Car 1001, license 11743864, created.
+2019-06-16 21:25:36 INFO  root:9 - Car 1002, license 2553585, created.
+2019-06-16 21:25:36 INFO  root:9 - Car 1003, license 10504924, created.
+2019-06-16 21:25:36 INFO  root:9 - Car 1004, license 7340530, created.
+2019-06-16 21:25:42 INFO  root:9 - Employee 0 has logged in.
+2019-06-16 21:25:49 INFO  root:9 - New User 100, Billy created.
+2019-06-16 21:25:49 INFO  root:9 - Saving file
+2019-06-16 21:25:49 INFO  root:9 - Saved Successfully
+2019-06-16 21:25:58 INFO  root:9 - New User 101, Wally created.
+2019-06-16 21:25:58 INFO  root:9 - Saving file
+2019-06-16 21:25:58 INFO  root:9 - Saved Successfully
+2019-06-16 21:26:04 INFO  root:9 - Customer 
+2019-06-16 21:26:10 INFO  root:9 - Saving file
+2019-06-16 21:26:10 INFO  root:9 - Saved Successfully
+2019-06-16 21:26:16 INFO  root:9 - Customer 
+2019-06-16 21:26:31 INFO  root:9 - Saving file
+2019-06-16 21:26:31 INFO  root:9 - Saved Successfully
+2019-06-16 21:26:35 INFO  root:9 - Employee 0 has logged in.
+2019-06-16 21:26:44 INFO  root:9 - Status of offer by 101 for car 5021409 is  set to Rejected
+2019-06-16 21:26:44 INFO  root:9 - Status of offer by 100 for car 5021409 is  set to Rejected
+2019-06-16 21:26:44 INFO  root:9 - Saving file
+2019-06-16 21:26:44 INFO  root:9 - Saved Successfully
+2019-06-16 21:26:44 INFO  root:9 - Status of car 5021409 is  set to Removed
+2019-06-16 21:26:44 INFO  root:9 - Saving file
+2019-06-16 21:26:44 INFO  root:9 - Saved Successfully
+2019-06-16 21:26:44 INFO  root:9 - Status of car 5021409 is  set to Sold
+2019-06-16 21:26:44 INFO  root:9 - Status of offer by 100 for car 5021409 is  set to Accepted
+2019-06-16 21:26:44 INFO  root:9 - Saving file
+2019-06-16 21:26:44 INFO  root:9 - Saved Successfully
+2019-06-16 21:26:44 INFO  root:9 - Car 4C9 EE1 has been sold to user number 100
+2019-06-16 21:26:49 INFO  root:9 - Customer 
+2019-06-16 21:26:59 INFO  root:9 - Customer 
+2019-06-16 21:27:15 INFO  root:9 - Customer 
+2019-06-16 21:27:19 INFO  root:9 - Saving file
+2019-06-16 21:27:19 INFO  root:9 - Saved Successfully
+2019-06-16 21:27:19 INFO  root:9 - Application Ended
+2019-06-16 21:27:24 INFO  root:9 - Application Started
+2019-06-16 21:27:24 INFO  root:9 - Opening file
+2019-06-16 21:27:24 INFO  root:9 - Opened Successfully
+2019-06-16 21:27:30 INFO  root:9 - Employee 0 has logged in.
+2019-06-16 21:27:42 INFO  root:9 - Car 1005, license 4556956, created.
+2019-06-16 21:27:42 INFO  root:9 - Saving file
+2019-06-16 21:27:42 INFO  root:9 - Saved Successfully
+2019-06-16 21:28:46 INFO  root:9 - Saving file
+2019-06-16 21:28:46 INFO  root:9 - Saved Successfully
+2019-06-16 21:28:46 INFO  root:9 - Status of car 11743864 is  set to Removed
+2019-06-16 21:28:46 INFO  root:9 - Saving file
+2019-06-16 21:28:46 INFO  root:9 - Saved Successfully
+2019-06-16 21:29:05 INFO  root:9 - New User 1, Will created.
+2019-06-16 21:29:05 INFO  root:9 - Saving file
+2019-06-16 21:29:05 INFO  root:9 - Saved Successfully
+2019-06-16 21:29:15 INFO  root:9 - Saving file
+2019-06-16 21:29:15 INFO  root:9 - Saved Successfully
+2019-06-16 21:29:15 INFO  root:9 - Application Ended
+2019-06-16 22:21:43 INFO  root:9 - Application Started
+2019-06-16 23:10:03 INFO  root:9 - Application Started
+2019-06-16 23:10:53 INFO  root:9 - Application Started

@@ -2,11 +2,13 @@ package com.mJames.pojo;
 
 public class Payment {
 	
-	private int userID;
-	private int carLicense;
-	private double amount;
-	private double amountRemaining;
-	private int term;
+	private Integer userID;
+	private Integer carLicense;
+	private Double amount;
+	private Double amountRemaining;
+	private Integer term;
+	
+	// Amount and ammountRemaining change
 	
 	public Payment() {
 		super();

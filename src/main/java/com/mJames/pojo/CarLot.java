@@ -30,6 +30,7 @@ public class CarLot extends Logging implements Serializable {
 		cars = new HashMap<Integer, Car>();
 		knownLicenses = new HashSet<Integer>();
 		offers = new HashSet<Offer>();
+		payments = new HashSet<Payment>();
 		licenceToLotID = new HashMap<Integer, Integer>();
 	}
 	/*

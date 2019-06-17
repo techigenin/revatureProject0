@@ -7,32 +7,38 @@ import com.mJames.util.Logging;
 
 public class Offer implements Serializable{
 	private static final long serialVersionUID = 7260038008843297384L;
-	private Integer license;
-	private Integer customerid;
-	private double offer;
-	private int term;
+	private Integer carLicense;
+	private Integer userID;
+	private Double value;
+	private Integer term;
 	private Integer acceptedBy;
 	private String status;
+	
+	// accepedBy and status change
 	
 	public Offer() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public Offer(Integer license, Integer customerid, double offer, int term, String status) {
+	public Offer(Integer license, Integer customerid, Double value, Integer term, String status, Integer acceptedBy) {
 		super();
-		this.setLicense(license);
-		this.customerid = customerid;
-		this.offer = offer;
+		this.setCarLicense(license);
+		this.userID = customerid;
+		this.value = value;
 		this.term = term;
 		setStatus(status);
+		this.acceptedBy = acceptedBy;
 	}
 	
+	public Offer(int carLicense, int userNum, double value, int months, String string) {
+		this(carLicense, userNum, value, months, string, null);
+	}
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((customerid == null) ? 0 : customerid.hashCode());
-		result = prime * result + ((license == null) ? 0 : license.hashCode());
+		result = prime * result + ((userID == null) ? 0 : userID.hashCode());
+		result = prime * result + ((carLicense == null) ? 0 : carLicense.hashCode());
 		return result;
 	}
 	@Override
@@ -44,40 +50,40 @@ public class Offer implements Serializable{
 		if (getClass() != obj.getClass())
 			return false;
 		Offer other = (Offer) obj;
-		if (customerid == null) {
-			if (other.customerid != null)
+		if (userID == null) {
+			if (other.userID != null)
 				return false;
-		} else if (!customerid.equals(other.customerid))
+		} else if (!userID.equals(other.userID))
 			return false;
-		if (license == null) {
-			if (other.license != null)
+		if (carLicense == null) {
+			if (other.carLicense != null)
 				return false;
-		} else if (!license.equals(other.license))
+		} else if (!carLicense.equals(other.carLicense))
 			return false;
 		return true;
 	}
 	
 	
-public Integer getLicense() {
-		return license;
+	public Integer getCarLicense() {
+		return carLicense;
 	}
-	public void setLicense(Integer license) {
-		this.license = license;
+	public void setCarLicense(Integer license) {
+		this.carLicense = license;
 	}
-	public Integer getCustomerId() {
-		return customerid;
+	public Integer getUserID() {
+		return userID;
 	}
-	public double getOffer() {
-		return offer;
+	public double getValue() {
+		return value;
 	}
-	private void setOffer(double oVal) {
-		offer = oVal;
+	private void setValue(double oVal) {
+		value = oVal;
 		DataUpdate.saveOffer(this);
 	}
 	public boolean updateOffer(double oVal) {
-		if (oVal > offer)
+		if (oVal > value)
 		{
-			setOffer(oVal);
+			setValue(oVal);
 			return true;
 		}
 		else return false;
@@ -86,7 +92,7 @@ public Integer getLicense() {
 		return term;
 	}
 	public double getPayment(){
-		return offer/term;
+		return value/term;
 	}
 	public Integer getAcceptedBy() {
 		return acceptedBy;
@@ -95,6 +101,9 @@ public Integer getLicense() {
 		this.acceptedBy = acceptedBy;
 	}
 
+	public String getStatus() {
+		return status;
+	}
 	public boolean statusActive() {
 		return status.equals("Active");
 	}
@@ -113,18 +122,18 @@ public Integer getLicense() {
 	}
 	public void setStatusActive() {
 		setStatus("Active");
-		Logging.infoLog("Status of offer by " + customerid + " for car " + license + " is  set to Active");
+		Logging.infoLog("Status of offer by " + userID + " for car " + carLicense + " is  set to Active");
 	}	
 	public void setStatusRejected() {
 		setStatus("Rejected");
-		Logging.infoLog("Status of offer by " + customerid + " for car " + license + " is  set to Rejected");
+		Logging.infoLog("Status of offer by " + userID + " for car " + carLicense + " is  set to Rejected");
 	}		
 	public void setStatusAccepted() {
 		setStatus("Accepted");
-		Logging.infoLog("Status of offer by " + customerid + " for car " + license + " is  set to Accepted");
+		Logging.infoLog("Status of offer by " + userID + " for car " + carLicense + " is  set to Accepted");
 	}	
 	public void setStatusPending() {
 		setStatus("Pending");
-		Logging.infoLog("Status of offer by " + customerid + " for car " + license + " is  set to Pending");
+		Logging.infoLog("Status of offer by " + userID + " for car " + carLicense + " is  set to Pending");
 	}
 }

@@ -6,8 +6,6 @@ import java.util.HashSet;
 import java.util.HashMap;
 import java.util.Set;
 
-import javax.xml.crypto.Data;
-
 import com.mJames.pojo.Car;
 import com.mJames.pojo.CarLot;
 import com.mJames.pojo.Customer;
@@ -288,7 +286,7 @@ public class CarLotServiceImplConsole implements CarLotService {
 			
 			for (Offer o : activeOffers)
 			{
-				Car car = getCarByLicense(o.getLicense());
+				Car car = getCarByLicense(o.getCarLicense());
 				
 				IOUtil.messageToUser("%8d%8s%8s%8s%8.2f%8.2f%8d%12d\n", 
 					car.getLotID(), 
@@ -296,9 +294,9 @@ public class CarLotServiceImplConsole implements CarLotService {
 					car.getMake(),
 					car.getModel(),
 					car.getPrice(), 
-					o.getOffer(), 
+					o.getValue(), 
 					o.getTerm(),
-					o.getCustomerId());
+					o.getUserID());
 			}
 			return true;
 		}
@@ -353,7 +351,7 @@ public class CarLotServiceImplConsole implements CarLotService {
 		
 		for(Offer o : cl.getOffers())
 		{
-			if (o.getCustomerId() == userNum)
+			if (o.getUserID() == userNum && o.statusActive())
 			{
 				userOffers.add(o);
 				good = true;
@@ -371,14 +369,14 @@ public class CarLotServiceImplConsole implements CarLotService {
 		
 		for (Offer o: userOffers)
 		{
-			Car c = getCarByLicense(o.getLicense());
+			Car c = getCarByLicense(o.getCarLicense());
 			System.out.printf("%6d%10s%10s%10s%9.2f%9.2f%9d\n", 
 					c.getLotID(), 
 					c.getColor(), 
 					c.getMake(),
 					c.getModel(),
 					c.getPrice(), 
-					o.getOffer(),
+					o.getValue(),
 					o.getTerm());
 		}
 	}
@@ -389,7 +387,7 @@ public class CarLotServiceImplConsole implements CarLotService {
 		
 		for (Offer o : cl.getOffers())
 		{
-			if (getCarByLicense(o.getLicense()).getLotID() == cID)
+			if (getCarByLicense(o.getCarLicense()).getLotID() == cID)
 				offerSet.add(o);
 		}
 		
@@ -406,9 +404,9 @@ public class CarLotServiceImplConsole implements CarLotService {
 						car.getLotID(), 
 						car.getColor(), 
 						car.getPrice(), 
-						o.getOffer(), 
+						o.getValue(), 
 						o.getTerm(),
-						o.getCustomerId());
+						o.getUserID());
 			}
 		}
 		else
@@ -417,13 +415,13 @@ public class CarLotServiceImplConsole implements CarLotService {
 	@Override
 	public void updateOffers(Offer newOffer) {
 		// First, the car exists
-		if (cl.getCars().values().contains(getCarByLicense(newOffer.getLicense())))
+		if (cl.getCars().values().contains(getCarByLicense(newOffer.getCarLicense())))
 		{
 			// Check to see if an existing offer exists
 			for (Offer o : cl.getOffers())
 			{
 				if (o.equals(newOffer)) {
-					if (o.updateOffer(newOffer.getOffer()))
+					if (o.updateOffer(newOffer.getValue()))
 					{	
 						IOUtil.messageToUser("Offer has been placed.");
 						return;
@@ -451,9 +449,9 @@ public class CarLotServiceImplConsole implements CarLotService {
 			{
 				o.setStatusRejected();
 				
-				Customer cust = (Customer) getCustomerByID(o.getCustomerId());
+				Customer cust = (Customer) getCustomerByID(o.getUserID());
 				IOUtil.messageToUser("Offer on car " 
-					+ getCarByLicense(o.getLicense()).getLotID()
+					+ getCarByLicense(o.getCarLicense()).getLotID()
 					+ " by customer " 
 					+ cust.getFirstName()
 					+ " "
@@ -531,16 +529,11 @@ public class CarLotServiceImplConsole implements CarLotService {
 
 	@Override
 	public void acceptOffer(Offer offer) {
-		for (Offer o : cl.getOffers())
-		{
-			if (o.getLicense() == offer.getLicense()) // Same Car
-			{
-				if (o.getCustomerId() == offer.getCustomerId()) // Same Customer
-					o.setStatusAccepted();
-				else
-					o.setStatusRejected();
-			}
-		}
+		/*
+		 * for (Offer o : cl.getOffers()) { if (o.getLicense() == offer.getLicense()) //
+		 * Same Car { if (o.getCustomerId() == offer.getCustomerId()) // Same Customer
+		 * o.setStatusAccepted(); else o.setStatusRejected(); } }
+		 */
 		
 		DataUpdate.saveCarLot(cl);
 	}
@@ -549,7 +542,7 @@ public class CarLotServiceImplConsole implements CarLotService {
 	{
 		for (Offer o : cl.getOffers())
 		{
-			if (o.getLicense() == car.getLicenseNumber())
+			if (o.getCarLicense() == car.getLicenseNumber())
 				o.setStatusRejected();
 		}
 		

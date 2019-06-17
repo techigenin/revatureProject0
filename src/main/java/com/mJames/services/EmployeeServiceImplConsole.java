@@ -116,10 +116,9 @@ public class EmployeeServiceImplConsole extends UserServiceImplConsole implement
 		String color = IOUtil.getResponse("Please enter a color", "[A-Za-z]{0,20}");
 		Double price = Double.parseDouble(IOUtil.getResponse("Please enter a price:", "[0-9]{0,5}[.]{1}[0-9]{1,2}|[0-9]{0,5}"));
 		String make = IOUtil.getResponse("Please enter the make", "[A-Za-z]{0,20}");
-		String model = IOUtil.getResponse("Please enter the model", "[A-Za-z]{0,20}");
-		Integer year = Integer.parseInt(IOUtil.getResponse("Please enter a year of release:", "[0-9]{0,5}"));
+		String model = IOUtil.getResponse("Please enter the model", "[A-Za-z0-9]{0,20}");
 		
-		cs.addCar(new Car(cNum, price, color, make, model, year, "Active", c.getKnownLicenses()));
+		cs.addCar(new Car(cNum, price, color, make, model, null, "Active", c.getKnownLicenses()));
 	}	
 	@Override
 	public void removeCar(CarLot c)
@@ -166,10 +165,12 @@ public class EmployeeServiceImplConsole extends UserServiceImplConsole implement
 			
 			for (Offer o : offers)
 			{
-				if (o.getCustomerId() == custNum)
+				if (o.getUserID() == custNum)
 				{
+					cs.removeCar(car);
 					car.setOwnerID(cust.getUserNum());
 					car.setStatusSold();
+					o.setStatusAccepted();
 					
 					cs.acceptOffer(o);
 					o.setAcceptedBy(e.getUserNum());
@@ -191,7 +192,7 @@ public class EmployeeServiceImplConsole extends UserServiceImplConsole implement
 		
 		for (Offer o : c.getOffers())
 		{
-			if (o.getCustomerId() == custNum && o.getLicense() == car.getLicenseNumber())
+			if (o.getUserID() == custNum && o.getCarLicense() == car.getLicenseNumber())
 			{
 				o.setStatusRejected();
 				return;	
@@ -214,12 +215,12 @@ public class EmployeeServiceImplConsole extends UserServiceImplConsole implement
 		{
 			if (o.statusActive())
 			{
-				Integer lotID = c.getLotID(o.getLicense());
+				Integer lotID = c.getLotID(o.getCarLicense());
 				
 				if (!carsAndCusts.containsKey(lotID))
 					carsAndCusts.put(lotID, new ArrayList<Integer>());
 				
-				carsAndCusts.get(lotID).add(o.getCustomerId());
+				carsAndCusts.get(lotID).add(o.getUserID());
 			}
 		}
 		
@@ -245,7 +246,7 @@ public class EmployeeServiceImplConsole extends UserServiceImplConsole implement
 				Set<Integer> cNums = new HashSet<Integer>();
 				for (Offer o : activeOffers)
 				{
-					cNums.add(o.getCustomerId());
+					cNums.add(o.getUserID());
 				}
 				
 				IOUtil.messageToUser("Please select a customer");

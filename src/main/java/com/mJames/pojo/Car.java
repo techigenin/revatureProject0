@@ -20,6 +20,8 @@ public class Car implements Serializable{
 	private String model;
 	private String status;
 
+	// lotID, ownerID, status change
+	
 	public Car()
 	{
 		super();
@@ -40,14 +42,33 @@ public class Car implements Serializable{
 		this.model = model;
 		this.ownerID = ownerID;
 		setStatus(status);
-	}
-	
-	/*
-	 * public Car(int lotID, int licenseNumber, double price, String color, Integer
-	 * ownerID, String make, String model) { super(); this.lotID = lotID;
-	 * this.licenseNumber = licenseNumber; this.price = price; this.color = color;
-	 * this.ownerID = ownerID; this.make = make; this.model = model; }
-	 */
+	}	
+//	  public Car(int lotID, int licenseNumber, double price, String color, Integer
+//	  ownerID, String make, String model) 
+//	  { 
+//		  super(); 
+//		  this.lotID = lotID;
+//		  this.licenseNumber = licenseNumber; 
+//		  this.price = price; 
+//		  this.color = color;
+//		  this.ownerID = ownerID; 
+//		  this.make = make; 
+//		  this.model = model; 
+//		  
+//	  }
+	public Car(Integer lotID, int licenseNumber, Integer ownerID,   
+			String make, String model, String color,double price,
+			String status)	{ 
+		  super(); 
+		  this.lotID = lotID;
+		  this.licenseNumber = licenseNumber; 
+		  this.price = price; 
+		  this.color = color;
+		  this.ownerID = ownerID; 
+		  this.make = make; 
+		  this.model = model; 
+		  setStatus(status);
+	  }
 
 	@Override
 	public int hashCode() {
@@ -163,6 +184,9 @@ public class Car implements Serializable{
 		return model;
 	}
 
+	public String getStatus() {
+		return status;
+	}
 	public boolean statusActive() {
 		return (status.equals("Active"));
 	}
