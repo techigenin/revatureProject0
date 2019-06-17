@@ -1,5 +1,6 @@
 package com.mJames.services;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -13,7 +14,6 @@ import com.mJames.pojo.Offer;
 import com.mJames.pojo.User;
 import com.mJames.ui.IOUtil;
 import com.mJames.util.Logging;
-import com.mJames.util.Serialization;
 
 public class EmployeeServiceImplConsole extends UserServiceImplConsole implements EmployeeService {
 	@Override
@@ -31,9 +31,9 @@ public class EmployeeServiceImplConsole extends UserServiceImplConsole implement
 		commands.put(9, "9. List users");
 		commands.put(10, "10. View cars on lot");
 		commands.put(0, "0. Logout");
-		if (u.getUserNum() == 0)
-			commands.put(-1, "-1. Remove user");
-		
+//		if (u.getUserNum() == 0)
+//			commands.put(-1, "-1. Remove user");
+//		
 		return commands;
 	}
 
@@ -69,7 +69,7 @@ public class EmployeeServiceImplConsole extends UserServiceImplConsole implement
 				"Please enter the employees first name", 
 				"[A-Za-z' ]{0,50}");
 		String lastName = IOUtil.getResponse(
-				"Please enter the employees lsat name", 
+				"Please enter the employees last name", 
 				"[A-Za-z' ]{0,50}");
 		String password = IOUtil.getResponse(
 				"Please enter a password for the new user (alphanumeric, no spaces)", 
@@ -125,7 +125,7 @@ public class EmployeeServiceImplConsole extends UserServiceImplConsole implement
 	public void removeCar(CarLot c)
 	{
 		CarLotService cs = new CarLotServiceImplConsole(c);
-		printListOfCarsWithHeading(c);
+		cs.printActiveCars();
 		
 		boolean good = false;
 		
@@ -150,21 +150,6 @@ public class EmployeeServiceImplConsole extends UserServiceImplConsole implement
 	}
 
 	@Override
-	public void viewActiveOffers(CarLot c) {
-		CarLotService cs= new CarLotServiceImplConsole(c);
-		cs.printActiveOffers();
-		/*
-		 * System.out.println("The following offers currently exist.");
-		 * 
-		 * ArrayList<Integer> offerCars = new
-		 * ArrayList<Integer>(carLot.getOffers().keySet());
-		 * 
-		 * for (Integer i : offerCars) { for (Integer j :
-		 * carLot.getOffers().get(i).keySet()) { System.out.printf("%6d%6d%10.2f\n", i,
-		 * j, carLot.getOffers().get(i).get(j)); } }
-		 */
-	}
-	@Override
 	public void acceptOffer(CarLot c, Employee e) {
 		CarLotService cs = new CarLotServiceImplConsole(c);
 		int[] nums = offerBusiness(c);
@@ -184,7 +169,7 @@ public class EmployeeServiceImplConsole extends UserServiceImplConsole implement
 				if (o.getCustomerId() == custNum)
 				{
 					car.setOwnerID(cust.getUserNum());
-					car.setStatus("Sold");
+					car.setStatusSold();
 					
 					cs.acceptOffer(o);
 					o.setAcceptedBy(e.getUserNum());
@@ -193,15 +178,13 @@ public class EmployeeServiceImplConsole extends UserServiceImplConsole implement
 			}
 			
 			Logging.infoLog("Car " + car.getLicenseString() + " has been sold to user number " + cust.getUserNum());
-			
-			// remove the car from the lots inventory
-			cs.removeCar(car);
-			Serialization.Serialize(c);
 		}
 	}
 	@Override
 	public void rejectOffer(CarLot c) {
 		int[] nums = offerBusiness(c);
+		if (nums[0] == -1)
+			return;
 		int carNum = nums[0];
 		int custNum = nums[1];
 		Car car = c.getCars().get(carNum);
@@ -209,7 +192,10 @@ public class EmployeeServiceImplConsole extends UserServiceImplConsole implement
 		for (Offer o : c.getOffers())
 		{
 			if (o.getCustomerId() == custNum && o.getLicense() == car.getLicenseNumber())
-				o.setStatus("Rejected");
+			{
+				o.setStatusRejected();
+				return;	
+			}
 		}
 	}
 	@Override
@@ -223,40 +209,56 @@ public class EmployeeServiceImplConsole extends UserServiceImplConsole implement
 		int carNum = -1;
 		int custNum = -1;
 		
-		// List offers
-		System.out.println("Please select a car");
-		
-		// Accept one of the selections as input
-		while (!c.getCars().containsKey(carNum))
+		HashMap<Integer, ArrayList<Integer>> carsAndCusts = new HashMap<Integer, ArrayList<Integer>>();
+		for (Offer o : c.getOffers())
 		{
-			carNum = Integer.parseInt(IOUtil.getResponse("","[0-9]{0,6}"));
+			if (o.statusActive())
+			{
+				Integer lotID = c.getLotID(o.getLicense());
+				
+				if (!carsAndCusts.containsKey(lotID))
+					carsAndCusts.put(lotID, new ArrayList<Integer>());
+				
+				carsAndCusts.get(lotID).add(o.getCustomerId());
+			}
 		}
 		
-		// List offers on the car, and select one
-		cs.printCarOffers(carNum);
-		
-		OfferService os = new OfferServiceImplConsole();
-		
-		Set<Offer> activeOffers = os.getActiveOffers(c.getOffers());
-		if(activeOffers.size() != 0)
+		// List offers
+		if(cs.printActiveOffers())
 		{
-			Set<Integer> cNums = new HashSet<Integer>();
-			for (Offer o : activeOffers)
+			System.out.println("Please select a car");
+			
+			// Accept one of the selections as input
+			while (!carsAndCusts.containsKey(carNum))
 			{
-				cNums.add(o.getCustomerId());
+				carNum = Integer.parseInt(IOUtil.getResponse("","[0-9]{0,6}"));
 			}
 			
-			while (!cNums.contains(custNum) 
-					&& (custNum < c.getEMPLOYEENUMMAX() 
-					|| custNum > c.getCUSTOMERMAX()))
+			// List offers on the car, and select one
+			//cs.printCarOffers(carNum);
+			
+			OfferService os = new OfferServiceImplConsole();
+			
+			Set<Offer> activeOffers = os.getActiveOffers(c.getOffers());
+			if(activeOffers.size() != 0)
 			{
-				custNum = Integer.parseInt(
-						IOUtil.getResponse("Please select a customer", "[0-9]{0,6}"));
-			}
+				Set<Integer> cNums = new HashSet<Integer>();
+				for (Offer o : activeOffers)
+				{
+					cNums.add(o.getCustomerId());
+				}
+				
+				IOUtil.messageToUser("Please select a customer");
+				
+				while (!carsAndCusts.get(carNum).contains(custNum))
+				{
+					custNum = Integer.parseInt(
+							IOUtil.getResponse("", "[0-9]{0,6}"));
+				}
+			}	
+			else
+				System.out.println("There are no offers on this car.");
 		}	
-		else
-			System.out.println("There are no offers on this car.");
-		
 		int[] nums = new int[2]; // 0 = carNum, 1 = custNum 
 		nums[0] = carNum; // Car
 		nums[1] = custNum; // Cust

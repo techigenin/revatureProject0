@@ -23,8 +23,6 @@ public interface EmployeeService {
 
 	void removeCar(CarLot c);
 
-	void viewActiveOffers(CarLot c);
-
 	void acceptOffer(CarLot c, Employee e);
 
 	void rejectOffer(CarLot c);

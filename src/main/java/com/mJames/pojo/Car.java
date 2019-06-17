@@ -5,6 +5,9 @@ import java.time.LocalDateTime;
 import java.util.Random;
 import java.util.Set;
 
+import com.mJames.util.DataUpdate;
+import com.mJames.util.Logging;
+
 public class Car implements Serializable{
 
 	private static final long serialVersionUID = -1720761779763343820L;
@@ -36,27 +39,33 @@ public class Car implements Serializable{
 		this.make = make;
 		this.model = model;
 		this.ownerID = ownerID;
-		this.status = status;
+		setStatus(status);
 	}
 	
-	public Car(int lotID, int licenseNumber, double price, String color, Integer ownerID, String make, String model) {
-		super();
-		this.lotID = lotID;
-		this.licenseNumber = licenseNumber;
-		this.price = price;
-		this.color = color;
-		this.ownerID = ownerID;
-		this.make = make;
-		this.model = model;
-	}
+	/*
+	 * public Car(int lotID, int licenseNumber, double price, String color, Integer
+	 * ownerID, String make, String model) { super(); this.lotID = lotID;
+	 * this.licenseNumber = licenseNumber; this.price = price; this.color = color;
+	 * this.ownerID = ownerID; this.make = make; this.model = model; }
+	 */
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((color == null) ? 0 : color.hashCode());
 		result = prime * result + licenseNumber;
+		result = prime * result + ((lotID == null) ? 0 : lotID.hashCode());
+		result = prime * result + ((make == null) ? 0 : make.hashCode());
+		result = prime * result + ((model == null) ? 0 : model.hashCode());
+		result = prime * result + ((ownerID == null) ? 0 : ownerID.hashCode());
+		long temp;
+		temp = Double.doubleToLongBits(price);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
+		result = prime * result + ((status == null) ? 0 : status.hashCode());
 		return result;
 	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -66,7 +75,39 @@ public class Car implements Serializable{
 		if (getClass() != obj.getClass())
 			return false;
 		Car other = (Car) obj;
+		if (color == null) {
+			if (other.color != null)
+				return false;
+		} else if (!color.equals(other.color))
+			return false;
 		if (licenseNumber != other.licenseNumber)
+			return false;
+		if (lotID == null) {
+			if (other.lotID != null)
+				return false;
+		} else if (!lotID.equals(other.lotID))
+			return false;
+		if (make == null) {
+			if (other.make != null)
+				return false;
+		} else if (!make.equals(other.make))
+			return false;
+		if (model == null) {
+			if (other.model != null)
+				return false;
+		} else if (!model.equals(other.model))
+			return false;
+		if (ownerID == null) {
+			if (other.ownerID != null)
+				return false;
+		} else if (!ownerID.equals(other.ownerID))
+			return false;
+		if (Double.doubleToLongBits(price) != Double.doubleToLongBits(other.price))
+			return false;
+		if (status == null) {
+			if (other.status != null)
+				return false;
+		} else if (!status.equals(other.status))
 			return false;
 		return true;
 	}
@@ -122,11 +163,37 @@ public class Car implements Serializable{
 		return model;
 	}
 
-	public String getStatus() {
-		return status;
+	public boolean statusActive() {
+		return (status.equals("Active"));
+	}
+	public boolean statusSold() {
+		return (status.equals("Sold"));
+	}
+	public boolean statusPending() {
+		return (status.equals("Pending"));
+	}
+	public boolean statusRemoved() {
+		return (status.equals("Removed"));
 	}
 
-	public void setStatus(String status) {
+	private void setStatus(String status) {
 		this.status = status;
+		DataUpdate.saveCar(this);
+	}
+	public void setStatusActive() {
+		setStatus("Active");
+		Logging.infoLog("Status of car " + licenseNumber + " is  set to Active");
+	}	
+	public void setStatusSold() {
+		setStatus("Sold");
+		Logging.infoLog("Status of car " + licenseNumber + " is  set to Sold");
+	}		
+	public void setStatusPending() {
+		setStatus("Pending");
+		Logging.infoLog("Status of car " + licenseNumber + " is  set to Pending");
+	}	
+	public void setStatusRemoved() {
+		setStatus("Removed");
+		Logging.infoLog("Status of car " + licenseNumber + " is  set to Removed");
 	}
 }

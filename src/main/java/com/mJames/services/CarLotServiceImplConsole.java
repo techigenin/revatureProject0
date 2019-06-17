@@ -1,9 +1,12 @@
 package com.mJames.services;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.HashMap;
 import java.util.Set;
+
+import javax.xml.crypto.Data;
 
 import com.mJames.pojo.Car;
 import com.mJames.pojo.CarLot;
@@ -12,7 +15,8 @@ import com.mJames.pojo.Employee;
 import com.mJames.pojo.Offer;
 import com.mJames.pojo.User;
 import com.mJames.ui.IOUtil;
-import com.mJames.util.Serialization;
+import com.mJames.util.DataUpdate;
+import com.mJames.util.Logging;
 
 public class CarLotServiceImplConsole implements CarLotService {
 	private static UserService us = new UserServiceImplConsole();
@@ -92,9 +96,11 @@ public class CarLotServiceImplConsole implements CarLotService {
 		}
 		
 		cl.setCurrentUser(user);
+		Logging.infoLog((user.getUserNum() > cl.getEMPLOYEENUMMAX()) ? "Customer " : "Employee " + 
+				user.getUserNum() + " has logged in.");
 		
-		IOUtil.messageToUser("Logged in. Current user is : " + cl.getCurrentUser().getUserNum());
-		IOUtil.messageToUser("Hello " + cl.getCurrentUser().getFirstName());
+		IOUtil.messageToUser("Logged in. Current user is : " + user.getUserNum());
+		IOUtil.messageToUser("Hello " + user.getFirstName());
 	}
 	
 	@Override
@@ -117,7 +123,7 @@ public class CarLotServiceImplConsole implements CarLotService {
 				switch(Integer.parseInt(response))
 				{
 				case 1:
-					es.viewActiveOffers(cl);
+					printActiveOffers();
 					break;
 				case 2:
 					es.acceptOffer(cl, emp);
@@ -144,7 +150,7 @@ public class CarLotServiceImplConsole implements CarLotService {
 					es.listUsers(cl);
 					break;
 				case 10:
-					us.printListOfCarsWithHeading(cl);
+					printActiveCars();
 					break;
 //				case -1:
 //					es.removeUser(cl, emp);
@@ -166,7 +172,7 @@ public class CarLotServiceImplConsole implements CarLotService {
 				switch(Integer.parseInt(response))
 				{
 				case 1:
-					us.printListOfCarsWithHeading(cl);
+					printActiveCars();
 					break;
 				case 2:
 					printCustomerOffers(cust.getUserNum());
@@ -220,7 +226,7 @@ public class CarLotServiceImplConsole implements CarLotService {
 	@Override
 	public Car addCar(Car car) {
 		cl.addCar(car);
-		Serialization.Serialize(cl);
+		DataUpdate.saveCarLot(cl);
 		return car;
 	}
 	@Override
@@ -228,19 +234,10 @@ public class CarLotServiceImplConsole implements CarLotService {
 	{
 		rejectAllOffers(car);
 		
-		setCarStatus(car, "Removed");
-		Serialization.Serialize(cl);
+		car.setStatusRemoved();
+		DataUpdate.saveCarLot(cl);
 	}
 
-	private void setCarStatus(Car car, String status) {
-		for (Car c : cl.getCars().values())
-		{
-			if (c.equals(car))
-			{
-				c.setStatus(status);
-			}
-		}
-	}
 	@Override
 	public User addUser(User user)
 	{
@@ -250,7 +247,7 @@ public class CarLotServiceImplConsole implements CarLotService {
 				user.getLastName());
 		
 		cl.addUser(user);
-		Serialization.Serialize(cl);
+		DataUpdate.saveCarLot(cl);
 		return user;
 	}
 	@Override
@@ -264,7 +261,7 @@ public class CarLotServiceImplConsole implements CarLotService {
 			{	
 				cl.removeUser(user);
 				System.out.printf("User %d, %s, removed%n", uNum, user.getFirstName());
-				Serialization.Serialize(cl);
+				DataUpdate.saveCarLot(cl);
 			}
 			else
 				System.out.println("There is no user " + uNum);
@@ -274,37 +271,80 @@ public class CarLotServiceImplConsole implements CarLotService {
 	}
 	
 	@Override
-	public void printActiveOffers()
+	public boolean printActiveOffers()
 	{
 		Set<Offer> activeOffers = new HashSet<Offer>();
 		
 		for (Offer o : cl.getOffers())
 		{
-			if (o.getStatus() == "Active")
+			if (o.statusActive())
 				activeOffers.add(o);
 		}
 		
 		if (activeOffers.size() > 0)
 		{
 			IOUtil.messageToUser("The following active offers exist");
-			IOUtil.messageToUser("%8s%8s%8s%8s%8s%12s\n", "carID", "Color", "Price", "Offer", "Months",  "Customer");
+			IOUtil.messageToUser("%8s%8s%8s%8s%8s%8s%8s%12s\n", "carID", "Color", "Make", "Model", "Price", "Offer", "Months",  "Customer");
 			
 			for (Offer o : activeOffers)
 			{
 				Car car = getCarByLicense(o.getLicense());
 				
-				IOUtil.messageToUser("%8d%8s%8.2f%8.2f%8d%12d\n", 
+				IOUtil.messageToUser("%8d%8s%8s%8s%8.2f%8.2f%8d%12d\n", 
 					car.getLotID(), 
 					car.getColor(), 
+					car.getMake(),
+					car.getModel(),
 					car.getPrice(), 
 					o.getOffer(), 
 					o.getTerm(),
 					o.getCustomerId());
 			}
+			return true;
 		}
 		else
+		{
 			IOUtil.messageToUser("There are currently no active offers");	
-	}	
+			return false;
+		}	
+	}
+
+	@Override
+	public void printActiveCars()
+	{
+		ArrayList<Car> cars = new ArrayList<Car>();
+				
+		for (Car c : cl.getCars().values())
+		{
+			if (c.statusActive())
+				cars.add(c);
+		}
+		if (cars.size() > 0)
+		{
+			IOUtil.messageToUser("The following cars are on the lot.");
+			
+			IOUtil.messageToUser("%-6s%-11s%-11s%-11s%-8s%-16s\n", 
+					"ID", 
+					"Color", 
+					"Make", 
+					"Model",
+					"Price($)", 
+					" License Number");
+			for (Car car : cars)
+			{
+				IOUtil.messageToUser("%6d%11s%11s%11s%8.2f%16s\n", 
+						car.getLotID(), 
+						car.getColor(), 
+						car.getMake(),
+						car.getModel(),
+						car.getPrice(), 
+						car.getLicenseString());
+			}
+		}
+		else
+			System.out.println("There are no cars on the lot");
+	}
+
 	@Override
 	public void printCustomerOffers(int userNum) {
 		boolean good = false;
@@ -380,43 +420,39 @@ public class CarLotServiceImplConsole implements CarLotService {
 		if (cl.getCars().values().contains(getCarByLicense(newOffer.getLicense())))
 		{
 			// Check to see if an existing offer exists
-			Offer oldOffer = null;
-			
 			for (Offer o : cl.getOffers())
 			{
-				if (o.equals(newOffer))
-						oldOffer = newOffer;
-			}
-			
-			if (oldOffer != null)
-			{
-				if (newOffer.getOffer() > oldOffer.getOffer())
-				{
-					cl.getOffers().remove(oldOffer);
-					cl.getOffers().add(newOffer);
-					System.out.println("Offer has been placed.");
+				if (o.equals(newOffer)) {
+					if (o.updateOffer(newOffer.getOffer()))
+					{	
+						IOUtil.messageToUser("Offer has been placed.");
+						return;
+					}
+					else 
+					{
+						IOUtil.messageToUser("New offers must exceed old offers.");
+						return;
+					}
 				}
-				else 
-					System.out.println("New offers must exceed old offers.");
 			}
-			else
-			{
-				cl.getOffers().add(newOffer);
-			}
+			// Otherwise, add the offer
+			cl.addOffer(newOffer);
+			DataUpdate.saveCarLot(cl);
 		}
 		else // The car doesn't exist
-			System.out.println("Car does not exist.");
+			IOUtil.messageToUser("Car does not exist.");
 	}
 	@Override
-	public void rejectSingleOffer(Offer oldOffer)
+	public void rejectSingleOffer(Offer offer)
 	{
 		for (Offer o : cl.getOffers())
 		{
-			if (o.equals(oldOffer))
+			if (o.equals(offer))
 			{
-				cl.getOffers().remove(o);
+				o.setStatusRejected();
+				
 				Customer cust = (Customer) getCustomerByID(o.getCustomerId());
-				System.out.println("Offer on car " 
+				IOUtil.messageToUser("Offer on car " 
 					+ getCarByLicense(o.getLicense()).getLotID()
 					+ " by customer " 
 					+ cust.getFirstName()
@@ -427,25 +463,10 @@ public class CarLotServiceImplConsole implements CarLotService {
 			}
 		}
 		
-		System.out.println("No such offer exists");
+		IOUtil.messageToUser("No such offer exists");
+		DataUpdate.saveCarLot(cl);
 	}
-	private User getCustomerByID(Integer customerId) {
-		return cl.getUsers().get(customerId);
-	}
-
-	private void rejectAllOffers(Car car)
-	{
-		for (Offer o : cl.getOffers())
-		{
-			if (o.getLicense() == car.getLicenseNumber())
-				o.setStatus("Rejected");
-		}
 		
-		System.out.println("All remaining offers for " 
-				+ car.getLotID() 
-				+ " have been rejected.");
-	}
-	
 	@Override
 	public void listUsers()	{
 		Set<Integer> employees = new HashSet<Integer>();
@@ -497,7 +518,7 @@ public class CarLotServiceImplConsole implements CarLotService {
 				"Please enter the users first name", 
 				"[A-Za-z' ]{0,50}");
 		String lastName = IOUtil.getResponse(
-				"Please enter the users lsat name", 
+				"Please enter the users last name", 
 				"[A-Za-z' ]{0,50}");
 		String password = IOUtil.getResponse(
 				"Please enter a password for the new user (alphanumeric, no spaces)", 
@@ -505,17 +526,7 @@ public class CarLotServiceImplConsole implements CarLotService {
 		
 		addUser(new Customer(uNum, firstName, lastName, password));
 		
-		System.out.println("User " + firstName + " added. User number is: " + uNum);
-	}
-
-
-	private Car getCarByLicense(int lic) {
-		for (Car c : cl.getCars().values())
-		{
-			if (c.getLicenseNumber() == lic)
-				return c;
-		}
-		return null;
+		IOUtil.messageToUser("User " + firstName + " added. User number is: " + uNum);
 	}
 
 	@Override
@@ -525,10 +536,38 @@ public class CarLotServiceImplConsole implements CarLotService {
 			if (o.getLicense() == offer.getLicense()) // Same Car
 			{
 				if (o.getCustomerId() == offer.getCustomerId()) // Same Customer
-					o.setStatus("Accepted");
+					o.setStatusAccepted();
 				else
-					o.setStatus("Rejected");
+					o.setStatusRejected();
 			}
 		}
+		
+		DataUpdate.saveCarLot(cl);
+	}
+
+	private void rejectAllOffers(Car car)
+	{
+		for (Offer o : cl.getOffers())
+		{
+			if (o.getLicense() == car.getLicenseNumber())
+				o.setStatusRejected();
+		}
+		
+		IOUtil.messageToUser("All remaining offers for " 
+				+ car.getLotID() 
+				+ " have been rejected.");
+		
+		DataUpdate.saveCarLot(cl);
+	}
+	private User getCustomerByID(Integer customerId) {
+		return cl.getUsers().get(customerId);
+	}
+	private Car getCarByLicense(int lic) {
+		for (Car c : cl.getCars().values())
+		{
+			if (c.getLicenseNumber() == lic)
+				return c;
+		}
+		return null;
 	}
 }

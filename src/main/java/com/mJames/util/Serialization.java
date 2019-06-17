@@ -8,7 +8,7 @@ import com.mJames.pojo.CarLot;
 
 public class Serialization {
 	
-	public static void Serialize(CarLot c) {
+	public static boolean Serialize(CarLot c) {
 		String fileName = "carLot.ser";
 		try
 		{
@@ -21,11 +21,13 @@ public class Serialization {
 			out.close();
 			file.close();
 			Logging.infoLog("Saved Successfully");
+			return true;
 		}
 		catch (IOException e)
 		{
 			Logging.errorLog("Saving failed");
 			e.printStackTrace();
+			return false;
 		}
 	}
 }

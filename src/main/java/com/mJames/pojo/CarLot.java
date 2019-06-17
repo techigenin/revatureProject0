@@ -21,6 +21,7 @@ public class CarLot extends Logging implements Serializable {
 	private Map<Integer, User> users;
 	private Set<Offer> offers;
 	private Set<Payment> payments;
+	private Map<Integer, Integer> licenceToLotID;
 		
 	public CarLot() 
 	{
@@ -29,48 +30,49 @@ public class CarLot extends Logging implements Serializable {
 		cars = new HashMap<Integer, Car>();
 		knownLicenses = new HashSet<Integer>();
 		offers = new HashSet<Offer>();
+		licenceToLotID = new HashMap<Integer, Integer>();
 	}
-	public CarLot(Map<Integer, Car> cars, Map<Integer, User> users) {
-		super();
-		this.cars = cars;
-		this.users = users;
-		
-		knownLicenses = new HashSet<Integer>();
-		
-		for (Car c : cars.values())
-		{
-			knownLicenses.add(c.getLicenseNumber());
-		}
-	}	
+	/*
+	 * public CarLot(Map<Integer, Car> cars, Map<Integer, User> users) { super();
+	 * this.cars = cars; this.users = users;
+	 * 
+	 * knownLicenses = new HashSet<Integer>();
+	 * 
+	 * for (Car c : cars.values()) { knownLicenses.add(c.getLicenseNumber()); } }
+	 */
 	
 	public Car addCar(Car car)
 	{
 		String idNum = ""  + car.getLotID();
 		String license = "" + car.getLicenseNumber();
+		licenceToLotID.put(car.getLicenseNumber(), car.getLotID());
 		Logging.infoLog("Car " + idNum + ", license " + license + ", created.");
 		
 		cars.put(car.getLotID(), car);
+		knownLicenses.add(car.getLicenseNumber());
 		
 		return car;
 	}
-	public Map<Integer, Car> removeCar(int license) {
-		Car car = new Car();
-		
-		for (Car c : cars.values())
-		{
-			if (c.getLicenseNumber() == license)
-			{
-				car = c;
-				break;
-			}
-		}
-		
-		cars.remove(car.getLotID());
-		int idNum = car.getLotID();
-		
-		Logging.infoLog("Car " + idNum + ", license " + license + ", removed.");
-		
-		return cars;
+	public Map<Integer, Integer> removeCar(int license) {
+		licenceToLotID.put(license, null);
+		return licenceToLotID;
+		//		Car car = new Car();
+//		
+//		for (Car c : cars.values())
+//		{
+//			if (c.getLicenseNumber() == license)
+//			{
+//				car = c;
+//				break;
+//			}
+//		}
+//		
+//		cars.remove(car.getLotID());
+//		int idNum = car.getLotID();
+//		
+//		Logging.infoLog("Car " + idNum + ", license " + license + ", removed.");
+//		
+//		return cars;
 	}
 	public Map<Integer, Car> getCars() {
 		return cars;
@@ -92,7 +94,6 @@ public class CarLot extends Logging implements Serializable {
 		return knownLicenses;
 	}
 
-	
 	public User setCurrentUser(User u)
 	{
 		currentUser = u;
@@ -119,5 +120,11 @@ public class CarLot extends Logging implements Serializable {
 	}
 	public void setPayments(Set<Payment> payments) {
 		this.payments = payments;
+	}
+	public void addOffer(Offer offer) {
+		offers.add(offer);
+	}
+	public Integer getLotID(Integer lVal) {
+		return licenceToLotID.get(lVal);
 	}
 }

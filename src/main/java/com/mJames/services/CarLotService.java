@@ -32,7 +32,9 @@ public interface CarLotService {
 
 	void removeUser(int callingUserNum, int uNum);
 
-	void printActiveOffers();
+	boolean printActiveOffers();
+	
+	void printActiveCars();
 
 	void printCustomerOffers(int userNum);
 

@@ -13,11 +13,13 @@ public class OfferServiceImplConsole implements OfferService {
 		
 		for(Offer o : offers)
 		{
-			if (o.getStatus() == "Active")
+			if (o.statusActive())
 				activeOffers.add(o);
 		}
 		
 		return activeOffers;
 	}
+	
+
 
 }

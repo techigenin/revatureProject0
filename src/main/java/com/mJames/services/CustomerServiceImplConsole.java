@@ -42,7 +42,7 @@ import com.mJames.ui.IOUtil;
 	public void makeOffer(CarLot c, Customer cust)
 	{
 		CarLotService cs = new CarLotServiceImplConsole(c);
-		printListOfCarsWithHeading(c);
+		cs.printActiveCars();
 		int whichCar = Integer.parseInt(IOUtil.getResponse(
 				"Please select a car to make an offer on", "[0-9]{4,6}"));
 		double offer = Double.parseDouble(IOUtil.getResponse(
@@ -51,8 +51,6 @@ import com.mJames.ui.IOUtil;
 		int months = Integer.parseInt(IOUtil.getResponse(
 				"Payments will be made over how many months?", 
 				"[0-9]{0,3}"));
-		
-		
 		
 		cs.updateOffers(new Offer(c.getCars().get(whichCar).getLicenseNumber(), cust.getUserNum(), offer, months, "Active"));
 	}
@@ -86,9 +84,13 @@ import com.mJames.ui.IOUtil;
 		
 		for (Car c : cl.getCars().values())
 		{
-			if (c.getOwnerID() != null &&
-					c.getOwnerID() == cust.getUserNum())
-				custCars.add(c);
+			if (c.statusSold())
+			{
+				if (c.getOwnerID() == cust.getUserNum())
+				{
+					custCars.add(c);
+				}
+			}
 		}
 		return custCars;
 	}
