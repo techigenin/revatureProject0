@@ -10,7 +10,7 @@ import com.mJames.pojo.User;
 
 public interface CarLotService {
 
-	void run();
+	int run();
 
 	void login();
 
@@ -46,7 +46,11 @@ public interface CarLotService {
 
 	void listUsers();
 
-	void addCustomer(CarLot c);
+	void addCustomer();
 
 	void acceptOffer(Offer o);
+	
+	void viewPayments();
+	
+	double calculatePayment(Offer o);
 }

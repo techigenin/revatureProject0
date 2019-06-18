@@ -146,11 +146,11 @@ public class CheckCreateTables {
 				
 				String sql = "CREATE TABLE payment " +
 						"(userid INTEGER,"
+						+ "payment_num INTEGER,"
 						+ "car_license INTEGER,"
-						+ "ammount NUMERIC(8,2),"
-						+ "ammount_remaining NUMERIC(8,2),"
-						+ "term INTEGER,"
-						+ "PRIMARY KEY (userid, car_license))";
+						+ "amount NUMERIC(8,2),"
+						+ "amount_remaining NUMERIC(8,2),"
+						+ "PRIMARY KEY (payment_num))";
 				
 				stmt.executeUpdate(sql);
 			}

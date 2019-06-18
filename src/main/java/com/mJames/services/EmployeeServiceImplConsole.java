@@ -25,7 +25,7 @@ public class EmployeeServiceImplConsole extends UserServiceImplConsole implement
 		commands.put(3, "3. Reject offer");
 		commands.put(4, "4. Add car to lot");
 		commands.put(5, "5. Remove car from lot");
-		commands.put(6, "6. View payments on car");
+		commands.put(6, "6. View payments");
 		commands.put(7, "7. Add new customer");
 		commands.put(8, "8. Add new employee");
 		commands.put(9, "9. List users");
@@ -172,6 +172,9 @@ public class EmployeeServiceImplConsole extends UserServiceImplConsole implement
 					car.setStatusSold();
 					o.setStatusAccepted();
 					
+					PaymentService ps = new PaymentServiceImpl();
+					ps.makeFirstPayment(c, o, cs.calculatePayment(o));
+					
 					cs.acceptOffer(o);
 					o.setAcceptedBy(e.getUserNum());
 					break;
@@ -198,10 +201,6 @@ public class EmployeeServiceImplConsole extends UserServiceImplConsole implement
 				return;	
 			}
 		}
-	}
-	@Override
-	public void viewPayments(CarLot c) {
-		// TODO This method.  After adding the ability for users to make payments
 	}
 
 	private int[] offerBusiness(CarLot c) {

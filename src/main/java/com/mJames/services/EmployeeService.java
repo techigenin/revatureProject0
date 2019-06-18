@@ -27,6 +27,6 @@ public interface EmployeeService {
 
 	void rejectOffer(CarLot c);
 
-	void viewPayments(CarLot c);
+
 
 }

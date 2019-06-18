@@ -156,6 +156,9 @@ public class CarLot extends Logging implements Serializable {
 		Logging.infoLog("Removing user number " + user.getUserNum() + ".");
 		users.remove(user.getUserNum());
 	}
+	public void addPayment(Payment p) {
+		payments.add(p);
+	}
 	public Set<Payment> getPayments() {
 		return payments;
 	}
@@ -169,5 +172,8 @@ public class CarLot extends Logging implements Serializable {
 		return licenceToLotID.get(lVal);
 	}
 
+	public Integer getNumberPayments() {
+		return payments.size();
+	}
 
 }

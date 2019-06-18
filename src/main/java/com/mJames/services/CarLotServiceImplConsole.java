@@ -2,7 +2,9 @@ package com.mJames.services;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.HashMap;
 import java.util.Set;
 
@@ -11,6 +13,7 @@ import com.mJames.pojo.CarLot;
 import com.mJames.pojo.Customer;
 import com.mJames.pojo.Employee;
 import com.mJames.pojo.Offer;
+import com.mJames.pojo.Payment;
 import com.mJames.pojo.User;
 import com.mJames.ui.IOUtil;
 import com.mJames.util.DataUpdate;
@@ -20,7 +23,6 @@ public class CarLotServiceImplConsole implements CarLotService {
 	private static UserService us = new UserServiceImplConsole();
 	private static EmployeeService es = new EmployeeServiceImplConsole();
 	private static CustomerService cs = new CustomerServiceImplConsole();
-	private boolean keepRunning;
 	private CarLot cl;
 
 	public CarLotServiceImplConsole(CarLot c)
@@ -30,31 +32,28 @@ public class CarLotServiceImplConsole implements CarLotService {
 	}
 	
 	@Override
-	public void run()
+	public int run()
 	{
-		keepRunning = true;
-		
-		while(keepRunning)
+		String response = IOUtil.getResponse(
+				"Login (1), Create new customer acount (2), or Quit(0)", 
+				"[0-2]{1,2}"); 
+		if (response.contentEquals("1"))
 		{
-			String response = IOUtil.getResponse(
-					"Login (1), Create new customer acount (2), or Quit(0)", 
-					"[0-2]{1,2}"); 
-			if (response.contentEquals("1"))
-			{
-				login();
-				executeCommand();
-			}
-			else if (response.contentEquals("2"))
-			{
-				addCustomer(cl);
-			}
-			else if (response.contentEquals("0"))
-			{
-				System.out.println("Goodbye!");
-				keepRunning = false;
-			}
+			login();
+			executeCommand();
+			return 1;
 		}
-	}
+		else if (response.contentEquals("2"))
+		{
+			addCustomer();
+			return 2;
+		}
+		else // response 0
+		{
+			System.out.println("Goodbye!");
+			return 0;
+		}
+}
 	@Override
 	public void login() {
 		boolean userGood = false;
@@ -135,10 +134,10 @@ public class CarLotServiceImplConsole implements CarLotService {
 					es.removeCar(cl);
 					break;
 				case 6: 
-					es.viewPayments(cl);
+					viewPayments();
 					break;
 				case 7:
-					addCustomer(cl);
+					addCustomer();
 					break;
 				case 8:
 					es.addEmployee(cl);
@@ -181,8 +180,10 @@ public class CarLotServiceImplConsole implements CarLotService {
 					cs.viewCars(cl, cust);
 					break;
 				case 5:
-					// TODO fix this
 					cs.viewPayments(cl, cust);
+					break;
+				case 6:
+					cs.makePayment(cl, cust);
 					break;
 				case 0:
 					loggedIn = false;
@@ -417,8 +418,14 @@ public class CarLotServiceImplConsole implements CarLotService {
 		// First, the car exists
 		if (cl.getCars().values().contains(getCarByLicense(newOffer.getCarLicense())))
 		{
+			Set<Offer> activeOffers = new HashSet<Offer>();
+			
+			for (Offer o  : cl.getOffers())
+				if (o.statusActive())
+					activeOffers.add(o);
+			
 			// Check to see if an existing offer exists
-			for (Offer o : cl.getOffers())
+			for (Offer o : activeOffers)
 			{
 				if (o.equals(newOffer)) {
 					if (o.updateOffer(newOffer.getValue()))
@@ -505,11 +512,11 @@ public class CarLotServiceImplConsole implements CarLotService {
 		}
 	}
 	@Override
-	public void addCustomer(CarLot c)
+	public void addCustomer()
 	{
 		IOUtil.messageToUser("Creating a new customer account.");
 		
-		int uNum = c.getEMPLOYEENUMMAX() + 1;
+		int uNum = cl.getEMPLOYEENUMMAX() + 1;
 		uNum = firstFree(uNum);
 		
 		String firstName = IOUtil.getResponse(
@@ -529,12 +536,6 @@ public class CarLotServiceImplConsole implements CarLotService {
 
 	@Override
 	public void acceptOffer(Offer offer) {
-		/*
-		 * for (Offer o : cl.getOffers()) { if (o.getLicense() == offer.getLicense()) //
-		 * Same Car { if (o.getCustomerId() == offer.getCustomerId()) // Same Customer
-		 * o.setStatusAccepted(); else o.setStatusRejected(); } }
-		 */
-		
 		DataUpdate.saveCarLot(cl);
 	}
 
@@ -562,5 +563,29 @@ public class CarLotServiceImplConsole implements CarLotService {
 				return c;
 		}
 		return null;
+	}
+
+	@Override
+	public double calculatePayment(Offer o) {
+		return o.getValue()/o.getTerm();
+	}
+
+	@Override
+	public void viewPayments() {
+		IOUtil.messageToUser("%10s%10s%10s%18s\n", "License", "OwnerID", "Amount", "Amount Remaining");
+
+		List<Payment> payments = new ArrayList<Payment>();
+		
+		payments.addAll(cl.getPayments());
+		
+		Collections.sort(payments);
+		
+		for (Payment p : payments)
+		{
+			IOUtil.messageToUser("%10s%10d%10.2f%18.2f\n", 
+					Car.getLicenseString(p.getCarLicense()),
+					p.getUserID(), p.getAmount(), 
+					p.getAmountRemaining());
+		}
 	}
 }

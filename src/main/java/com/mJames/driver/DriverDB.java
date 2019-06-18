@@ -31,11 +31,15 @@ public class DriverDB {
 			CheckCreateTables.checkOfferTable(conn);
 			CheckCreateTables.checkPaymentTable(conn);
 
-			CarLot carlot = new CarLot();
-			carlot.buildFromDB();
-			CarLotService cs = new CarLotServiceImplConsole(carlot);
-			cs.run();
+			CarLot carlot;
 			
+			while (true) {
+				carlot = new CarLot();
+				carlot.buildFromDB();
+				CarLotService cs = new CarLotServiceImplConsole(carlot);
+				if (cs.run() == 0)
+					break;
+			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

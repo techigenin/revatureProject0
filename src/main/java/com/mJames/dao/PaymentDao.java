@@ -10,14 +10,16 @@ public interface PaymentDao {
 	
 	public boolean createPayment(Payment p);
 	
-	public boolean updatePaymentAmmount(Payment p);
+	public boolean updatePaymentAmount(Payment p);
 	
-	public boolean updatePaymentAmmountRemaining(Payment p);
+	public boolean updatePaymentAmountRemaining(Payment p);
 	
 	public boolean deletePayment(Payment p);
 	
-	public Payment getPaymentByUserIDAndLicense(Integer license, Integer id);
-	
 	public List<Payment> getAllPayments();
+
+	Payment getPaymentbyPaymentNumber(Integer paymentNum);
+
+	boolean createPayment(Integer custNum, Integer license);
 
 }

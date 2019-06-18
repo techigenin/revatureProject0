@@ -8,6 +8,8 @@ import com.mJames.dao.EmployeeDao;
 import com.mJames.dao.EmployeeDaoImpl;
 import com.mJames.dao.OfferDao;
 import com.mJames.dao.OfferDaoImpl;
+import com.mJames.dao.PaymentDao;
+import com.mJames.dao.PaymentDaoImpl;
 import com.mJames.pojo.Car;
 import com.mJames.pojo.CarLot;
 import com.mJames.pojo.Customer;
@@ -122,7 +124,12 @@ public interface DataUpdate {
 		return true;
 	}
 	
-	public static boolean savePayment(Payment payment) {
+	public static boolean savePayment(Payment p) {
+		PaymentDao pDao = new PaymentDaoImpl();
+		
+		if (!pDao.paymentExists(p))
+			pDao.createPayment(p);
+		
 		return true;
 	}
 	

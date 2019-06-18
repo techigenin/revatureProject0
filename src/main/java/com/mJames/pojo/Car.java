@@ -134,6 +134,11 @@ public class Car implements Serializable{
 		String licString = String.format("%06X", licenseNumber);
 		return licString.substring(0,3) + " " + licString.substring(3);
 	}
+	public static String getLicenseString(Integer licNum)
+	{
+		String licString = String.format("%06X", licNum);
+		return licString.substring(0,3) + " " + licString.substring(3);
+	}
 
 	public Integer getLotID() {
 		return lotID;

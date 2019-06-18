@@ -600,3 +600,164 @@
 2019-06-17 23:43:30 INFO  root:9 - Employee 0 has logged in.
 2019-06-17 23:43:39 INFO  root:9 - Status of offer by 101 for car 8132653 is  set to Rejected
 2019-06-17 23:44:08 INFO  root:9 - New User 1, Will created.
+2019-06-18 14:03:27 INFO  root:9 - Application Started
+2019-06-18 14:03:58 INFO  root:9 - Customer 
+2019-06-18 14:05:06 INFO  root:9 - Application Started
+2019-06-18 14:05:36 INFO  root:9 - Application Started
+2019-06-18 14:06:04 INFO  root:9 - Customer 
+2019-06-18 14:06:29 INFO  root:9 - Employee 1 has logged in.
+2019-06-18 14:06:38 INFO  root:9 - Status of offer by 100 for car 8132653 is  set to Rejected
+2019-06-18 14:06:50 INFO  root:9 - Customer 
+2019-06-18 14:10:17 INFO  root:9 - Application Started
+2019-06-18 14:10:53 INFO  root:9 - Customer 
+2019-06-18 14:12:11 INFO  root:9 - Application Started
+2019-06-18 14:12:23 INFO  root:9 - Customer 
+2019-06-18 14:12:48 INFO  root:9 - Employee 1 has logged in.
+2019-06-18 14:12:56 INFO  root:9 - Status of offer by 100 for car 8132653 is  set to Rejected
+2019-06-18 14:13:14 INFO  root:9 - Customer 
+2019-06-18 14:13:38 INFO  root:9 - Employee 1 has logged in.
+2019-06-18 14:18:20 INFO  root:9 - Application Started
+2019-06-18 14:18:36 INFO  root:9 - Employee 0 has logged in.
+2019-06-18 14:18:49 INFO  root:9 - Employee 1 has logged in.
+2019-06-18 14:19:07 INFO  root:9 - Status of offer by 100 for car 8132653 is  set to Rejected
+2019-06-18 14:19:11 INFO  root:9 - Status of car 8132653 is  set to Removed
+2019-06-18 14:19:14 INFO  root:9 - Status of car 8132653 is  set to Sold
+2019-06-18 14:19:15 INFO  root:9 - Status of offer by 100 for car 8132653 is  set to Accepted
+2019-06-18 14:19:17 INFO  root:9 - Car 7C1 82D has been sold to user number 100
+2019-06-18 14:24:16 INFO  root:9 - Application Started
+2019-06-18 14:24:36 INFO  root:9 - Employee 1 has logged in.
+2019-06-18 14:24:56 INFO  root:9 - Car 1000, license 8748250, created.
+2019-06-18 14:25:14 INFO  root:9 - Customer 
+2019-06-18 14:25:46 INFO  root:9 - Employee 1 has logged in.
+2019-06-18 14:25:53 INFO  root:9 - Status of offer by 100 for car 8748250 is  set to Rejected
+2019-06-18 14:25:56 INFO  root:9 - Status of car 8748250 is  set to Removed
+2019-06-18 14:26:00 INFO  root:9 - Status of car 8748250 is  set to Sold
+2019-06-18 14:26:01 INFO  root:9 - Status of offer by 100 for car 8748250 is  set to Accepted
+2019-06-18 14:26:03 INFO  root:9 - Car 857 CDA has been sold to user number 100
+2019-06-18 14:46:13 INFO  root:9 - Application Started
+2019-06-18 14:46:29 INFO  root:9 - Employee 1 has logged in.
+2019-06-18 14:46:41 INFO  root:9 - Car 1000, license 8585549, created.
+2019-06-18 14:46:54 INFO  root:9 - Customer 
+2019-06-18 14:47:31 INFO  root:9 - Employee 1 has logged in.
+2019-06-18 14:47:40 INFO  root:9 - Status of offer by 100 for car 8585549 is  set to Rejected
+2019-06-18 14:47:43 INFO  root:9 - Status of car 8585549 is  set to Removed
+2019-06-18 14:47:46 INFO  root:9 - Status of car 8585549 is  set to Sold
+2019-06-18 14:47:47 INFO  root:9 - Status of offer by 100 for car 8585549 is  set to Accepted
+2019-06-18 14:49:02 INFO  root:9 - Car 830 14D has been sold to user number 100
+2019-06-18 14:49:16 INFO  root:9 - Car 1001, license 11746030, created.
+2019-06-18 14:49:30 INFO  root:9 - Customer 
+2019-06-18 14:50:26 INFO  root:9 - Employee 1 has logged in.
+2019-06-18 14:50:34 INFO  root:9 - Status of offer by 100 for car 11746030 is  set to Rejected
+2019-06-18 14:50:37 INFO  root:9 - Status of car 11746030 is  set to Removed
+2019-06-18 14:50:41 INFO  root:9 - Status of car 11746030 is  set to Sold
+2019-06-18 14:50:42 INFO  root:9 - Status of offer by 100 for car 11746030 is  set to Accepted
+2019-06-18 14:53:55 INFO  root:9 - Application Started
+2019-06-18 14:54:14 INFO  root:9 - Employee 1 has logged in.
+2019-06-18 14:54:58 INFO  root:9 - Car 1000, license 10284787, created.
+2019-06-18 14:55:10 INFO  root:9 - Customer 
+2019-06-18 14:55:42 INFO  root:9 - Employee 1 has logged in.
+2019-06-18 14:55:50 INFO  root:9 - Status of offer by 101 for car 10284787 is  set to Rejected
+2019-06-18 14:55:53 INFO  root:9 - Status of car 10284787 is  set to Removed
+2019-06-18 14:55:56 INFO  root:9 - Status of car 10284787 is  set to Sold
+2019-06-18 14:55:58 INFO  root:9 - Status of offer by 101 for car 10284787 is  set to Accepted
+2019-06-18 14:56:15 INFO  root:9 - Car 9CE EF3 has been sold to user number 101
+2019-06-18 14:57:21 INFO  root:9 - Application Started
+2019-06-18 14:57:34 INFO  root:9 - Application Started
+2019-06-18 14:57:52 INFO  root:9 - Employee 1 has logged in.
+2019-06-18 14:59:06 INFO  root:9 - Car 1000, license 12562532, created.
+2019-06-18 14:59:20 INFO  root:9 - Customer 
+2019-06-18 14:59:40 INFO  root:9 - Customer 
+2019-06-18 15:00:21 INFO  root:9 - Employee 1 has logged in.
+2019-06-18 15:00:31 INFO  root:9 - Status of offer by 101 for car 12562532 is  set to Rejected
+2019-06-18 15:00:34 INFO  root:9 - Status of car 12562532 is  set to Removed
+2019-06-18 15:00:37 INFO  root:9 - Status of car 12562532 is  set to Sold
+2019-06-18 15:00:38 INFO  root:9 - Status of offer by 101 for car 10284787 is  set to Accepted
+2019-06-18 15:00:46 INFO  root:9 - Car BFB 064 has been sold to user number 101
+2019-06-18 15:03:56 INFO  root:9 - Application Started
+2019-06-18 15:04:11 INFO  root:9 - Customer 
+2019-06-18 15:04:44 INFO  root:9 - Employee 1 has logged in.
+2019-06-18 15:04:51 INFO  root:9 - Status of offer by 101 for car 12562532 is  set to Rejected
+2019-06-18 15:06:04 INFO  root:9 - Application Started
+2019-06-18 15:07:55 INFO  root:9 - Employee 1 has logged in.
+2019-06-18 15:08:14 INFO  root:9 - Employee 1 has logged in.
+2019-06-18 15:08:19 INFO  root:9 - Status of offer by 101 for car 12562532 is  set to Rejected
+2019-06-18 15:08:22 INFO  root:9 - Status of car 12562532 is  set to Removed
+2019-06-18 15:08:26 INFO  root:9 - Status of car 12562532 is  set to Sold
+2019-06-18 15:08:27 INFO  root:9 - Status of offer by 101 for car 12562532 is  set to Accepted
+2019-06-18 15:08:30 INFO  root:9 - Car BFB 064 has been sold to user number 101
+2019-06-18 15:10:29 INFO  root:9 - Application Started
+2019-06-18 15:10:51 INFO  root:9 - Application Started
+2019-06-18 15:11:23 INFO  root:9 - Employee 1 has logged in.
+2019-06-18 15:11:57 INFO  root:9 - Employee 1 has logged in.
+2019-06-18 15:13:01 INFO  root:9 - Application Started
+2019-06-18 15:13:16 INFO  root:9 - Employee 1 has logged in.
+2019-06-18 15:13:33 INFO  root:9 - Customer 
+2019-06-18 15:14:00 INFO  root:9 - Employee 1 has logged in.
+2019-06-18 15:14:08 INFO  root:9 - Status of offer by 100 for car 12562532 is  set to Rejected
+2019-06-18 15:14:10 INFO  root:9 - Status of offer by 101 for car 12562532 is  set to Rejected
+2019-06-18 15:14:13 INFO  root:9 - Status of car 12562532 is  set to Removed
+2019-06-18 15:14:16 INFO  root:9 - Status of car 12562532 is  set to Sold
+2019-06-18 15:14:18 INFO  root:9 - Status of offer by 100 for car 12562532 is  set to Accepted
+2019-06-18 15:14:21 INFO  root:9 - Car BFB 064 has been sold to user number 100
+2019-06-18 15:17:02 INFO  root:9 - Application Started
+2019-06-18 15:18:22 INFO  root:9 - Application Started
+2019-06-18 15:18:56 INFO  root:9 - Application Started
+2019-06-18 15:19:14 INFO  root:9 - Employee 1 has logged in.
+2019-06-18 15:19:47 INFO  root:9 - Application Started
+2019-06-18 15:20:02 INFO  root:9 - Employee 1 has logged in.
+2019-06-18 15:20:44 INFO  root:9 - Application Started
+2019-06-18 15:21:00 INFO  root:9 - Employee 1 has logged in.
+2019-06-18 15:21:20 INFO  root:9 - Application Started
+2019-06-18 15:21:37 INFO  root:9 - Employee 1 has logged in.
+2019-06-18 16:02:56 INFO  root:9 - Application Started
+2019-06-18 16:03:18 INFO  root:9 - Customer 
+2019-06-18 16:04:36 INFO  root:9 - Application Started
+2019-06-18 16:04:54 INFO  root:9 - Customer 
+2019-06-18 16:05:59 INFO  root:9 - Application Started
+2019-06-18 16:09:21 INFO  root:9 - Application Started
+2019-06-18 16:09:41 INFO  root:9 - Customer 
+2019-06-18 16:10:13 INFO  root:9 - Application Started
+2019-06-18 16:10:19 INFO  root:9 - Application Started
+2019-06-18 16:11:00 INFO  root:9 - Customer 
+2019-06-18 16:12:51 INFO  root:9 - Application Started
+2019-06-18 16:12:56 INFO  root:9 - Application Started
+2019-06-18 16:13:11 INFO  root:9 - Customer 
+2019-06-18 16:16:53 INFO  root:9 - Application Started
+2019-06-18 16:17:14 INFO  root:9 - Customer 
+2019-06-18 16:19:35 INFO  root:9 - Application Started
+2019-06-18 16:19:53 INFO  root:9 - Customer 
+2019-06-18 16:33:46 INFO  root:9 - Application Started
+2019-06-18 16:34:03 INFO  root:9 - Customer 
+2019-06-18 16:34:33 INFO  root:9 - Application Started
+2019-06-18 16:34:48 INFO  root:9 - Customer 
+2019-06-18 16:35:08 INFO  root:9 - Application Started
+2019-06-18 16:35:24 INFO  root:9 - Customer 
+2019-06-18 16:36:37 INFO  root:9 - Application Started
+2019-06-18 16:36:57 INFO  root:9 - Customer 
+2019-06-18 16:37:48 INFO  root:9 - Application Started
+2019-06-18 16:38:03 INFO  root:9 - Customer 
+2019-06-18 16:39:16 INFO  root:9 - Application Started
+2019-06-18 16:39:29 INFO  root:9 - Customer 
+2019-06-18 16:41:14 INFO  root:9 - Application Started
+2019-06-18 16:41:33 INFO  root:9 - Customer 
+2019-06-18 16:46:02 INFO  root:9 - Application Started
+2019-06-18 16:46:22 INFO  root:9 - Customer 
+2019-06-18 16:46:54 INFO  root:9 - Application Started
+2019-06-18 16:47:11 INFO  root:9 - Customer 
+2019-06-18 16:48:12 INFO  root:9 - Customer 
+2019-06-18 16:48:38 INFO  root:9 - Employee 1 has logged in.
+2019-06-18 16:48:54 INFO  root:9 - Car 1000, license 12170429, created.
+2019-06-18 16:49:08 INFO  root:9 - Customer 
+2019-06-18 16:49:43 INFO  root:9 - Employee 1 has logged in.
+2019-06-18 16:49:53 INFO  root:9 - Application Started
+2019-06-18 16:50:13 INFO  root:9 - Employee 1 has logged in.
+2019-06-18 16:50:28 INFO  root:9 - Status of offer by 101 for car 12170429 is  set to Rejected
+2019-06-18 16:50:31 INFO  root:9 - Status of car 12170429 is  set to Removed
+2019-06-18 16:50:34 INFO  root:9 - Status of car 12170429 is  set to Sold
+2019-06-18 16:50:36 INFO  root:9 - Status of offer by 101 for car 12170429 is  set to Accepted
+2019-06-18 16:50:39 INFO  root:9 - Car B9B 4BD has been sold to user number 101
+2019-06-18 16:51:07 INFO  root:9 - Customer 
+2019-06-18 16:51:45 INFO  root:9 - Customer 
+2019-06-18 16:52:45 INFO  root:9 - Application Started
+2019-06-18 16:53:03 INFO  root:9 - Customer 
+2019-06-18 16:53:53 INFO  root:9 - Customer 

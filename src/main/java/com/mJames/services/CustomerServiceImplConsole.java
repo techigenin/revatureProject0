@@ -2,6 +2,7 @@ package com.mJames.services;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 import com.mJames.pojo.Car;
@@ -21,6 +22,7 @@ import com.mJames.ui.IOUtil;
 		commands.put(3, "3. Make offer");
 		commands.put(4, "4. View my cars");
 		commands.put(5, "5. View remaining payments");
+		commands.put(6, "6. Make a payment");
 		commands.put(0, "0. Logout");
 		
 		return commands;
@@ -105,6 +107,42 @@ import com.mJames.ui.IOUtil;
 			System.out.printf("%8s%8.2f%8d%8.2f\n", 
 					car.getLicenseString(), 
 					car.getPrice());
+		}
+	}
+	@Override
+	public void makePayment(CarLot cl, Customer cust) {
+		PaymentService ps = new PaymentServiceImpl();
+		
+		Map<Integer, Car> userCars = new HashMap<Integer, Car>();
+		int i = 1;
+		
+		for (Car c : cl.getCars().values())
+		{
+			if (c.statusSold() &&c.getOwnerID() == cust.getUserNum())
+			{
+				userCars.put(i++, c);
+			}
+		}
+		
+		
+		if (userCars.size() > 0)
+		{
+			IOUtil.messageToUser("User has the following cars:");
+			IOUtil.messageToUser("%5s%10s%10s%10s%10s\n", "", "License", "Make", "Model", "Color");
+			
+			i = 1;
+			
+			for (Car c : userCars.values())
+			{
+				IOUtil.messageToUser("%5d.%10s%10s%10s%10s\n", i++, c.getLicenseString(),
+						c.getMake(), c.getModel(), c.getColor());	
+			}
+			
+			i = Integer.parseInt(IOUtil.getResponse("Please select a car number" , "[0-9]{1,3}"));
+			
+			Car c = userCars.get(i);
+			
+			ps.makePayment(cust.getUserNum(), c.getLicenseNumber());
 		}
 	}
 }
