@@ -5,12 +5,14 @@ import java.util.List;
 import com.mJames.pojo.Employee;
 
 public interface EmployeeDao {
+	
+	public boolean employeeExists(Employee e);
 
-	public void createEmployee(Employee u);
+	public boolean createEmployee(Employee e);
 	
-	public void updateEmployeePassword(String p, Employee c);
+	public boolean updateEmployeePassword(String p, Employee c);
 	
-	public void deleteEmployee(Employee u);
+	public boolean deleteEmployee(Employee e);
 	
 	public Employee getEmployeeByUserID(Integer id);
 	

@@ -46,7 +46,6 @@ public class CarLotServiceImplConsole implements CarLotService {
 			}
 			else if (response.contentEquals("2"))
 			{
-				//Customer newCust = new Customer(c);
 				addCustomer(cl);
 			}
 			else if (response.contentEquals("0"))
@@ -232,6 +231,7 @@ public class CarLotServiceImplConsole implements CarLotService {
 	{
 		rejectAllOffers(car);
 		
+		car.setLotID(null);
 		car.setStatusRemoved();
 		DataUpdate.saveCarLot(cl);
 	}
@@ -522,7 +522,7 @@ public class CarLotServiceImplConsole implements CarLotService {
 				"Please enter a password for the new user (alphanumeric, no spaces)", 
 				"[A-Za-z0-9']{0,50}");
 		
-		addUser(new Customer(uNum, firstName, lastName, password));
+		addUser(new Customer(uNum, firstName, lastName, password, true));
 		
 		IOUtil.messageToUser("User " + firstName + " added. User number is: " + uNum);
 	}

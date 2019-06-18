@@ -41,21 +41,12 @@ public class Car implements Serializable{
 		this.make = make;
 		this.model = model;
 		this.ownerID = ownerID;
-		setStatus(status);
+		this.status = status;
+		
+		DataUpdate.saveCar(this);
 	}	
-//	  public Car(int lotID, int licenseNumber, double price, String color, Integer
-//	  ownerID, String make, String model) 
-//	  { 
-//		  super(); 
-//		  this.lotID = lotID;
-//		  this.licenseNumber = licenseNumber; 
-//		  this.price = price; 
-//		  this.color = color;
-//		  this.ownerID = ownerID; 
-//		  this.make = make; 
-//		  this.model = model; 
-//		  
-//	  }
+
+	// Used for DB reconstruction
 	public Car(Integer lotID, int licenseNumber, Integer ownerID,   
 			String make, String model, String color,double price,
 			String status)	{ 
@@ -67,7 +58,7 @@ public class Car implements Serializable{
 		  this.ownerID = ownerID; 
 		  this.make = make; 
 		  this.model = model; 
-		  setStatus(status);
+		  this.status = status;
 	  }
 
 	@Override
@@ -150,6 +141,7 @@ public class Car implements Serializable{
 
 	public void setLotID(Integer lotID) {
 		this.lotID = lotID;
+		DataUpdate.saveCarLotID(this);
 	}
 
 	public double getPrice() {
@@ -166,6 +158,7 @@ public class Car implements Serializable{
 
 	public void setOwnerID(Integer ownerID) {
 		this.ownerID = ownerID;
+		DataUpdate.saveCarOwnerID(this);
 	}
 
 	public int getLicenseNumber() {
@@ -202,7 +195,7 @@ public class Car implements Serializable{
 
 	private void setStatus(String status) {
 		this.status = status;
-		DataUpdate.saveCar(this);
+		DataUpdate.saveCarStatus(this);
 	}
 	public void setStatusActive() {
 		setStatus("Active");

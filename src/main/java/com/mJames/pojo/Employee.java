@@ -12,9 +12,16 @@ public class Employee extends User implements Serializable{
 		super();
 	}
 	
-	public Employee(int userNum, String firstName, String lastName, String password) {
+	// Used for DB reconstruction
+	public Employee(int userNum, String firstName, String lastName, String password){
 		super(userNum, firstName, lastName, password);
-		DataUpdate.saveUser(this);
+	}
+	
+	public Employee(int userNum, String firstName, String lastName, String password, boolean isNew) {
+		this(userNum, firstName, lastName, password);
+		
+		if (isNew)
+			DataUpdate.saveEmployeePassword(this, password);
 	}
 	
 	// TODO - Consider removing Employee and Customer, since they really are just users

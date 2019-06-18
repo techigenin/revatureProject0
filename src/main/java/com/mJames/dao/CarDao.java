@@ -6,13 +6,14 @@ import com.mJames.pojo.Car;
 
 public interface CarDao {
 	
-	public void createCar(Car c);
+	public boolean carExists(Car c) ;
+	public boolean createCar(Car c);
 	
-	public void updateCarLotID(Car c);
-	public void updateCarOwnerID(Car c);
-	public void updateCarStatus(Car c);
+	public boolean updateCarLotID(Car c);
+	public boolean updateCarOwnerID(Car c);
+	public boolean updateCarStatus(Car c);
 	
-	public void deleteCar(Car c);
+	public boolean deleteCar(Car c);
 	
 	public Car getCarByLicense(Integer license);
 	

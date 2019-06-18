@@ -1,4 +1,4 @@
-package com.mJames.driver;
+package com.mJames.util;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
@@ -6,6 +6,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import com.mJames.dao.EmployeeDao;
+import com.mJames.dao.EmployeeDaoImpl;
+import com.mJames.pojo.Employee;
 import com.mJames.ui.IOUtil;
 
 public class CheckCreateTables {
@@ -92,7 +95,6 @@ public class CheckCreateTables {
 						+ "PRIMARY KEY (employeeid))";
 				
 				stmt.executeUpdate(sql);
-				IOUtil.messageToUser("Table \"employee\" Created");
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

@@ -1,5 +1,7 @@
 package com.mJames.pojo;
 
+import com.mJames.util.DataUpdate;
+
 public class Payment {
 	
 	private Integer userID;
@@ -14,6 +16,7 @@ public class Payment {
 		super();
 	}
 
+	// Used for DB reconstruction
 	public Payment(int userID, int carLicense, double amount, double amountRemaining, int term) {
 		super();
 		this.userID = userID;
@@ -21,6 +24,12 @@ public class Payment {
 		this.amount = amount;
 		this.amountRemaining = amountRemaining;
 		this.term = term;
+	}
+	public Payment(int userID, int carLicense, double amount, double amountRemaining, int term, boolean isNew) {
+		this(userID, carLicense, amount, amountRemaining, term);
+		
+		if (isNew)
+			DataUpdate.savePayment(this);
 	}
 
 	public double getAmount() {

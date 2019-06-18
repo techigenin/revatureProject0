@@ -29,10 +29,22 @@ public class Offer implements Serializable{
 		setStatus(status);
 		this.acceptedBy = acceptedBy;
 	}
-	
-	public Offer(int carLicense, int userNum, double value, int months, String string) {
-		this(carLicense, userNum, value, months, string, null);
+	// Used for DB reconstruction
+	public Offer(Integer carLicense, Integer userNum, Double value, Integer months, String status) {
+		this(carLicense, userNum, value, months, status, null);
+	}	
+	public Offer(Integer carLicense, Integer userNum, Double value, Integer months, String status, boolean isNew) {
+		super();
+		this.setCarLicense(carLicense);
+		this.userID = userNum;
+		this.value = value;
+		this.term = months;
+		this.status = status;
+		this.acceptedBy = null;
+		
+		DataUpdate.saveOffer(this);
 	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -62,8 +74,7 @@ public class Offer implements Serializable{
 			return false;
 		return true;
 	}
-	
-	
+
 	public Integer getCarLicense() {
 		return carLicense;
 	}
@@ -78,7 +89,6 @@ public class Offer implements Serializable{
 	}
 	private void setValue(double oVal) {
 		value = oVal;
-		DataUpdate.saveOffer(this);
 	}
 	public boolean updateOffer(double oVal) {
 		if (oVal > value)
@@ -99,6 +109,7 @@ public class Offer implements Serializable{
 	}
 	public void setAcceptedBy(Integer acceptedBy) {
 		this.acceptedBy = acceptedBy;
+		DataUpdate.saveOfferAcceptedBy(this);
 	}
 
 	public String getStatus() {
@@ -118,7 +129,7 @@ public class Offer implements Serializable{
 	}
 	private void setStatus(String status) {
 		this.status = status;
-		DataUpdate.saveOffer(this);
+		DataUpdate.saveOfferStatus(this);
 	}
 	public void setStatusActive() {
 		setStatus("Active");

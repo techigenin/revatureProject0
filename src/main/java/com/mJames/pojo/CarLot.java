@@ -1,11 +1,24 @@
 package com.mJames.pojo;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import com.mJames.dao.CarDao;
+import com.mJames.dao.CarDaoImpl;
+import com.mJames.dao.CustomerDao;
+import com.mJames.dao.CustomerDaoImpl;
+import com.mJames.dao.EmployeeDao;
+import com.mJames.dao.EmployeeDaoImpl;
+import com.mJames.dao.OfferDao;
+import com.mJames.dao.OfferDaoImpl;
+import com.mJames.dao.PaymentDao;
+import com.mJames.dao.PaymentDaoImpl;
 import com.mJames.pojo.User;
 import com.mJames.util.Logging;
 
@@ -33,14 +46,56 @@ public class CarLot extends Logging implements Serializable {
 		payments = new HashSet<Payment>();
 		licenceToLotID = new HashMap<Integer, Integer>();
 	}
-	/*
-	 * public CarLot(Map<Integer, Car> cars, Map<Integer, User> users) { super();
-	 * this.cars = cars; this.users = users;
-	 * 
-	 * knownLicenses = new HashSet<Integer>();
-	 * 
-	 * for (Car c : cars.values()) { knownLicenses.add(c.getLicenseNumber()); } }
-	 */
+
+	public void buildFromDB() {
+		CarDao carDao = new CarDaoImpl();
+		EmployeeDao eDao = new EmployeeDaoImpl();
+		CustomerDao cDao = new CustomerDaoImpl();
+		OfferDao oDao = new OfferDaoImpl();
+		PaymentDao pDao = new PaymentDaoImpl();
+		
+		List<Car> carList = carDao.getAllCars();
+		List<User> userList = new ArrayList<User>();
+		userList.addAll(eDao.getAllEmployees());
+		userList.addAll(cDao.getAllCustomers());
+		
+		for (Car c : carList)
+			cars.put(c.getLotID(), c);
+		for (User u : userList)
+			users.put(u.getUserNum(), u);
+		offers.addAll(oDao.getAllOffers());
+		payments.addAll(pDao.getAllPayments());
+		
+		buildLicToLotID();
+	}
+	
+	public boolean addKnownLicenses(Collection<Integer> licenses) {
+		return knownLicenses.addAll(licenses);
+	}
+	public boolean addUsers(Collection<Customer> custs, Collection<Employee> emps) {
+		Map<Integer, User> usrMap = new HashMap<Integer, User>();
+		
+		for (Customer c : custs)
+			usrMap.put(c.getUserNum(), c);
+		for (Employee e : emps)
+			usrMap.put(e.getUserNum(), e);
+		
+		int usersSize = users.size();
+		
+		users.putAll(usrMap);
+		
+		return (users.size() - usersSize) == usrMap.size();
+	}
+	public boolean addOffers(Collection<Offer> offs) {
+		return offers.addAll(offs);
+	}
+	public boolean addPayments(Collection<Payment> pmts) {
+		return payments.addAll(pmts);
+	}
+	private void buildLicToLotID() {
+		for (Car c : cars.values())
+			licenceToLotID.put(c.getLicenseNumber(), c.getLotID());
+	}
 	
 	public Car addCar(Car car)
 	{
@@ -52,28 +107,13 @@ public class CarLot extends Logging implements Serializable {
 		cars.put(car.getLotID(), car);
 		knownLicenses.add(car.getLicenseNumber());
 		
+		licenceToLotID.put(car.getLicenseNumber(), car.getLotID());
+		
 		return car;
 	}
 	public Map<Integer, Integer> removeCar(int license) {
 		licenceToLotID.put(license, null);
 		return licenceToLotID;
-		//		Car car = new Car();
-//		
-//		for (Car c : cars.values())
-//		{
-//			if (c.getLicenseNumber() == license)
-//			{
-//				car = c;
-//				break;
-//			}
-//		}
-//		
-//		cars.remove(car.getLotID());
-//		int idNum = car.getLotID();
-//		
-//		Logging.infoLog("Car " + idNum + ", license " + license + ", removed.");
-//		
-//		return cars;
 	}
 	public Map<Integer, Car> getCars() {
 		return cars;
@@ -128,4 +168,6 @@ public class CarLot extends Logging implements Serializable {
 	public Integer getLotID(Integer lVal) {
 		return licenceToLotID.get(lVal);
 	}
+
+
 }

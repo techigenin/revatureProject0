@@ -4,7 +4,10 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 import com.mJames.pojo.CarLot;
+import com.mJames.services.CarLotService;
+import com.mJames.services.CarLotServiceImplConsole;
 import com.mJames.ui.IOUtil;
+import com.mJames.util.CheckCreateTables;
 import com.mJames.util.ConnectionFactory;
 import com.mJames.util.Logging;
 
@@ -27,10 +30,11 @@ public class DriverDB {
 			CheckCreateTables.checkEmployeeTable(conn);
 			CheckCreateTables.checkOfferTable(conn);
 			CheckCreateTables.checkPaymentTable(conn);
-			
+
 			CarLot carlot = new CarLot();
-			
-			
+			carlot.buildFromDB();
+			CarLotService cs = new CarLotServiceImplConsole(carlot);
+			cs.run();
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

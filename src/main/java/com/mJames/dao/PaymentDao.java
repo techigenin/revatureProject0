@@ -6,13 +6,15 @@ import com.mJames.pojo.Payment;
 
 public interface PaymentDao {
 	
-	public void createPayment(Payment u);
+	public boolean paymentExists(Payment p);
 	
-	public void updatePaymentAmmount(Payment u);
+	public boolean createPayment(Payment p);
 	
-	public void updatePaymentAmmountRemaining(Payment u);
+	public boolean updatePaymentAmmount(Payment p);
 	
-	public void deletePayment(Payment u);
+	public boolean updatePaymentAmmountRemaining(Payment p);
+	
+	public boolean deletePayment(Payment p);
 	
 	public Payment getPaymentByUserIDAndLicense(Integer license, Integer id);
 	

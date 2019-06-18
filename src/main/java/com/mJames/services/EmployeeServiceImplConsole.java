@@ -75,7 +75,7 @@ public class EmployeeServiceImplConsole extends UserServiceImplConsole implement
 				"Please enter a password for the new user (alphanumeric, no spaces)", 
 				"[A-Za-z0-9']{0,50}");
 		
-		Employee newEmployee = new Employee(uNum, firstName, lastName, password);
+		Employee newEmployee = new Employee(uNum, firstName, lastName, password, true);
 		
 		cs.addUser(newEmployee);
 		
@@ -114,9 +114,9 @@ public class EmployeeServiceImplConsole extends UserServiceImplConsole implement
 		cNum = cs.firstFree(cNum);
 		
 		String color = IOUtil.getResponse("Please enter a color", "[A-Za-z]{0,20}");
-		Double price = Double.parseDouble(IOUtil.getResponse("Please enter a price:", "[0-9]{0,5}[.]{1}[0-9]{1,2}|[0-9]{0,5}"));
 		String make = IOUtil.getResponse("Please enter the make", "[A-Za-z]{0,20}");
 		String model = IOUtil.getResponse("Please enter the model", "[A-Za-z0-9]{0,20}");
+		Double price = Double.parseDouble(IOUtil.getResponse("Please enter a price:", "[0-9]{0,5}[.]{1}[0-9]{1,2}|[0-9]{0,5}"));
 		
 		cs.addCar(new Car(cNum, price, color, make, model, null, "Active", c.getKnownLicenses()));
 	}	

@@ -1,6 +1,7 @@
 package com.mJames.dao;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -8,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.mJames.pojo.Car;
+import com.mJames.util.ConnectionFactory;
 import com.mJames.util.Logging;
 
 public class CarDaoImpl implements CarDao {
@@ -15,85 +17,126 @@ public class CarDaoImpl implements CarDao {
 	private Connection conn;
 	
 	@Override
-	public void createCar(Car c) {
+	public boolean carExists(Car c) {
 		try {
+			conn = ConnectionFactory.getConnection();
 			Statement stmt = conn.createStatement();
 			
-			String sql = "Insert INTO car " 
-						+ "VALUES (" 
-						+ c.getLicenseNumber()+ ", "
-						+ c.getOwnerID()+ ", "
-						+ c.getMake()+ ", "
-						+ c.getModel()+ ", "
-						+ c.getColor()+ ", "
-						+ c.getPrice()+ ", "
-						+ c.getLotID()+ ", "
-						+ c.getStatus() + ")";
-			stmt.execute(sql);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			String sql = "select * from car where licensenum = " + c.getLicenseNumber();
+			
+			ResultSet rs = stmt.executeQuery(sql);
+			
+			if(rs.next())
+				return true;
+		} catch (SQLException ex) {
+			ex.printStackTrace();
 		}
+		return false;
 	}
 	
 	@Override
-	public void updateCarLotID(Car c) {
+	public boolean createCar(Car c) {
 		try {
-			Statement stmt = conn.createStatement();
-			String query = "update car set LotID = " + c.getLotID() 
-							+ " where LicenseNum = " + c.getLicenseNumber();
-		
-			stmt.execute(query);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-	}
-
-	@Override
-	public void updateCarOwnerID(Car c) {
-		try {
-			Statement stmt = conn.createStatement();
-			String query = "update car set OwnerID = " + c.getOwnerID() 
-							+ " where LicenseNum = " + c.getLicenseNumber();
-		
-			stmt.execute(query);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
-	@Override
-	public void updateCarStatus(Car c) {
-		try {
-			Statement stmt = conn.createStatement();
-			String query = "update car set status = " + c.getStatus() 
-							+ " where LicenseNum = " + c.getLicenseNumber();
-			stmt.execute(query);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
-	@Override
-	public void deleteCar(Car c) {
-		try {
-			Statement stmt = conn.createStatement();
-			String query = "delete from car where licenseNum = " + c.getLicenseNumber();
+			conn = ConnectionFactory.getConnection();
 			
-			stmt.execute(query);
+			PreparedStatement pstmt = conn.prepareStatement(
+					"Insert INTO car VALUES (?,?,?,?,?,?,?,?);"); 
+				pstmt.setInt(1, c.getLicenseNumber());
+				if (c.getOwnerID() == null)
+					pstmt.setNull(2, java.sql.Types.INTEGER);
+				else
+					pstmt.setInt(2, c.getOwnerID());
+				pstmt.setString(3, c.getMake());
+				pstmt.setString(4, c.getModel());
+				pstmt.setString(5, c.getColor());
+				pstmt.setDouble(6, c.getPrice());
+				if (c.getLotID() == null)
+					pstmt.setNull(7, java.sql.Types.INTEGER);
+				else
+					pstmt.setInt(7, c.getLotID());
+				pstmt.setString(8, c.getStatus());
+			pstmt.executeUpdate();
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+	
+	@Override
+	public boolean updateCarLotID(Car c) {
+		try {
+			conn = ConnectionFactory.getConnection();
+			PreparedStatement pstmt = conn.prepareStatement("update car set LotID = ? where LicenseNum = ?;");
+			if (c.getLotID() == null)
+				pstmt.setNull(1, java.sql.Types.INTEGER);
+			else
+				pstmt.setInt(1, c.getLotID());
+			pstmt.setInt(2, c.getLicenseNumber());
+			pstmt.executeUpdate();
+			return true;
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+		}
+		return false;
+		
+	}
+
+	@Override
+	public boolean updateCarOwnerID(Car c) {
+		try {
+			conn = ConnectionFactory.getConnection();
+			PreparedStatement pstmt = conn.prepareStatement(
+					"update car set ownerid = ? "
+					+ "where licensenum = ?;");
+			if (c.getOwnerID() == null)
+				pstmt.setNull(1, java.sql.Types.INTEGER);
+			else
+				pstmt.setInt(1, c.getOwnerID());
+			pstmt.setInt(2, c.getLicenseNumber());
+			pstmt.executeUpdate();
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+
+	@Override
+	public boolean updateCarStatus(Car c) {
+		try {
+			conn = ConnectionFactory.getConnection();
+			PreparedStatement pstmt = conn.prepareStatement("update car set status = ? where LicenseNum = ?;");
+			pstmt.setString(1, c.getStatus());
+			pstmt.setInt(2, c.getLicenseNumber());
+			pstmt.executeUpdate();
+			return true;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return false;
+	}
+
+	@Override
+	public boolean deleteCar(Car c) {
+		try {
+			conn = ConnectionFactory.getConnection();
+			PreparedStatement pstmt = conn.prepareStatement("delete from car where licenseNum = ?;");
+			pstmt.setInt(1, c.getLicenseNumber());
+			pstmt.executeUpdate();
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
 	}
 
 	@Override
 	public Car getCarByLicense(Integer license) {
 		try {
+			conn = ConnectionFactory.getConnection();
 			Statement stmt = conn.createStatement();
 			
 			String sql = "select * from car where licensenum = " + license;
@@ -105,7 +148,6 @@ public class CarDaoImpl implements CarDao {
 				return buildCarFromRS(rs);
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -114,6 +156,7 @@ public class CarDaoImpl implements CarDao {
 	}
 	@Override
 	public List<Car> getAllCars() {
+		conn = ConnectionFactory.getConnection();
 		List<Car> carList = new ArrayList<Car>();
 		
 		Statement stmt;
@@ -125,7 +168,6 @@ public class CarDaoImpl implements CarDao {
 			while(rs.next())
 				carList.add(buildCarFromRS(rs));
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 

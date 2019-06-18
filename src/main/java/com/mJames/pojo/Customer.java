@@ -10,8 +10,14 @@ public class Customer extends User implements Serializable{
 	public Customer() {
 		super();
 	}
+	// Used for DB reconstruction
 	public Customer(int userNum, String firstName, String lastName, String password) {
 		super(userNum, firstName, lastName, password);
-		DataUpdate.saveUser(this);
+	}
+	public Customer(int userNum, String firstName, String lastName, String password, boolean isNew) {
+		this(userNum, firstName, lastName, password);
+		
+		if (isNew)
+			DataUpdate.saveCustomerPassword(this, password);
 	}
 }

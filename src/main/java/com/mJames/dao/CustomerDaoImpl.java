@@ -1,6 +1,7 @@
 package com.mJames.dao;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -9,59 +10,84 @@ import java.util.List;
 
 import com.mJames.dao.CustomerDao;
 import com.mJames.pojo.Customer;
+import com.mJames.util.ConnectionFactory;
 import com.mJames.util.Logging;
 
 public class CustomerDaoImpl implements CustomerDao {
 
 	private Connection conn;
-	
+
 	@Override
-	public void createCustomer(Customer c) {
+	public boolean customerExists(Customer c) {
 		try {
+			conn = ConnectionFactory.getConnection();
 			Statement stmt = conn.createStatement();
 			
-			String sql = "Insert INTO customer "
-					+ " (customerid, firstname, lastname) " 
-					+ "VALUES (" 
-					+ c.getUserNum()+ ", "
-					+ c.getFirstName()+ ", "
-					+ c.getLastName() + ")";
-			stmt.execute(sql);
+			String sql = "select * from customer where customerid = " + c.getUserNum();
+			
+			ResultSet rs = stmt.executeQuery(sql);
+			
+			if(rs.next())
+				return true;
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		}
+		return false;
+	}
+	
+	@Override
+	public boolean createCustomer(Customer c) {
+		try {
+			conn = ConnectionFactory.getConnection();
+			PreparedStatement pstmt = conn.prepareStatement("Insert INTO Customer (Customerid, firstname, lastname) VALUES (?, ?, ?)");
+			pstmt.setInt(1, c.getUserNum());
+			pstmt.setString(2, c.getFirstName());
+			pstmt.setString(3, c.getLastName());
+			pstmt.executeUpdate();
+			return true;
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
+		return false;
 	}
 	@Override
-	public void updateCustomerPassword(String p, Customer c) {
+	public boolean updateCustomerPassword(String p, Customer c) {
 		try {
-			Statement stmt = conn.createStatement();
-			String query = "update Customer set password = " + p 
-							+ " where customerid = " + c.getUserNum();
-		
-			stmt.execute(query);
+			conn = ConnectionFactory.getConnection();
+			PreparedStatement pstmt = conn.prepareStatement("update Customer set password = ? where Customerid = ?");
+			pstmt.setString(1, p);
+			pstmt.setInt(2, c.getUserNum());
+			pstmt.executeUpdate();
+			return true;
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
+			
 		}
-		
+			return false;
 	}
 
 	@Override
-	public void deleteCustomer(Customer c) {
+	public boolean deleteCustomer(Customer c) {
 		try {
-			Statement stmt = conn.createStatement();
-			String query = "delete from Customer where customerid = " + c.getUserNum();
-			stmt.execute(query);
+			conn = ConnectionFactory.getConnection();
+			PreparedStatement pstmt = conn.prepareStatement(
+					"delete from Customer where Customerid = ?;");
+			pstmt.setInt(1, c.getUserNum());
+			pstmt.executeUpdate();
+			return true;
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
+		return false;
 	}
 
 	@Override
 	public Customer getCustomerByUserID(Integer userID) {
 		try {
+			conn = ConnectionFactory.getConnection();
 			Statement stmt = conn.createStatement();
 			
 			String sql = "select * from Customer where customerid = " + userID;
@@ -84,6 +110,7 @@ public class CustomerDaoImpl implements CustomerDao {
 	public List<Customer> getAllCustomers() {
 		List<Customer> CustomerList = new ArrayList<Customer>();
 		
+		conn = ConnectionFactory.getConnection();
 		Statement stmt;
 		try {
 			stmt = conn.createStatement();
@@ -101,10 +128,10 @@ public class CustomerDaoImpl implements CustomerDao {
 	}
 	
 	private Customer buildCustomerFromRS(ResultSet rs) throws SQLException {
-		Integer userID = rs.getInt("lotid"); 
-		String firstName = rs.getString("make");
-		String lastName = rs.getString("model");
-		String password = rs.getString("color");
+		Integer userID = rs.getInt("customerid"); 
+		String firstName = rs.getString("firstname");
+		String lastName = rs.getString("lastname");
+		String password = rs.getString("password");
 		
 		return new Customer(userID, firstName, lastName, password);
 	}

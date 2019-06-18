@@ -6,13 +6,15 @@ import com.mJames.pojo.Customer;
 
 public interface CustomerDao {
 	
-	public void createCustomer(Customer u);
+	public boolean createCustomer(Customer u);
 	
-	public void updateCustomerPassword(String p, Customer c);
+	public boolean updateCustomerPassword(String p, Customer c);
 	
-	public void deleteCustomer(Customer u);
+	public boolean deleteCustomer(Customer u);
 	
 	public Customer getCustomerByUserID(Integer userID);
 	
 	public List<Customer> getAllCustomers();
+
+	public boolean customerExists(Customer c);
 }

@@ -1,6 +1,7 @@
 package com.mJames.dao;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -8,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.mJames.pojo.Offer;
+import com.mJames.util.ConnectionFactory;
 import com.mJames.util.Logging;
 
 public class OfferDaoImpl implements OfferDao {
@@ -15,72 +17,115 @@ public class OfferDaoImpl implements OfferDao {
 	private Connection conn;
 	
 	@Override
-	public void createOffer(Offer o) {
+	public boolean offerExists(Offer o) {
 		try {
+			conn = ConnectionFactory.getConnection();
 			Statement stmt = conn.createStatement();
 			
-			String sql = "Insert INTO Offer "
-					+ " (userid, car_license, value, term, accepted_by, status) " 
-					+ "VALUES (" 
-					+ o.getUserID()+ ", "
-					+ o.getCarLicense()+ ", "
-					+ o.getValue()+ ", "
-					+ o.getTerm() + ", "
-					+ o.getAcceptedBy() + ", "
-					+ o.getStatus() + ");";
-			stmt.execute(sql);
+			String sql = "select * from offer where userid = "
+				 + o.getUserID() + " and car_license = " + o.getCarLicense() + ";";
+			
+			ResultSet rs = stmt.executeQuery(sql);
+			
+			if(rs.next())
+				return true;
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		}
+		return false;
+	}
+	
+	@Override
+	public boolean createOffer(Offer o) {
+		try {
+			conn = ConnectionFactory.getConnection();
+			PreparedStatement pstmt = conn.prepareStatement("Insert INTO Offer "
+					+ "(userid, car_license, value, term, accepted_by, status) " 
+					+ "VALUES (?, ?, ?, ?, ?, ?);");
+			 
+			pstmt.setInt(1, o.getUserID());
+			pstmt.setInt(2, o.getCarLicense());
+			pstmt.setDouble(3, o.getValue());
+			pstmt.setInt(4, o.getTerm());
+			if (o.getAcceptedBy() == null)
+				pstmt.setNull(5, java.sql.Types.INTEGER);
+			else
+				pstmt.setInt(5, o.getAcceptedBy());
+			pstmt.setString(6, o.getStatus());
+			pstmt.executeUpdate();
+			return true;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return false;
 	}
 
 	@Override
-	public void updateOfferAcceptedBy(Offer o) {
+	public boolean updateOfferAcceptedBy(Offer o) {
 		try {
-			Statement stmt = conn.createStatement();
-			String query = "update Offer set accepted_by = " + o.getAcceptedBy() 
-							+ " where userid = " + o.getUserID()
-							+ " and car_license = " + o.getCarLicense() + ";";
-		
-			stmt.execute(query);
+			conn = ConnectionFactory.getConnection();
+			PreparedStatement pstmt = conn.prepareStatement(
+					"update Offer set accepted_by = ? "
+						+ "where userid = ? "
+						+ "and car_license = ? ;");
+			if (o.getAcceptedBy() == null)
+				pstmt.setNull(1, java.sql.Types.INTEGER);
+			else
+				pstmt.setInt(1, o.getAcceptedBy());
+			pstmt.setInt(2, o.getUserID());
+			pstmt.setInt(3, o.getCarLicense());
+			pstmt.executeUpdate();
+			return true;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return false;
 	}
 	@Override
-	public void updateOfferStatus(Offer o) {
+	public boolean updateOfferStatus(Offer o) {
 		try {
-			Statement stmt = conn.createStatement();
-			String query = "update Offer set status = " + o.getStatus() 
-							+ " where userid = " + o.getUserID()
-							+ " and car_license = " + o.getCarLicense() + ";";
-		
-			stmt.execute(query);
+			conn = ConnectionFactory.getConnection();
+			PreparedStatement pstmt = conn.prepareStatement(
+					"update Offer set status = ? "
+						+ "where userid = ? "
+						+ "and car_license = ?;");
+			pstmt.setString(1, o.getStatus());
+			pstmt.setInt(2, o.getUserID());
+			pstmt.setInt(3, o.getCarLicense());
+			pstmt.executeUpdate();
+			return true;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return false;
 	}
 
 	@Override
-	public void deleteOffer(Offer o) {
+	public boolean deleteOffer(Offer o) {
 		try {
-			Statement stmt = conn.createStatement();
-			String query = "delete from Offer "
-					+ "where userid = " + o.getUserID()
-					+ "and car_license = " + o.getCarLicense() + ";";
-			stmt.execute(query);
+			conn = ConnectionFactory.getConnection();
+			PreparedStatement pstmt = conn.prepareStatement(
+					"delete from Offer "
+						+ "where userid = ? "
+						+ "and car_license = ?;");
+			pstmt.setInt(1, o.getUserID());
+			pstmt.setInt(2, o.getCarLicense());
+			pstmt.executeUpdate();
+			return true;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return false;
 	}
 
 	@Override
 	public Offer getOfferByCustIDAndLicense(Integer userID, Integer license) {
 		try {
+			conn = ConnectionFactory.getConnection();
 			Statement stmt = conn.createStatement();
 			
 			String sql = "select * from Offer where userid = " + userID
@@ -104,6 +149,7 @@ public class OfferDaoImpl implements OfferDao {
 	public List<Offer> getAllOffers() {
 		List<Offer> OfferList = new ArrayList<Offer>();
 		
+		conn = ConnectionFactory.getConnection();
 		Statement stmt;
 		try {
 			stmt = conn.createStatement();
@@ -120,7 +166,7 @@ public class OfferDaoImpl implements OfferDao {
 	}
 
 	private Offer buildOfferFromRS(ResultSet rs) throws SQLException {
-		Integer userID = rs.getInt("lotid"); 
+		Integer userID = rs.getInt("userID"); 
 		Integer license = rs.getInt("car_license");
 		Double value = rs.getDouble("value");
 		Integer term = rs.getInt("term");
@@ -129,4 +175,6 @@ public class OfferDaoImpl implements OfferDao {
 		
 		return new Offer(license, userID, value, term, status, acceptedBy);
 	}
+
+
 }

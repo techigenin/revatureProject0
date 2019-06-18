@@ -6,16 +6,18 @@ import com.mJames.pojo.Offer;
 
 public interface OfferDao {
 	
-	public void createOffer(Offer u);
+	public boolean createOffer(Offer u);
 	
-	public void updateOfferAcceptedBy(Offer u);
+	public boolean updateOfferAcceptedBy(Offer u);
 
-	public void updateOfferStatus(Offer u);
+	public boolean updateOfferStatus(Offer u);
 	
-	public void deleteOffer(Offer u);
+	public boolean deleteOffer(Offer u);
 	
 	public Offer getOfferByCustIDAndLicense(Integer userID, Integer license);
 	
 	public List<Offer> getAllOffers();
+
+	public boolean offerExists(Offer o);
 
 }
