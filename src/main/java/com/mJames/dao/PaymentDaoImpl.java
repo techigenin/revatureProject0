@@ -1,6 +1,4 @@
 package com.mJames.dao;
-
-import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -9,8 +7,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.mJames.pojo.CarLot;
 import com.mJames.pojo.Payment;
-import com.mJames.services.PaymentService;
 import com.mJames.util.ConnectionFactory;
 import com.mJames.util.Logging;
 
@@ -163,21 +161,20 @@ public class PaymentDaoImpl implements PaymentDao {
 	}
 
 	@Override
-	public boolean createPayment(Integer custNum, Integer license) {
+	public boolean createPayment(Integer custNum, Integer license, CarLot cl) {
 		try {
 			//userid = u and car_license
 			conn = ConnectionFactory.getConnection();
 			Statement stmt = conn.createStatement();
-			String sql = "select payment_amount_remaining(" + custNum + ", " + license + ");";
+			String sql = "select * from payment_amount_remaining(" + custNum + ", " + license + ");";
 			ResultSet rs = stmt.executeQuery(sql);
 		
 			while(rs.next()) {
-				String[] returnStrings = fixReturnValue(rs.getString(1));
-				Integer highestPNum = Integer.parseInt(returnStrings[0]);
-				Double amtRem = Double.parseDouble(returnStrings[1]);
-				Double amt = Double.parseDouble(returnStrings[2]);
+				Integer highestPNum = rs.getInt("paymentnum");
+				Double amtRem = rs.getDouble("amtremaining");
+				Double amt = rs.getDouble("amt");
 				
-				new Payment(highestPNum+1, custNum, license, amt, amtRem - amt, true);
+				cl.addPayment(new Payment(highestPNum+1, custNum, license, amt, amtRem - amt, true));
 				return true;
 			}
 		} catch (SQLException e) {
@@ -188,9 +185,20 @@ public class PaymentDaoImpl implements PaymentDao {
 		return false;
 	}
 	
-	private String[] fixReturnValue(String retVal) {
-		retVal = retVal.substring(1, retVal.length()-1);
+	@Override
+	public Double getPaymentAmountRemaining(Integer custNum, Integer license) {
+		try {
+			conn = ConnectionFactory.getConnection();
+			Statement stmt = conn.createStatement();
+			String sql = "select * from get_amount_remaining(" + custNum + ", " + license + ");";
+			ResultSet rs = stmt.executeQuery(sql);
 		
-		return retVal.split(",");
+			while(rs.next()) {
+				return rs.getDouble("amtremaining");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return 0.0;
 	}
 }

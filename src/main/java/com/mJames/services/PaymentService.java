@@ -7,5 +7,5 @@ public interface PaymentService {
 
 	void makeFirstPayment(CarLot cl, Offer o, double amt);
 	
-	void makePayment(int ownerID, int license);
+	void makePayment(int ownerID, int license, CarLot cl);
 }

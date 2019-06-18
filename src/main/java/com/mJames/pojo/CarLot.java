@@ -29,7 +29,7 @@ public class CarLot extends Logging implements Serializable {
 	private final int CUSTOMERMAX = 999;
 	
 	private User currentUser;
-	private Map<Integer, Car> cars;
+	private Set<Car> cars;
 	private Set<Integer> knownLicenses;
 	private Map<Integer, User> users;
 	private Set<Offer> offers;
@@ -40,7 +40,7 @@ public class CarLot extends Logging implements Serializable {
 	{
 		super();
 		users = new HashMap<Integer, User>();
-		cars = new HashMap<Integer, Car>();
+		cars = new HashSet<Car>();
 		knownLicenses = new HashSet<Integer>();
 		offers = new HashSet<Offer>();
 		payments = new HashSet<Payment>();
@@ -54,15 +54,13 @@ public class CarLot extends Logging implements Serializable {
 		OfferDao oDao = new OfferDaoImpl();
 		PaymentDao pDao = new PaymentDaoImpl();
 		
-		List<Car> carList = carDao.getAllCars();
 		List<User> userList = new ArrayList<User>();
 		userList.addAll(eDao.getAllEmployees());
 		userList.addAll(cDao.getAllCustomers());
 		
-		for (Car c : carList)
-			cars.put(c.getLotID(), c);
 		for (User u : userList)
 			users.put(u.getUserNum(), u);
+		cars.addAll(carDao.getAllCars());
 		offers.addAll(oDao.getAllOffers());
 		payments.addAll(pDao.getAllPayments());
 		
@@ -93,7 +91,7 @@ public class CarLot extends Logging implements Serializable {
 		return payments.addAll(pmts);
 	}
 	private void buildLicToLotID() {
-		for (Car c : cars.values())
+		for (Car c : cars)
 			licenceToLotID.put(c.getLicenseNumber(), c.getLotID());
 	}
 	
@@ -104,7 +102,7 @@ public class CarLot extends Logging implements Serializable {
 		licenceToLotID.put(car.getLicenseNumber(), car.getLotID());
 		Logging.infoLog("Car " + idNum + ", license " + license + ", created.");
 		
-		cars.put(car.getLotID(), car);
+		cars.add(car);
 		knownLicenses.add(car.getLicenseNumber());
 		
 		licenceToLotID.put(car.getLicenseNumber(), car.getLotID());
@@ -115,7 +113,7 @@ public class CarLot extends Logging implements Serializable {
 		licenceToLotID.put(license, null);
 		return licenceToLotID;
 	}
-	public Map<Integer, Car> getCars() {
+	public Set<Car> getCars() {
 		return cars;
 	}
 	public int getEMPLOYEENUMMAX() {

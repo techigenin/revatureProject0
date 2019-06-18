@@ -2,6 +2,7 @@ package com.mJames.services;
 
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Set;
 
 import com.mJames.pojo.Car;
 import com.mJames.pojo.CarLot;
@@ -19,6 +20,8 @@ public interface CarLotService {
 	void printChoices(HashMap<Integer, String> map);
 
 	boolean elementExists(int u, Collection<Integer> c);
+	
+	Set<Integer> getCarLotIDs();
 
 	int firstFree(int start);
 
@@ -27,6 +30,10 @@ public interface CarLotService {
 	Car addCar(Car car);
 
 	void removeCar(Car car);
+	
+	Car getCarByLotID(Integer LotID);
+	
+	Car getCarByLicense(Integer license);
 
 	User addUser(User user);
 

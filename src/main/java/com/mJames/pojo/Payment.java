@@ -34,10 +34,7 @@ public class Payment implements Comparable<Payment> {
 	
 	@Override
 	public int compareTo(Payment p) {
-		if (this.getCarLicense() != p.getCarLicense())
-			return this.getCarLicense().compareTo(p.getCarLicense());
-		else
-			return this.getAmountRemaining().compareTo(p.getAmountRemaining());
+		return this.getPaymentNumber().compareTo(p.paymentNumber);
 	}
 
 	public Double getAmount() {

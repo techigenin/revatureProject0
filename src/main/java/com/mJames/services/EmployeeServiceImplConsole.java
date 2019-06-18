@@ -48,7 +48,7 @@ public class EmployeeServiceImplConsole extends UserServiceImplConsole implement
 			ret += s + "";
 		}
 		
-		return ret + "\\-]{0,2}";
+		return ret + "\\-]{1,2}";
 	}	
 	
 	@Override
@@ -138,9 +138,9 @@ public class EmployeeServiceImplConsole extends UserServiceImplConsole implement
 			{
 				int intResp = Integer.parseInt(response);
 				
-				if (c.getCars().keySet().contains(intResp))
+				if (cs.getCarLotIDs().contains(intResp))
 				{
-					cs.removeCar(c.getCars().get(intResp));
+					cs.removeCar(cs.getCarByLotID(intResp));
 					System.out.println("Car " + intResp + " removed.");
 					good = true;
 				}
@@ -160,7 +160,7 @@ public class EmployeeServiceImplConsole extends UserServiceImplConsole implement
 		{
 			// Add the car to the customers inventory
 			Customer cust = (Customer) c.getUsers().get(custNum);
-			Car car = c.getCars().get(carNum);
+			Car car = cs.getCarByLotID(carNum);
 			Set<Offer> offers = c.getOffers();
 			
 			for (Offer o : offers)
@@ -186,12 +186,14 @@ public class EmployeeServiceImplConsole extends UserServiceImplConsole implement
 	}
 	@Override
 	public void rejectOffer(CarLot c) {
+		CarLotService cs = new CarLotServiceImplConsole(c);
+		
 		int[] nums = offerBusiness(c);
 		if (nums[0] == -1)
 			return;
 		int carNum = nums[0];
 		int custNum = nums[1];
-		Car car = c.getCars().get(carNum);
+		Car car = cs.getCarByLotID(carNum);
 		
 		for (Offer o : c.getOffers())
 		{

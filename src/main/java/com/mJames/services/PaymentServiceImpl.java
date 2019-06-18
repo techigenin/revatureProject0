@@ -16,8 +16,8 @@ public class PaymentServiceImpl implements PaymentService {
 	}
 
 	@Override
-	public void makePayment(int ownerID, int license) {
+	public void makePayment(int ownerID, int license, CarLot cl) {
 		PaymentDao pd = new PaymentDaoImpl();
-		pd.createPayment(ownerID, license);
+		pd.createPayment(ownerID, license, cl);
 	}
 }

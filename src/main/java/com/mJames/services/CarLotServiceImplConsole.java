@@ -211,11 +211,19 @@ public class CarLotServiceImplConsole implements CarLotService {
 	@Override
 	public int firstFree(int start) 
 	{
-		Set<Integer> numbers = new HashSet<Integer>(cl.getUsers().keySet());
-		numbers.addAll(cl.getCars().keySet());
+		Set<Integer> numbers = getCarLotIDs();
 		
 		while(elementExists(start, numbers)) {start += 1;}
 		return start;
+	}
+
+	public Set<Integer> getCarLotIDs() {
+		Set<Integer> numbers = new HashSet<Integer>(cl.getUsers().keySet());
+
+		for (Car c : cl.getCars())
+			if (c.statusActive())
+				numbers.add(c.getLotID());
+		return numbers;
 	}	
 	@Override
 	public boolean userExists(Integer uNum) {
@@ -313,7 +321,7 @@ public class CarLotServiceImplConsole implements CarLotService {
 	{
 		ArrayList<Car> cars = new ArrayList<Car>();
 				
-		for (Car c : cl.getCars().values())
+		for (Car c : cl.getCars())
 		{
 			if (c.statusActive())
 				cars.add(c);
@@ -397,7 +405,16 @@ public class CarLotServiceImplConsole implements CarLotService {
 			System.out.println("The following offers exist");
 			System.out.printf("%8s%8s%8s%8s%8s%12s\n", "carID", "Color", "Price", "Offer", "Months",  "Customer");
 			
-			Car car = cl.getCars().get(cID);
+			Car car = new Car();
+			
+			for (Car c : cl.getCars())
+			{
+				if (c.getLotID() == cID)
+				{
+					car = c;
+					break;
+				}
+			}
 			
 			for (Offer o : offerSet)
 			{
@@ -416,7 +433,7 @@ public class CarLotServiceImplConsole implements CarLotService {
 	@Override
 	public void updateOffers(Offer newOffer) {
 		// First, the car exists
-		if (cl.getCars().values().contains(getCarByLicense(newOffer.getCarLicense())))
+		if (cl.getCars().contains(getCarByLicense(newOffer.getCarLicense())))
 		{
 			Set<Offer> activeOffers = new HashSet<Offer>();
 			
@@ -556,8 +573,9 @@ public class CarLotServiceImplConsole implements CarLotService {
 	private User getCustomerByID(Integer customerId) {
 		return cl.getUsers().get(customerId);
 	}
-	private Car getCarByLicense(int lic) {
-		for (Car c : cl.getCars().values())
+	@Override
+	public  Car getCarByLicense(Integer lic) {
+		for (Car c : cl.getCars())
 		{
 			if (c.getLicenseNumber() == lic)
 				return c;
@@ -588,4 +606,15 @@ public class CarLotServiceImplConsole implements CarLotService {
 					p.getAmountRemaining());
 		}
 	}
+
+	@Override
+	public Car getCarByLotID(Integer LotID) {
+		for (Car c : cl.getCars())
+			if (c.getLotID() == LotID)
+				return c;
+		
+		return new Car();
+	}
+
+
 }

@@ -2,6 +2,7 @@ package com.mJames.dao;
 
 import java.util.List;
 
+import com.mJames.pojo.CarLot;
 import com.mJames.pojo.Payment;
 
 public interface PaymentDao {
@@ -20,6 +21,8 @@ public interface PaymentDao {
 
 	Payment getPaymentbyPaymentNumber(Integer paymentNum);
 
-	boolean createPayment(Integer custNum, Integer license);
+	boolean createPayment(Integer custNum, Integer license, CarLot cl);
+	
+	Double getPaymentAmountRemaining(Integer custNum, Integer license);
 
 }
