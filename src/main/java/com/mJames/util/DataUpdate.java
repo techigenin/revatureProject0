@@ -23,10 +23,6 @@ public interface DataUpdate {
 		if (!carDao.carExists(car))
 			carDao.createCar(car);
 		
-		carDao.updateCarLotID(car);
-		carDao.updateCarOwnerID(car);
-		carDao.updateCarStatus(car);
-		
 		return true;
 	}
 	public static boolean saveCarLotID(Car car) {
@@ -102,9 +98,6 @@ public interface DataUpdate {
 		
 		if (!oDao.offerExists(o))
 			oDao.createOffer(o);
-		
-		oDao.updateOfferAcceptedBy(o);
-		oDao.updateOfferStatus(o);
 		
 		return true;
 	}
