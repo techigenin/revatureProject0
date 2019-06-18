@@ -577,7 +577,7 @@ public class CarLotServiceImplConsole implements CarLotService {
 	public  Car getCarByLicense(Integer lic) {
 		for (Car c : cl.getCars())
 		{
-			if (c.getLicenseNumber() == lic)
+			if (c.getLicenseNumber().equals(lic))
 				return c;
 		}
 		return null;
@@ -610,7 +610,7 @@ public class CarLotServiceImplConsole implements CarLotService {
 	@Override
 	public Car getCarByLotID(Integer LotID) {
 		for (Car c : cl.getCars())
-			if (c.getLotID() == LotID)
+			if (c.getLotID().equals(LotID))
 				return c;
 		
 		return new Car();

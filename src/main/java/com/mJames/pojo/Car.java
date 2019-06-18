@@ -12,8 +12,8 @@ public class Car implements Serializable{
 
 	private static final long serialVersionUID = -1720761779763343820L;
 	private Integer lotID; // Identifier Unique to carlot
-	private int licenseNumber; // Universally unique Identifier
-	private double price;
+	private Integer licenseNumber; // Universally unique Identifier
+	private Double price;
 	private String color;
 	private Integer ownerID;
 	private String make;
@@ -149,7 +149,7 @@ public class Car implements Serializable{
 		DataUpdate.saveCarLotID(this);
 	}
 
-	public double getPrice() {
+	public Double getPrice() {
 		return price;
 	}
 
@@ -166,7 +166,7 @@ public class Car implements Serializable{
 		DataUpdate.saveCarOwnerID(this);
 	}
 
-	public int getLicenseNumber() {
+	public Integer getLicenseNumber() {
 		return licenseNumber;
 	}
 

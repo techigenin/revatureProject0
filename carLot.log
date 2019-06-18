@@ -779,3 +779,18 @@
 2019-06-18 18:34:51 INFO  root:9 - Application Started
 2019-06-18 18:35:09 INFO  root:9 - Employee 1 has logged in.
 2019-06-18 18:37:52 INFO  root:9 - Application Started
+2019-06-18 18:40:00 INFO  root:9 - Application Started
+2019-06-18 18:40:17 INFO  root:9 - Customer 
+2019-06-18 18:42:24 INFO  root:9 - Application Started
+2019-06-18 18:42:43 INFO  root:9 - Employee 1 has logged in.
+2019-06-18 18:43:02 INFO  root:9 - Car 1000, license 5948476, created.
+2019-06-18 18:43:22 INFO  root:9 - Customer 
+2019-06-18 18:46:28 INFO  root:9 - Application Started
+2019-06-18 18:46:48 INFO  root:9 - Customer 
+2019-06-18 18:47:34 INFO  root:9 - Application Started
+2019-06-18 18:47:49 INFO  root:9 - Customer 
+2019-06-18 18:49:34 INFO  root:9 - Application Started
+2019-06-18 18:49:55 INFO  root:9 - Customer 
+2019-06-18 18:51:20 INFO  root:9 - Application Started
+2019-06-18 18:51:35 INFO  root:9 - Customer 
+2019-06-18 18:54:40 INFO  root:9 - Employee 1 has logged in.
