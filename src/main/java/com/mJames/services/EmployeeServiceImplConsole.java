@@ -197,7 +197,8 @@ public class EmployeeServiceImplConsole extends UserServiceImplConsole implement
 		
 		for (Offer o : c.getOffers())
 		{
-			if (o.getUserID() == custNum && o.getCarLicense() == car.getLicenseNumber())
+			if (o.getUserID().equals(custNum) && 
+					o.getCarLicense().equals(car.getLicenseNumber()))
 			{
 				o.setStatusRejected();
 				return;	
