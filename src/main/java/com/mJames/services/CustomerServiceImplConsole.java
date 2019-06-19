@@ -74,11 +74,11 @@ import com.mJames.ui.IOUtil;
 		else
 		{
 			IOUtil.messageToUser("I have the following cars");
-			IOUtil.messageToUser("%10s%8s\n", "License #", "Color");
+			IOUtil.messageToUser("%-12s%-10s%-10s%-15s\n", "License #", "Color", "Make", "Model");
 			
 			for (Car car : custCars)
 			{
-				IOUtil.messageToUser("%10s%8s%8s%8s\n", 
+				IOUtil.messageToUser("%12s%10s%10s%15s\n", 
 						car.getLicenseString(), 
 						car.getColor(),
 						car.getMake(),
@@ -146,13 +146,13 @@ import com.mJames.ui.IOUtil;
 		if (userCars.size() > 0)
 		{
 			IOUtil.messageToUser("User has the following cars:");
-			IOUtil.messageToUser("%6s%10s%10s%10s%10s\n", "", "License", "Make", "Model", "Color");
+			IOUtil.messageToUser("%-6s%-12s%-10s%-10s%-10s\n", "", "License", "Make", "Model", "Color");
 			
 			i = 1;
 			
 			for (Car c : userCars.values())
 			{
-				IOUtil.messageToUser("%5d.%10s%10s%10s%10s\n", i++, c.getLicenseString(),
+				IOUtil.messageToUser("%5d.%12s%10s%10s%10s\n", i++, c.getLicenseString(),
 						c.getMake(), c.getModel(), c.getColor());	
 			}
 			

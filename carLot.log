@@ -828,3 +828,25 @@
 2019-06-19 07:54:38 INFO  root:9 - Car 1009, license 14897701, created.
 2019-06-19 08:01:00 INFO  root:9 - Application Started
 2019-06-19 08:01:24 INFO  root:9 - Employee 1 has logged in.
+2019-06-19 09:07:23 INFO  root:9 - Application Started
+2019-06-19 09:12:05 INFO  root:9 - Application Started
+2019-06-19 09:12:24 INFO  root:9 - Employee 1 has logged in.
+2019-06-19 09:14:07 INFO  root:9 - Application Started
+2019-06-19 09:14:20 INFO  root:9 - Employee 1 has logged in.
+2019-06-19 09:15:32 INFO  root:9 - New User 2, Michael created.
+2019-06-19 09:16:45 INFO  root:9 - Customer 
+2019-06-19 09:18:37 INFO  root:9 - Application Started
+2019-06-19 09:19:02 INFO  root:9 - Customer 
+2019-06-19 09:19:33 INFO  root:9 - Application Started
+2019-06-19 09:19:45 INFO  root:9 - Customer 
+2019-06-19 09:22:50 INFO  root:9 - Employee 1 has logged in.
+2019-06-19 09:45:13 INFO  root:9 - Application Started
+2019-06-19 09:45:27 INFO  root:9 - Employee 1 has logged in.
+2019-06-19 09:45:38 INFO  root:9 - Car 1010, license 6282187, created.
+2019-06-19 09:45:43 INFO  root:9 - Customer 
+2019-06-19 09:46:31 INFO  root:9 - Employee 1 has logged in.
+2019-06-19 09:46:45 INFO  root:9 - Status of car 6282187 is  set to Removed
+2019-06-19 09:46:45 INFO  root:9 - Status of car 6282187 is  set to Sold
+2019-06-19 09:46:45 INFO  root:9 - Status of offer by 100 for car 6282187 is  set to Accepted
+2019-06-19 09:46:46 INFO  root:9 - Car 5FD BCB has been sold to user number 100
+2019-06-19 09:46:54 INFO  root:9 - Customer 

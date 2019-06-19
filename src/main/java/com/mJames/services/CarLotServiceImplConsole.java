@@ -331,7 +331,7 @@ public class CarLotServiceImplConsole implements CarLotService {
 		{
 			IOUtil.messageToUser("The following cars are on the lot.");
 			
-			IOUtil.messageToUser("%-6s%-11s%-11s%-15s%-8s%-16s\n", 
+			IOUtil.messageToUser("%-6s%-11s%-11s%-15s%-10s%-16s\n", 
 					"ID", 
 					"Color", 
 					"Make", 
@@ -342,7 +342,7 @@ public class CarLotServiceImplConsole implements CarLotService {
 			Collections.sort(cars);
 			for (Car car : cars)
 			{
-				IOUtil.messageToUser("%6d%11s%11s%15s%8.2f%16s\n", 
+				IOUtil.messageToUser("%6d%11s%11s%15s%10.2f%16s\n", 
 						car.getLotID(), 
 						car.getColor(), 
 						car.getMake(),
@@ -593,7 +593,7 @@ public class CarLotServiceImplConsole implements CarLotService {
 
 	@Override
 	public void viewPayments() {
-		IOUtil.messageToUser("%10s%10s%10s%18s\n", "License", "OwnerID", "Amount", "Amount Remaining");
+		IOUtil.messageToUser("%-12s%-10s%-10s%-18s\n", "License", "OwnerID", "Amount", "Amount Remaining");
 
 		List<Payment> payments = new ArrayList<Payment>();
 		
