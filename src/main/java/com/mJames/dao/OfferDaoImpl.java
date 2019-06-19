@@ -14,12 +14,11 @@ import com.mJames.util.Logging;
 
 public class OfferDaoImpl implements OfferDao {
 
-	private Connection conn;
-	
+	private static Connection conn = ConnectionFactory.getConnection();	
 	@Override
 	public boolean offerExists(Offer o) {
 		try {
-			conn = ConnectionFactory.getConnection();
+//			conn = ConnectionFactory.getConnection();
 			Statement stmt = conn.createStatement();
 			
 			String sql = "select * from offer where userid = "
@@ -38,7 +37,7 @@ public class OfferDaoImpl implements OfferDao {
 	@Override
 	public boolean createOffer(Offer o) {
 		try {
-			conn = ConnectionFactory.getConnection();
+//			conn = ConnectionFactory.getConnection();
 			PreparedStatement pstmt = conn.prepareStatement("Insert INTO Offer "
 					+ "(userid, car_license, value, term, accepted_by, status) " 
 					+ "VALUES (?, ?, ?, ?, ?, ?);");
@@ -64,7 +63,7 @@ public class OfferDaoImpl implements OfferDao {
 	@Override
 	public boolean updateOfferAcceptedBy(Offer o) {
 		try {
-			conn = ConnectionFactory.getConnection();
+//			conn = ConnectionFactory.getConnection();
 			PreparedStatement pstmt = conn.prepareStatement(
 					"update Offer set accepted_by = ? "
 						+ "where userid = ? "
@@ -86,7 +85,7 @@ public class OfferDaoImpl implements OfferDao {
 	@Override
 	public boolean updateOfferStatus(Offer o) {
 		try {
-			conn = ConnectionFactory.getConnection();
+//			conn = ConnectionFactory.getConnection();
 			PreparedStatement pstmt = conn.prepareStatement(
 					"update Offer set status = ? "
 						+ "where userid = ? "
@@ -106,7 +105,7 @@ public class OfferDaoImpl implements OfferDao {
 	@Override
 	public boolean deleteOffer(Offer o) {
 		try {
-			conn = ConnectionFactory.getConnection();
+//			conn = ConnectionFactory.getConnection();
 			PreparedStatement pstmt = conn.prepareStatement(
 					"delete from Offer "
 						+ "where userid = ? "
@@ -125,7 +124,7 @@ public class OfferDaoImpl implements OfferDao {
 	@Override
 	public Offer getOfferByCustIDAndLicense(Integer userID, Integer license) {
 		try {
-			conn = ConnectionFactory.getConnection();
+//			conn = ConnectionFactory.getConnection();
 			Statement stmt = conn.createStatement();
 			
 			String sql = "select * from Offer where userid = " + userID
@@ -149,7 +148,7 @@ public class OfferDaoImpl implements OfferDao {
 	public List<Offer> getAllOffers() {
 		List<Offer> OfferList = new ArrayList<Offer>();
 		
-		conn = ConnectionFactory.getConnection();
+//		conn = ConnectionFactory.getConnection();
 		Statement stmt;
 		try {
 			stmt = conn.createStatement();
@@ -175,6 +174,4 @@ public class OfferDaoImpl implements OfferDao {
 		
 		return new Offer(license, userID, value, term, status, acceptedBy);
 	}
-
-
 }

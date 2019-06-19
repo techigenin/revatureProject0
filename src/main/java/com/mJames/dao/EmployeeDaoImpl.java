@@ -14,12 +14,11 @@ import com.mJames.util.Logging;
 
 public class EmployeeDaoImpl implements EmployeeDao {
 
-private Connection conn;
-
+	private static Connection conn = ConnectionFactory.getConnection();
 	@Override
 	public boolean employeeExists(Employee e) {
 		try {
-			conn = ConnectionFactory.getConnection();
+//			conn = ConnectionFactory.getConnection();
 			Statement stmt = conn.createStatement();
 			
 			String sql = "select * from Employee where Employeeid = " + e.getUserNum();
@@ -36,7 +35,7 @@ private Connection conn;
 	@Override
 	public boolean createEmployee(Employee c) {
 		try {
-			conn = ConnectionFactory.getConnection();
+//			conn = ConnectionFactory.getConnection();
 			PreparedStatement pstmt = conn.prepareStatement("Insert INTO employee (employeeid, firstname, lastname) VALUES (?, ?, ?)");
 			pstmt.setInt(1, c.getUserNum());
 			pstmt.setString(2, c.getFirstName());
@@ -52,7 +51,7 @@ private Connection conn;
 	@Override
 	public boolean updateEmployeePassword(String p, Employee c) {
 		try {
-			conn = ConnectionFactory.getConnection();
+//			conn = ConnectionFactory.getConnection();
 			PreparedStatement pstmt = conn.prepareStatement("update employee set password = ? where employeeid = ?");
 			pstmt.setString(1, p);
 			pstmt.setInt(2, c.getUserNum());
@@ -69,7 +68,7 @@ private Connection conn;
 	@Override
 	public boolean deleteEmployee(Employee c) {
 		try {
-			conn = ConnectionFactory.getConnection();
+//			conn = ConnectionFactory.getConnection();
 			PreparedStatement pstmt = conn.prepareStatement(
 					"delete from employee where employeeid = ?;");
 			pstmt.setInt(1, c.getUserNum());
@@ -85,7 +84,7 @@ private Connection conn;
 	@Override
 	public Employee getEmployeeByUserID(Integer userID) {
 		try {
-			conn = ConnectionFactory.getConnection();
+//			conn = ConnectionFactory.getConnection();
 			Statement stmt = conn.createStatement();
 			
 			String sql = "select * from Employee where Employeeid = " 
@@ -109,7 +108,7 @@ private Connection conn;
 	public List<Employee> getAllEmployees() {
 		List<Employee> EmployeeList = new ArrayList<Employee>();
 		
-		conn = ConnectionFactory.getConnection();
+//		conn = ConnectionFactory.getConnection();
 		Statement stmt;
 		try {
 			conn = ConnectionFactory.getConnection();

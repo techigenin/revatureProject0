@@ -8,7 +8,7 @@ import java.util.Set;
 import com.mJames.util.DataUpdate;
 import com.mJames.util.Logging;
 
-public class Car implements Serializable{
+public class Car implements Serializable , Comparable<Car> {
 
 	private static final long serialVersionUID = -1720761779763343820L;
 	private Integer lotID; // Identifier Unique to carlot
@@ -217,5 +217,10 @@ public class Car implements Serializable{
 	public void setStatusRemoved() {
 		setStatus("Removed");
 		Logging.infoLog("Status of car " + licenseNumber + " is  set to Removed");
+	}
+
+	@Override
+	public int compareTo(Car arg0) {
+		return this.getLotID().compareTo(arg0.getLotID());
 	}
 }

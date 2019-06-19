@@ -29,7 +29,7 @@ public class CarLot extends Logging implements Serializable {
 	private final int CUSTOMERMAX = 999;
 	
 	private User currentUser;
-	private Set<Car> cars;
+	private List<Car> cars;
 	private Set<Integer> knownLicenses;
 	private Map<Integer, User> users;
 	private Set<Offer> offers;
@@ -40,19 +40,24 @@ public class CarLot extends Logging implements Serializable {
 	{
 		super();
 		users = new HashMap<Integer, User>();
-		cars = new HashSet<Car>();
+		cars = new ArrayList<Car>();
 		knownLicenses = new HashSet<Integer>();
 		offers = new HashSet<Offer>();
 		payments = new HashSet<Payment>();
 		licenceToLotID = new HashMap<Integer, Integer>();
 	}
 
-	public void buildFromDB() {
+	public void rebuildFromDB() {
 		CarDao carDao = new CarDaoImpl();
 		EmployeeDao eDao = new EmployeeDaoImpl();
 		CustomerDao cDao = new CustomerDaoImpl();
 		OfferDao oDao = new OfferDaoImpl();
 		PaymentDao pDao = new PaymentDaoImpl();
+		
+		cars.clear();
+		users.clear();
+		offers.clear();
+		payments.clear();
 		
 		List<User> userList = new ArrayList<User>();
 		userList.addAll(eDao.getAllEmployees());
@@ -113,7 +118,7 @@ public class CarLot extends Logging implements Serializable {
 		licenceToLotID.put(license, null);
 		return licenceToLotID;
 	}
-	public Set<Car> getCars() {
+	public List<Car> getCars() {
 		return cars;
 	}
 	public int getEMPLOYEENUMMAX() {

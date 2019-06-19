@@ -15,7 +15,7 @@ public class DriverDB {
 
 	public static void main(String[] args) {
 		Logging.infoLog("Application Started");
-		IOUtil.messageToUser("Welcome to the Carlot.\n");
+		IOUtil.messageToUser("Welcome to CRAZY DENNY'S AUTO EMPORIUM.\n");
 		
 		try {
 			Class.forName("org.postgresql.Driver");
@@ -31,12 +31,11 @@ public class DriverDB {
 			CheckCreateTables.checkOfferTable(conn);
 			CheckCreateTables.checkPaymentTable(conn);
 
-			CarLot carlot;
-			
+			CarLot carlot = new CarLot();
+			carlot.rebuildFromDB();
+			CarLotService cs = new CarLotServiceImplConsole(carlot);
+				
 			while (true) {
-				carlot = new CarLot();
-				carlot.buildFromDB();
-				CarLotService cs = new CarLotServiceImplConsole(carlot);
 				if (cs.run() == 0)
 					break;
 			}

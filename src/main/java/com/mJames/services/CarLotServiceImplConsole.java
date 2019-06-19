@@ -40,6 +40,7 @@ public class CarLotServiceImplConsole implements CarLotService {
 		if (response.contentEquals("1"))
 		{
 			login();
+			cl.rebuildFromDB();
 			executeCommand();
 			return 1;
 		}
@@ -280,7 +281,7 @@ public class CarLotServiceImplConsole implements CarLotService {
 	@Override
 	public boolean printActiveOffers()
 	{
-		Set<Offer> activeOffers = new HashSet<Offer>();
+		ArrayList<Offer> activeOffers = new ArrayList<Offer>();
 		
 		for (Offer o : cl.getOffers())
 		{
@@ -330,16 +331,18 @@ public class CarLotServiceImplConsole implements CarLotService {
 		{
 			IOUtil.messageToUser("The following cars are on the lot.");
 			
-			IOUtil.messageToUser("%-6s%-11s%-11s%-11s%-8s%-16s\n", 
+			IOUtil.messageToUser("%-6s%-11s%-11s%-15s%-8s%-16s\n", 
 					"ID", 
 					"Color", 
 					"Make", 
 					"Model",
 					"Price($)", 
 					" License Number");
+			
+			Collections.sort(cars);
 			for (Car car : cars)
 			{
-				IOUtil.messageToUser("%6d%11s%11s%11s%8.2f%16s\n", 
+				IOUtil.messageToUser("%6d%11s%11s%15s%8.2f%16s\n", 
 						car.getLotID(), 
 						car.getColor(), 
 						car.getMake(),

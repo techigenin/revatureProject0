@@ -14,12 +14,12 @@ import com.mJames.util.Logging;
 
 public class CarDaoImpl implements CarDao {
 
-	private Connection conn;
+	private static Connection conn = ConnectionFactory.getConnection();
 	
 	@Override
 	public boolean carExists(Car c) {
 		try {
-			conn = ConnectionFactory.getConnection();
+			//conn = ConnectionFactory.getConnection();
 			Statement stmt = conn.createStatement();
 			
 			String sql = "select * from car where licensenum = " + c.getLicenseNumber();
@@ -37,7 +37,7 @@ public class CarDaoImpl implements CarDao {
 	@Override
 	public boolean createCar(Car c) {
 		try {
-			conn = ConnectionFactory.getConnection();
+			//conn = ConnectionFactory.getConnection();
 			
 			PreparedStatement pstmt = conn.prepareStatement(
 					"Insert INTO car VALUES (?,?,?,?,?,?,?,?);"); 
@@ -66,7 +66,7 @@ public class CarDaoImpl implements CarDao {
 	@Override
 	public boolean updateCarLotID(Car c) {
 		try {
-			conn = ConnectionFactory.getConnection();
+			//conn = ConnectionFactory.getConnection();
 			PreparedStatement pstmt = conn.prepareStatement("update car set LotID = ? where LicenseNum = ?;");
 			if (c.getLotID() == null)
 				pstmt.setNull(1, java.sql.Types.INTEGER);
@@ -86,7 +86,7 @@ public class CarDaoImpl implements CarDao {
 	@Override
 	public boolean updateCarOwnerID(Car c) {
 		try {
-			conn = ConnectionFactory.getConnection();
+			//conn = ConnectionFactory.getConnection();
 			PreparedStatement pstmt = conn.prepareStatement(
 					"update car set ownerid = ? "
 					+ "where licensenum = ?;");
@@ -106,7 +106,7 @@ public class CarDaoImpl implements CarDao {
 	@Override
 	public boolean updateCarStatus(Car c) {
 		try {
-			conn = ConnectionFactory.getConnection();
+			//conn = ConnectionFactory.getConnection();
 			PreparedStatement pstmt = conn.prepareStatement("update car set status = ? where LicenseNum = ?;");
 			pstmt.setString(1, c.getStatus());
 			pstmt.setInt(2, c.getLicenseNumber());
@@ -122,7 +122,7 @@ public class CarDaoImpl implements CarDao {
 	@Override
 	public boolean deleteCar(Car c) {
 		try {
-			conn = ConnectionFactory.getConnection();
+			//conn = ConnectionFactory.getConnection();
 			PreparedStatement pstmt = conn.prepareStatement("delete from car where licenseNum = ?;");
 			pstmt.setInt(1, c.getLicenseNumber());
 			pstmt.executeUpdate();
@@ -136,7 +136,7 @@ public class CarDaoImpl implements CarDao {
 	@Override
 	public Car getCarByLicense(Integer license) {
 		try {
-			conn = ConnectionFactory.getConnection();
+			//conn = ConnectionFactory.getConnection();
 			Statement stmt = conn.createStatement();
 			
 			String sql = "select * from car where licensenum = " + license;
@@ -156,7 +156,7 @@ public class CarDaoImpl implements CarDao {
 	}
 	@Override
 	public List<Car> getAllCars() {
-		conn = ConnectionFactory.getConnection();
+		//conn = ConnectionFactory.getConnection();
 		List<Car> carList = new ArrayList<Car>();
 		
 		Statement stmt;

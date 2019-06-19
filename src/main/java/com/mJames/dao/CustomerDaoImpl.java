@@ -15,12 +15,12 @@ import com.mJames.util.Logging;
 
 public class CustomerDaoImpl implements CustomerDao {
 
-	private Connection conn;
+	private static Connection conn = ConnectionFactory.getConnection();
 
 	@Override
 	public boolean customerExists(Customer c) {
 		try {
-			conn = ConnectionFactory.getConnection();
+//			conn = ConnectionFactory.getConnection();
 			Statement stmt = conn.createStatement();
 			
 			String sql = "select * from customer where customerid = " + c.getUserNum();
@@ -38,7 +38,7 @@ public class CustomerDaoImpl implements CustomerDao {
 	@Override
 	public boolean createCustomer(Customer c) {
 		try {
-			conn = ConnectionFactory.getConnection();
+//			conn = ConnectionFactory.getConnection();
 			PreparedStatement pstmt = conn.prepareStatement("Insert INTO Customer (Customerid, firstname, lastname) VALUES (?, ?, ?)");
 			pstmt.setInt(1, c.getUserNum());
 			pstmt.setString(2, c.getFirstName());
@@ -54,7 +54,7 @@ public class CustomerDaoImpl implements CustomerDao {
 	@Override
 	public boolean updateCustomerPassword(String p, Customer c) {
 		try {
-			conn = ConnectionFactory.getConnection();
+//			conn = ConnectionFactory.getConnection();
 			PreparedStatement pstmt = conn.prepareStatement("update Customer set password = ? where Customerid = ?");
 			pstmt.setString(1, p);
 			pstmt.setInt(2, c.getUserNum());
@@ -71,7 +71,7 @@ public class CustomerDaoImpl implements CustomerDao {
 	@Override
 	public boolean deleteCustomer(Customer c) {
 		try {
-			conn = ConnectionFactory.getConnection();
+//			conn = ConnectionFactory.getConnection();
 			PreparedStatement pstmt = conn.prepareStatement(
 					"delete from Customer where Customerid = ?;");
 			pstmt.setInt(1, c.getUserNum());
@@ -87,7 +87,7 @@ public class CustomerDaoImpl implements CustomerDao {
 	@Override
 	public Customer getCustomerByUserID(Integer userID) {
 		try {
-			conn = ConnectionFactory.getConnection();
+//			conn = ConnectionFactory.getConnection();
 			Statement stmt = conn.createStatement();
 			
 			String sql = "select * from Customer where customerid = " + userID;
@@ -110,7 +110,7 @@ public class CustomerDaoImpl implements CustomerDao {
 	public List<Customer> getAllCustomers() {
 		List<Customer> CustomerList = new ArrayList<Customer>();
 		
-		conn = ConnectionFactory.getConnection();
+//		conn = ConnectionFactory.getConnection();
 		Statement stmt;
 		try {
 			stmt = conn.createStatement();

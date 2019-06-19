@@ -14,14 +14,13 @@ import com.mJames.util.Logging;
 
 public class PaymentDaoImpl implements PaymentDao {
 
-	private Connection conn;
-	
+	private static Connection conn = ConnectionFactory.getConnection();	
 	// TODO needs PreparedStatement updating
 	
 	@Override
 	public boolean paymentExists(Payment p) {
 		try {
-			conn = ConnectionFactory.getConnection();
+//			conn = ConnectionFactory.getConnection();
 			Statement stmt = conn.createStatement();
 			
 			String sql = "select * from payment where payment_num = " 
@@ -40,7 +39,7 @@ public class PaymentDaoImpl implements PaymentDao {
 	@Override
 	public boolean createPayment(Payment p) {
 		try {
-			conn = ConnectionFactory.getConnection();
+//			conn = ConnectionFactory.getConnection();
 			PreparedStatement pstmt = conn.prepareStatement("Insert INTO payment "
 					+ "(userid, car_license, amount, amount_remaining, payment_num) " 
 					+ "VALUES (?, ?, ?, ?, ?);");
@@ -62,7 +61,7 @@ public class PaymentDaoImpl implements PaymentDao {
 	@Override
 	public boolean updatePaymentAmount(Payment p) {
 		try {
-			conn = ConnectionFactory.getConnection();
+//			conn = ConnectionFactory.getConnection();
 			PreparedStatement pstmt = conn.prepareStatement(
 					"update payment set amount = ? "
 						+ "where payment_num = ? ");
@@ -79,7 +78,7 @@ public class PaymentDaoImpl implements PaymentDao {
 	@Override
 	public boolean updatePaymentAmountRemaining(Payment p) {
 		try {
-			conn = ConnectionFactory.getConnection();
+//			conn = ConnectionFactory.getConnection();
 			PreparedStatement pstmt = conn.prepareStatement(
 					"update payment set amount_remaining = ? "
 						+ "where payment_num = ? ");
@@ -96,7 +95,7 @@ public class PaymentDaoImpl implements PaymentDao {
 	@Override
 	public boolean deletePayment(Payment o) {
 		try {
-			conn = ConnectionFactory.getConnection();
+//			conn = ConnectionFactory.getConnection();
 			PreparedStatement pstmt = conn.prepareStatement("delete from Payment "
 					+ "where payment_num = ? ");
 		pstmt.setInt(1, o.getPaymentNumber());
@@ -111,7 +110,7 @@ public class PaymentDaoImpl implements PaymentDao {
 	@Override
 	public Payment getPaymentbyPaymentNumber(Integer paymentNum) {
 		try {
-			conn = ConnectionFactory.getConnection();
+//			conn = ConnectionFactory.getConnection();
 			Statement stmt = conn.createStatement();
 			
 			String sql = "select * from Payment where payment_num = " + paymentNum;
@@ -134,7 +133,7 @@ public class PaymentDaoImpl implements PaymentDao {
 	public List<Payment> getAllPayments() {
 		List<Payment> PaymentList = new ArrayList<Payment>();
 		
-		conn = ConnectionFactory.getConnection();
+//		conn = ConnectionFactory.getConnection();
 		Statement stmt;
 		try {
 			stmt = conn.createStatement();
@@ -164,7 +163,7 @@ public class PaymentDaoImpl implements PaymentDao {
 	public boolean createPayment(Integer custNum, Integer license, CarLot cl) {
 		try {
 			//userid = u and car_license
-			conn = ConnectionFactory.getConnection();
+//			conn = ConnectionFactory.getConnection();
 			Statement stmt = conn.createStatement();
 			String sql = "select * from payment_amount_remaining(" + custNum + ", " + license + ");";
 			ResultSet rs = stmt.executeQuery(sql);
@@ -188,7 +187,7 @@ public class PaymentDaoImpl implements PaymentDao {
 	@Override
 	public Double getPaymentAmountRemaining(Integer custNum, Integer license) {
 		try {
-			conn = ConnectionFactory.getConnection();
+//			conn = ConnectionFactory.getConnection();
 			Statement stmt = conn.createStatement();
 			String sql = "select * from get_amount_remaining(" + custNum + ", " + license + ");";
 			ResultSet rs = stmt.executeQuery(sql);

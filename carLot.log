@@ -794,3 +794,37 @@
 2019-06-18 18:51:20 INFO  root:9 - Application Started
 2019-06-18 18:51:35 INFO  root:9 - Customer 
 2019-06-18 18:54:40 INFO  root:9 - Employee 1 has logged in.
+2019-06-18 18:55:08 INFO  root:9 - Application Started
+2019-06-18 18:55:26 INFO  root:9 - Employee 1 has logged in.
+2019-06-18 18:55:34 INFO  root:9 - Status of car 5948476 is  set to Removed
+2019-06-18 18:55:37 INFO  root:9 - Status of car 5948476 is  set to Sold
+2019-06-18 18:55:38 INFO  root:9 - Status of offer by 100 for car 5948476 is  set to Accepted
+2019-06-18 18:55:41 INFO  root:9 - Car 5AC 43C has been sold to user number 100
+2019-06-18 18:55:59 INFO  root:9 - Customer 
+2019-06-19 07:43:48 INFO  root:9 - Application Started
+2019-06-19 07:44:37 INFO  root:9 - Application Started
+2019-06-19 07:44:50 INFO  root:9 - Customer 
+2019-06-19 07:45:07 INFO  root:9 - Employee 1 has logged in.
+2019-06-19 07:45:48 INFO  root:9 - Car 1000, license 11393917, created.
+2019-06-19 07:46:02 INFO  root:9 - Car 1001, license 2722446, created.
+2019-06-19 07:47:08 INFO  root:9 - Car 1002, license 12945704, created.
+2019-06-19 07:47:19 INFO  root:9 - Application Started
+2019-06-19 07:47:39 INFO  root:9 - Employee 1 has logged in.
+2019-06-19 07:48:16 INFO  root:9 - Employee 1 has logged in.
+2019-06-19 07:49:29 INFO  root:9 - Application Started
+2019-06-19 07:49:43 INFO  root:9 - Employee 1 has logged in.
+2019-06-19 07:50:12 INFO  root:9 - Application Started
+2019-06-19 07:50:26 INFO  root:9 - Employee 1 has logged in.
+2019-06-19 07:51:38 INFO  root:9 - Application Started
+2019-06-19 07:51:50 INFO  root:9 - Employee 1 has logged in.
+2019-06-19 07:52:04 INFO  root:9 - Status of car 11393917 is  set to Removed
+2019-06-19 07:52:20 INFO  root:9 - Car 1000, license 1349829, created.
+2019-06-19 07:52:35 INFO  root:9 - Car 1003, license 11202755, created.
+2019-06-19 07:52:50 INFO  root:9 - Car 1004, license 16230971, created.
+2019-06-19 07:53:10 INFO  root:9 - Car 1005, license 16245239, created.
+2019-06-19 07:53:29 INFO  root:9 - Car 1006, license 15739945, created.
+2019-06-19 07:54:00 INFO  root:9 - Car 1007, license 3436816, created.
+2019-06-19 07:54:19 INFO  root:9 - Car 1008, license 13728587, created.
+2019-06-19 07:54:38 INFO  root:9 - Car 1009, license 14897701, created.
+2019-06-19 08:01:00 INFO  root:9 - Application Started
+2019-06-19 08:01:24 INFO  root:9 - Employee 1 has logged in.
